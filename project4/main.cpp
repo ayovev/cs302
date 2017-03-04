@@ -35,23 +35,21 @@ int main()
 
 int randomNumberGenerator()
 {
-   unsigned seed = chrono::system_clock::now().time_since_epoch().count()/100000;
-
-   srand(time(0));
+   unsigned seed = chrono::system_clock::now().time_since_epoch().count();
 
    default_random_engine dre(seed); // [1,2147483646]
    mt19937 mt(seed); // [0,4294967295]
 
    uniform_int_distribution<int> dist(1, 1000000);
 
-   return dist( mt );
+   return dist( dre );
 }
 
 void delay()
 {
-   for( int i = 0; i < 32767; i++ )
+   for( int i = 0; i < 1200; i++ )
    {
-      for( int j = 0; j < 32767; j++ )
+      for( int j = 0; j < 1200; j++ )
       {}
    }
 }
