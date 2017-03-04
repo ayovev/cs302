@@ -1,0 +1,39 @@
+The object of this programming assignment is twofold. You are to compare the
+relative performance of different sorting algorithms on the same data set and
+the same algorithm on different data sets.
+
+Choose a sorting algorithm from each of the O(n^2) (i.e., selection, insertion
+and bubble), O(n logn) (i.e., merge and quick), and O(n) (i.e., counting, bucket
+and radix) categories.
+
+Randomly generate (1 000, 10 000, 100 000, or 1 000 000) integer values (in the
+range of 0 to 1000000) to be inserted into the data structures. Note that the
+list (i.e., the input values) itself should not be sorted and all algorithms
+should use the same input file when the input size is same.
+
+Also, test the speed of algorithms when the input array is already sorted
+(for the same input data).
+
+The following output should be provided for an average of 10 sorts of each
+algorithm and input size:
+
+-the CPU time (note that generation processes should not affect these values)
+-the number of comparisons
+-the number of swaps
+
+Note: You can report only one run for the ones that take over an hour.
+
+Note: You can only use (i.e., copy) code from the book and slides. You need to
+develop the rest of the code yourself.
+
+Deliverables: (as source code or a doc or pdf file)
+
+-Source code for your classes (one for each sort algorithm for a total of 3)
+-A main file that tests the classes with randomly generated data.
+-Test output of your codes (timing snapshots)
+
+TEXTBOOK #9
+Write a program to display the running time of the sorts described in this
+chapter. Test the sorts on arrays of various sizes. Arrays of the same size
+should contain identical entries. Use the function clock from <ctime> to time
+each sort.

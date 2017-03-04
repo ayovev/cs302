@@ -1,9 +1,13 @@
 #include <cstdlib>
 #include <iostream>
+#include <fstream>
+#include <algorithm>
 #include <ctime>
 #include <chrono>
 #include <random>
+#include <vector>
 
+void generateFile( int numValues );
 int randomNumberGenerator();
 void delay();
 
@@ -11,23 +15,31 @@ using namespace std;
 
 int main()
 {
-   int numValues;
+   int index, number, numValues;
+   ifstream fin;
+   vector<int> vec;
 
    cout << "How many values would you like to test? ";
    cin >> numValues;
 
-   int arr[ numValues ];
+   vec.resize( numValues );
+   generateFile( numValues );
 
-   for( int i = 0; i < numValues; i++ )
+   fin.clear();
+   fin.open("values.txt");
+
+   for( index = 0; fin.eof() == false; index++ )
    {
-      arr[i] = randomNumberGenerator();
-      delay();
+      fin >> number;
+      vec[ index ] = number;
    }
 
-   for( int i = 0; i < numValues; i++ )
+   for( index = 0; index < numValues; index++ )
    {
-      cout << arr[i] << endl;
+      cout << vec[index] << endl;
    }
+
+   cout << endl;
 
    return EXIT_SUCCESS;
 }
@@ -51,4 +63,21 @@ void delay()
       for( int j = 0; j < 1200; j++ )
       {}
    }
+}
+
+void generateFile( int numValues )
+{
+   int counter;
+   ofstream fout;
+
+   fout.clear();
+   fout.open("values.txt");
+
+   for( counter = 0; counter < numValues; counter++ )
+   {
+      fout << randomNumberGenerator() << endl;
+      delay();
+   }
+
+   fout.close();
 }
