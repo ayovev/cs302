@@ -3,7 +3,6 @@
 #include <ctime>
 #include <chrono>
 #include <random>
-#include <array> // may not need
 
 int randomNumberGenerator();
 void delay();
