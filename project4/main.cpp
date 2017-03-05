@@ -7,36 +7,40 @@
 #include <random>
 #include <vector>
 
-void generateFile( int numValues );
 int randomNumberGenerator();
 void delay();
+void generateFile( int numValues );
 
 using namespace std;
 
 int main()
 {
    int index, number, numValues;
+   vector<int> vec1, vec2, vec3;
    ifstream fin;
-   vector<int> vec;
 
-   cout << "How many values would you like to test? ";
-   cin >> numValues;
+   numValues = 1000;
 
-   vec.resize( numValues );
+   vec1.resize( numValues );
+   vec2.resize( numValues );
+   vec3.resize( numValues );
+
    generateFile( numValues );
 
    fin.clear();
    fin.open("values.txt");
 
-   for( index = 0; fin.eof() == false; index++ )
+   for( index = 0; fin.good() == true; index++ )
    {
       fin >> number;
-      vec[ index ] = number;
+      vec1[ index ] = number;
+      vec2[ index ] = number;
+      vec3[ index ] = number;
    }
 
    for( index = 0; index < numValues; index++ )
    {
-      cout << vec[index] << endl;
+      cout << index + 1 << ". " << vec1[index] << endl;
    }
 
    cout << endl;
