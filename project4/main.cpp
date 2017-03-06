@@ -14,9 +14,6 @@ int randomNumberGenerator();
 void delay();
 void generateFile( int numValues );
 void bubbleSort( vector<int>& vec );
-void quickSort( vector<int>& vecE, int firstE, int lastE );
-//void part( vector<int>& vec );
-int part( vector<int>& vec, int first, int last );
 
 int main()
 {
@@ -112,65 +109,4 @@ void bubbleSort( vector<int>& vec )
          }
       }
    }
-}
-
-void quickSort( vector<int>& vecE, int firstE, int lastE )
-{
-   int middle;
-
-   if( firstE < lastE )
-   {
-      cout << "HOPEFULLY THIS WORKS" << endl;
-      middle = part( vecE, vecE.front(), vecE.back() );
-      cout << "WELL THIS WORKED" << endl;
-      quickSort( vecE, firstE, middle );
-      quickSort( vecE, middle + 1, lastE );
-   }
-}
-
-/*
-void part( vector<int>& vec )
-{
-   int pivot = vec[0];
-   int left, right;
-
-   for( left = 1, right = vec.size() - 1; left < right; )
-   {
-      if( vec[ left ] > pivot && vec[ right ] <= pivot )
-      {
-         swap( vec[ left ], vec[ right ] );
-      }
-      if( vec[ left ] <= pivot )
-      {
-         left++;
-      }
-      if( vec[ right ] > pivot )
-      {
-         right--;
-      }
-   }
-}
-*/
-
-int part( vector<int>& vec, int first, int last )
-{
-   int pivot = vec[ first ];
-
-   while( first != last )
-   {
-      if( vec[ first ] > vec[ last ] )
-      {
-         swap( vec[ first ], vec[ last ] );
-      }
-      if( pivot == vec[ first ] )
-      {
-         last--;
-      }
-      else
-      {
-         first++;
-      }
-   }
-
-   return first;
 }
