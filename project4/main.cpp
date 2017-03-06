@@ -1,3 +1,4 @@
+// HEADER FILES & LIBRARIES
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
@@ -10,7 +11,7 @@
 
 using namespace std;
 
-// WORKING
+// WORKING FUNCTION PROTOTYPES
 int randomNumberGenerator();
 void delay();
 void generateFile( int numValues );
@@ -18,7 +19,7 @@ void bubbleSort( vector<int>& vec );
 void quickSort( vector<int>& vec, int first, int last );
 int partition( vector<int>& vec, int first, int last);
 
-
+// MAIN PROGRAM
 int main()
 {
    int index, number, numValues;
@@ -56,6 +57,8 @@ int main()
 
    return EXIT_SUCCESS;
 }
+
+// FUNCTION IMPLEMENTATION
 
 int randomNumberGenerator()
 {
