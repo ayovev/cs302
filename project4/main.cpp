@@ -10,10 +10,14 @@
 
 using namespace std;
 
+// WORKING
 int randomNumberGenerator();
 void delay();
 void generateFile( int numValues );
 void bubbleSort( vector<int>& vec );
+void quickSort( vector<int>& vec, int first, int last );
+int partition( vector<int>& vec, int first, int last);
+
 
 int main()
 {
@@ -41,10 +45,11 @@ int main()
    }
 
    bubbleSort( vec1 );
+   quickSort( vec2, 0, vec2.size() );
 
    for( index = 0; index < numValues; index++ )
    {
-      cout << index + 1 << ". " << vec1[index] << endl;
+      cout << index + 1 << ". " << vec2[index] << endl;
    }
 
    cout << endl;
@@ -93,7 +98,7 @@ void generateFile( int numValues )
 void bubbleSort( vector<int>& vec )
 {
    bool sorted = false;
-   int count, index;
+   unsigned int count, index;
 
    for( count = 1; ( count < vec.size() ) && sorted == false; count++ )
    {
@@ -108,4 +113,35 @@ void bubbleSort( vector<int>& vec )
          }
       }
    }
+}
+
+void quickSort( vector<int>& vec, int first, int last )
+{
+    int middle;
+    if( first < last )
+    {
+        middle = partition( vec, first, last );
+        quickSort( vec, first, middle );
+        quickSort( vec, middle + 1, last );
+    }
+}
+
+int partition( vector<int>& vec, int first, int last )
+{
+    int x = vec[ first ];
+    int i = first;
+    int j;
+
+    for( j = first + 1; j < last; j++ )
+    {
+        if( vec[ j ] <= x )
+        {
+            i++;
+			   swap( vec[ i ], vec[ j ] );
+        }
+
+    }
+
+    swap( vec[ i ], vec[ first ] );
+    return i;
 }
