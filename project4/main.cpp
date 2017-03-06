@@ -132,19 +132,19 @@ void quickSort( vector<int>& vec, int first, int last )
 int partition( vector<int>& vec, int first, int last )
 {
     int x = vec[ first ];
-    int i = first;
-    int j;
+    int y = first;
+    int z;
 
-    for( j = first + 1; j < last; j++ )
+    for( z = first + 1; z < last; z++ )
     {
-        if( vec[ j ] <= x )
+        if( vec[ z ] <= x )
         {
-            i++;
-			   swap( vec[ i ], vec[ j ] );
+            y++;
+			   swap( vec[ y ], vec[ z ] );
         }
 
     }
 
-    swap( vec[ i ], vec[ first ] );
-    return i;
+    swap( vec[ y ], vec[ first ] );
+    return y;
 }
