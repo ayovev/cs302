@@ -41,11 +41,10 @@ int main()
    }
 
    bubbleSort( vec1 );
-   quickSort( vec2, vec2.front(), vec2.back() );
 
    for( index = 0; index < numValues; index++ )
    {
-      cout << index + 1 << ". " << vec2[index] << endl;
+      cout << index + 1 << ". " << vec1[index] << endl;
    }
 
    cout << endl;
