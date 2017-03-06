@@ -50,7 +50,7 @@ int main()
 
    for( index = 0; index < numValues; index++ )
    {
-      cout << index + 1 << ". " << vec2[index] << endl;
+      cout << index + 1 << ". " << vec3[index] << endl;
    }
 
    cout << endl;
