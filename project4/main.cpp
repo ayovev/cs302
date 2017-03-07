@@ -15,14 +15,15 @@ using namespace std;
 int randomNumberGenerator();
 void delay();
 void generateFile( int numValues );
-void bubbleSort( vector<int>& vec );
-void quickSort( vector<int>& vec, int first, int last );
-int partition( vector<int>& vec, int first, int last);
+void bubbleSort( vector<int>& vec, int& comparisons, int& swaps );
+void quickSort( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
+int partition( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
 
 // MAIN PROGRAM
 int main()
 {
    int index, number, numValues;
+   int comparisons = 0, swaps = 0;
    vector<int> vec1, vec2, vec3;
    ifstream fin;
 
@@ -45,15 +46,18 @@ int main()
       vec3[ index ] = number;
    }
 
-   bubbleSort( vec1 );
+   bubbleSort( vec1, comparisons, swaps );
    quickSort( vec2, 0, vec2.size() );
 
    for( index = 0; index < numValues; index++ )
    {
-      cout << index + 1 << ". " << vec3[index] << endl;
+      cout << index + 1 << ". " << vec1[index] << endl;
    }
 
    cout << endl;
+
+   cout << "Number of comparisons: " << comparisons << endl
+        << "Number of swaps: " << swaps << endl;
 
    return EXIT_SUCCESS;
 }
@@ -98,7 +102,7 @@ void generateFile( int numValues )
    fout.close();
 }
 
-void bubbleSort( vector<int>& vec )
+void bubbleSort( vector<int>& vec, int& comparisons, int& swaps )
 {
    bool sorted = false;
    unsigned int count, index;
@@ -109,8 +113,10 @@ void bubbleSort( vector<int>& vec )
 
       for( index = 0; index < vec.size() - count; index++ )
       {
+         comparisons++;
          if( vec[ index ] > vec[ index + 1 ] )
          {
+            swaps++;
             swap( vec[ index ], vec[ index + 1 ] );
             sorted = false;
          }
@@ -118,7 +124,7 @@ void bubbleSort( vector<int>& vec )
    }
 }
 
-void quickSort( vector<int>& vec, int first, int last )
+void quickSort( vector<int>& vec, int first, int last, int& comparisons, int& swaps )
 {
     int middle;
     if( first < last )
@@ -129,7 +135,7 @@ void quickSort( vector<int>& vec, int first, int last )
     }
 }
 
-int partition( vector<int>& vec, int first, int last )
+int partition( vector<int>& vec, int first, int last, int& comparisons, int& swaps )
 {
     int x = vec[ first ];
     int y = first;
