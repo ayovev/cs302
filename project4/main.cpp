@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
+#include <string>
 #include <algorithm>
 #include <ctime>
 #include <chrono>
@@ -18,14 +19,18 @@ void generateFile( int numValues );
 void bubbleSort( vector<int>& vec, int& comparisons, int& swaps );
 void quickSort( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
 int partition( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
+void logStuff( ofstream& fout, string sort, const int comparisons, const int swaps );
+void loadVector( vector<int>& vec );
 
 // MAIN PROGRAM
 int main()
 {
-   int index, number, numValues;
-   int comparisons = 0, swaps = 0;
+   int numValues, comparisons, swaps;
    vector<int> vec1, vec2, vec3;
-   ifstream fin;
+   ofstream fout;
+
+   fout.clear();
+   fout.open( "log.txt" );
 
    numValues = 1000;
 
@@ -35,29 +40,30 @@ int main()
 
    generateFile( numValues );
 
-   fin.clear();
-   fin.open("values.txt");
+   loadVector( vec1 );
+   loadVector( vec2 );
+   loadVector( vec3 );
 
-   for( index = 0; fin.good() == true; index++ )
-   {
-      fin >> number;
-      vec1[ index ] = number;
-      vec2[ index ] = number;
-      vec3[ index ] = number;
-   }
-
+   comparisons = 0, swaps = 0;
    bubbleSort( vec1, comparisons, swaps );
-   quickSort( vec2, 0, vec2.size() );
+   logStuff( fout, "Bubble Sort", comparisons, swaps );
 
-   for( index = 0; index < numValues; index++ )
+   comparisons = 0, swaps = 0;
+   quickSort( vec2, 0, vec2.size(), comparisons, swaps );
+   logStuff( fout, "Quick Sort", comparisons, swaps );
+
+// TEST OUTPUT TO VERIFY THAT VECTOR HAS BEEN SORTED - INSERT ANYWHERE TO VIEW
+// CONTENTS OF VECTOR
+/*
+   for( int index = 0; index < numValues; index++ )
    {
       cout << index + 1 << ". " << vec1[index] << endl;
    }
+*/
 
    cout << endl;
 
-   cout << "Number of comparisons: " << comparisons << endl
-        << "Number of swaps: " << swaps << endl;
+   fout.close();
 
    return EXIT_SUCCESS;
 }
@@ -127,11 +133,13 @@ void bubbleSort( vector<int>& vec, int& comparisons, int& swaps )
 void quickSort( vector<int>& vec, int first, int last, int& comparisons, int& swaps )
 {
     int middle;
+
+    comparisons++;
     if( first < last )
     {
-        middle = partition( vec, first, last );
-        quickSort( vec, first, middle );
-        quickSort( vec, middle + 1, last );
+        middle = partition( vec, first, last, comparisons, swaps );
+        quickSort( vec, first, middle, comparisons, swaps );
+        quickSort( vec, middle + 1, last, comparisons, swaps );
     }
 }
 
@@ -143,14 +151,40 @@ int partition( vector<int>& vec, int first, int last, int& comparisons, int& swa
 
     for( z = first + 1; z < last; z++ )
     {
+        comparisons++;
         if( vec[ z ] <= x )
         {
             y++;
+            swaps++;
 			   swap( vec[ y ], vec[ z ] );
         }
-
     }
-
+    swaps++;
     swap( vec[ y ], vec[ first ] );
+
     return y;
+}
+
+void logStuff( ofstream& fout, const string sort, const int comparisons, const int swaps )
+{
+   fout << sort << " took "
+        << comparisons << " comparisons and "
+        << swaps << " swaps." << endl;
+}
+
+void loadVector( vector<int>& vec )
+{
+   int index, number;
+   ifstream fin;
+
+   fin.clear();
+   fin.open( "values.txt" );
+
+   for( index = 0; fin.good() == true; index++ )
+   {
+      fin >> number;
+      vec[ index ] = number;
+   }
+
+   fin.close();
 }
