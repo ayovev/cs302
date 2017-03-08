@@ -29,8 +29,9 @@ void radixSortInt(vector<int>& nums)
 
     for ( unsigned int j = 0; j < nums.size(); ++j)
     {
-      int bit = (nums[j] >> i) & 1;
-      if (bit)
+      int bit = ( nums[j] >> i ) & 1;
+
+      if ( bit == 1 )
       {
         oneBucket.push_back(nums[j]);
       }
