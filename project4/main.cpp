@@ -54,12 +54,12 @@ int main()
 
 // TEST OUTPUT TO VERIFY THAT VECTOR HAS BEEN SORTED - INSERT ANYWHERE TO VIEW
 // CONTENTS OF VECTOR
-/*
+
    for( int index = 0; index < numValues; index++ )
    {
       cout << index + 1 << ". " << vec1[index] << endl;
    }
-*/
+
 
    cout << endl;
 
@@ -69,7 +69,6 @@ int main()
 }
 
 // FUNCTION IMPLEMENTATION
-
 int randomNumberGenerator()
 {
    unsigned seed = chrono::system_clock::now().time_since_epoch().count();
@@ -97,7 +96,7 @@ void generateFile( int numValues )
    ofstream fout;
 
    fout.clear();
-   fout.open("values.txt");
+   fout.open( "values.txt" );
 
    for( counter = 0; counter < numValues; counter++ )
    {
