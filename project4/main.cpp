@@ -118,6 +118,32 @@ void generateFile( int numValues )
    fout.close();
 }
 
+void loadVector( vector<int>& vec )
+{
+   int index, number;
+   ifstream fin;
+
+   cout << "Loading Vector With Random Values..." << endl;
+
+   fin.clear();
+   fin.open( "values.txt" );
+
+   for( index = 0; fin.good() == true; index++ )
+   {
+      fin >> number;
+      vec[ index ] = number;
+   }
+
+   fin.close();
+}
+
+void logStuff( ofstream& fout, const string sort, const int comparisons, const int swaps )
+{
+   fout << sort << " took "
+        << comparisons << " comparisons and "
+        << swaps << " swaps." << endl;
+}
+
 void bubbleSort( vector<int>& vec, int& comparisons, int& swaps )
 {
    bool sorted = false;
@@ -173,32 +199,6 @@ int partition( vector<int>& vec, int first, int last, int& comparisons, int& swa
     swap( vec[ y ], vec[ first ] );
 
     return y;
-}
-
-void logStuff( ofstream& fout, const string sort, const int comparisons, const int swaps )
-{
-   fout << sort << " took "
-        << comparisons << " comparisons and "
-        << swaps << " swaps." << endl;
-}
-
-void loadVector( vector<int>& vec )
-{
-   int index, number;
-   ifstream fin;
-
-   cout << "Loading Vector With Random Values..." << endl;
-
-   fin.clear();
-   fin.open( "values.txt" );
-
-   for( index = 0; fin.good() == true; index++ )
-   {
-      fin >> number;
-      vec[ index ] = number;
-   }
-
-   fin.close();
 }
 
 void radixSort( vector<int>& vec, int& comparisons, int& swaps )
