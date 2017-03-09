@@ -16,12 +16,12 @@ using namespace std;
 int randomNumberGenerator();
 void delay();
 void generateFile( int numValues );
+void loadVector( vector<int>& vec );
+void logStuff( ofstream& fout, string sort, const int comparisons, const int swaps );
 void bubbleSort( vector<int>& vec, int& comparisons, int& swaps );
 void quickSort( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
 int partition( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
-void logStuff( ofstream& fout, string sort, const int comparisons, const int swaps );
-void loadVector( vector<int>& vec );
-void radixSortInt( vector<int>& vec, int& comparisons, int& swaps );
+void radixSort( vector<int>& vec, int& comparisons, int& swaps );
 
 
 // MAIN PROGRAM
@@ -47,25 +47,28 @@ int main()
    loadVector( vec3 );
 
    comparisons = 0, swaps = 0;
+   cout << "Sorting Vector 1 With Bubble Sort" << endl;
    bubbleSort( vec1, comparisons, swaps );
    logStuff( fout, "Bubble Sort", comparisons, swaps );
 
    comparisons = 0, swaps = 0;
+   cout << "Sorting Vector 2 With Quick Sort" << endl;
    quickSort( vec2, 0, vec2.size(), comparisons, swaps );
    logStuff( fout, "Quick Sort", comparisons, swaps );
 
    comparisons = 0, swaps = 0;
-   radixSortInt( vec3 );
+   cout << "Sorting Vector 3 With Radix Sort" << endl;
+   radixSort( vec3, comparisons, swaps );
    logStuff( fout, "Radix Sort", comparisons, swaps );
 
 // TEST OUTPUT TO VERIFY THAT VECTOR HAS BEEN SORTED - INSERT ANYWHERE TO VIEW
 // CONTENTS OF VECTOR
-
+/*
    for( int index = 0; index < numValues; index++ )
    {
-      cout << index + 1 << ". " << vec3[index] << endl;
+      cout << index + 1 << ". " << vec1[index] << endl;
    }
-
+*/
 
    cout << endl;
 
@@ -89,9 +92,9 @@ int randomNumberGenerator()
 
 void delay()
 {
-   for( int i = 0; i < 1200; i++ )
+   for( int i = 0; i < 1500; i++ )
    {
-      for( int j = 0; j < 1200; j++ )
+      for( int j = 0; j < 1500; j++ )
       {}
    }
 }
@@ -100,6 +103,8 @@ void generateFile( int numValues )
 {
    int counter;
    ofstream fout;
+
+   cout  << "Generating " << numValues << " Random Values..." << endl;
 
    fout.clear();
    fout.open( "values.txt" );
@@ -182,6 +187,8 @@ void loadVector( vector<int>& vec )
    int index, number;
    ifstream fin;
 
+   cout << "Loading Vector With Random Values..." << endl;
+
    fin.clear();
    fin.open( "values.txt" );
 
@@ -194,38 +201,38 @@ void loadVector( vector<int>& vec )
    fin.close();
 }
 
-void radixSortInt( vector<int>& nums )
+void radixSort( vector<int>& vec, int& comparisons, int& swaps )
 {
   for (int i = 0; i < 32; ++i)
   {
     vector<int> zeroBucket;
     vector<int> oneBucket;
 
-    for ( unsigned int j = 0; j < nums.size(); ++j)
+    for ( unsigned int j = 0; j < vec.size(); ++j)
     {
-      int bit = ( nums[j] >> i ) & 1;
+      int bit = ( vec[j] >> i ) & 1;
 
       if ( bit == 1 )
       {
-        oneBucket.push_back(nums[j]);
+        oneBucket.push_back(vec[j]);
       }
       else
       {
-        zeroBucket.push_back(nums[j]);
+        zeroBucket.push_back(vec[j]);
       }
     }
 
-    nums.clear();
+    vec.clear();
 
     if (i == 31)
     {
-      nums.insert(nums.end(), oneBucket.begin(), oneBucket.end());
-      nums.insert(nums.end(), zeroBucket.begin(), zeroBucket.end());
+      vec.insert(vec.end(), oneBucket.begin(), oneBucket.end());
+      vec.insert(vec.end(), zeroBucket.begin(), zeroBucket.end());
     }
     else
     {
-      nums.insert(nums.end(), zeroBucket.begin(), zeroBucket.end());
-      nums.insert(nums.end(), oneBucket.begin(), oneBucket.end());
+      vec.insert(vec.end(), zeroBucket.begin(), zeroBucket.end());
+      vec.insert(vec.end(), oneBucket.begin(), oneBucket.end());
     }
   }
 }
