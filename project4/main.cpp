@@ -21,6 +21,8 @@ void quickSort( vector<int>& vec, int first, int last, int& comparisons, int& sw
 int partition( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
 void logStuff( ofstream& fout, string sort, const int comparisons, const int swaps );
 void loadVector( vector<int>& vec );
+void radixSortInt( vector<int>& vec, int& comparisons, int& swaps );
+
 
 // MAIN PROGRAM
 int main()
@@ -52,12 +54,16 @@ int main()
    quickSort( vec2, 0, vec2.size(), comparisons, swaps );
    logStuff( fout, "Quick Sort", comparisons, swaps );
 
+   comparisons = 0, swaps = 0;
+   radixSortInt( vec3 );
+   logStuff( fout, "Radix Sort", comparisons, swaps );
+
 // TEST OUTPUT TO VERIFY THAT VECTOR HAS BEEN SORTED - INSERT ANYWHERE TO VIEW
 // CONTENTS OF VECTOR
 
    for( int index = 0; index < numValues; index++ )
    {
-      cout << index + 1 << ". " << vec1[index] << endl;
+      cout << index + 1 << ". " << vec3[index] << endl;
    }
 
 
@@ -186,4 +192,40 @@ void loadVector( vector<int>& vec )
    }
 
    fin.close();
+}
+
+void radixSortInt( vector<int>& nums )
+{
+  for (int i = 0; i < 32; ++i)
+  {
+    vector<int> zeroBucket;
+    vector<int> oneBucket;
+
+    for ( unsigned int j = 0; j < nums.size(); ++j)
+    {
+      int bit = ( nums[j] >> i ) & 1;
+
+      if ( bit == 1 )
+      {
+        oneBucket.push_back(nums[j]);
+      }
+      else
+      {
+        zeroBucket.push_back(nums[j]);
+      }
+    }
+
+    nums.clear();
+
+    if (i == 31)
+    {
+      nums.insert(nums.end(), oneBucket.begin(), oneBucket.end());
+      nums.insert(nums.end(), zeroBucket.begin(), zeroBucket.end());
+    }
+    else
+    {
+      nums.insert(nums.end(), zeroBucket.begin(), zeroBucket.end());
+      nums.insert(nums.end(), oneBucket.begin(), oneBucket.end());
+    }
+  }
 }
