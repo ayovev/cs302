@@ -23,7 +23,6 @@ void quickSort( vector<int>& vec, int first, int last, int& comparisons, int& sw
 int partition( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
 //void radixSort( vector<int>& vec, int& comparisons, int& swaps );
 
-
 // MAIN PROGRAM
 int main()
 {
@@ -42,19 +41,36 @@ int main()
 
    generateFile( numValues );
 
-   loadVector( vec1 );
-   loadVector( vec2 );
-   loadVector( vec3 );
+// LOAD VECTOR FUNCTION - START
+   int index, number;
+   ifstream fin;
 
-   comparisons = 0, swaps = 0;
-   cout << "Sorting Vector 1 With Bubble Sort" << endl;
-   bubbleSort( vec1, comparisons, swaps );
-   logStuff( fout, "Bubble Sort", comparisons, swaps );
+   fin.clear();
+   fin.open( "values.txt" );
 
-   comparisons = 0, swaps = 0;
-   cout << "Sorting Vector 2 With Quick Sort" << endl;
-   quickSort( vec2, 0, vec2.size(), comparisons, swaps );
-   logStuff( fout, "Quick Sort", comparisons, swaps );
+   for( index = 0; /*fin.good() == true*/ index < numValues; index++ )
+   {
+      fin >> number;
+      vec1[ index ] = number;
+   }
+
+   fin.close();
+
+// LOAD VECTOR FUNCTION - END
+
+//   loadVector( vec1 );
+//   loadVector( vec2 );
+//   loadVector( vec3 );
+
+   // comparisons = 0, swaps = 0;
+   // cout << "Sorting Vector 1 With Bubble Sort" << endl;
+   // bubbleSort( vec1, comparisons, swaps );
+   // logStuff( fout, "Bubble Sort", comparisons, swaps );
+   //
+   // comparisons = 0, swaps = 0;
+   // cout << "Sorting Vector 2 With Quick Sort" << endl;
+   // quickSort( vec2, 0, vec2.size(), comparisons, swaps );
+   // logStuff( fout, "Quick Sort", comparisons, swaps );
 
 /*
    comparisons = 0, swaps = 0;
@@ -83,8 +99,8 @@ int randomNumberGenerator()
 {
    unsigned seed = chrono::system_clock::now().time_since_epoch().count();
 
-   default_random_engine dre(seed); // [1,2147483646]
-   mt19937 mt(seed); // [0,4294967295]
+   default_random_engine dre( seed ); // [1,2147483646]
+   mt19937 mt( seed ); // [0,4294967295]
 
    uniform_int_distribution<int> dist(0, 1000000);
 
