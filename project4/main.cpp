@@ -16,7 +16,7 @@ using namespace std;
 int randomNumberGenerator();
 void delay();
 void generateFile( int numValues );
-void loadVector( vector<int>& vec );
+void loadVector( vector<int>& vec, int numValues );
 void logStuff( ofstream& fout, string sort, const int comparisons, const int swaps );
 void bubbleSort( vector<int>& vec, int& comparisons, int& swaps );
 void quickSort( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
@@ -41,36 +41,23 @@ int main()
 
    generateFile( numValues );
 
-// LOAD VECTOR FUNCTION - START
-   int index, number;
-   ifstream fin;
+   loadVector( vec1, numValues );
+   loadVector( vec2, numValues );
+   loadVector( vec3, numValues );
 
-   fin.clear();
-   fin.open( "values.txt" );
+   comparisons = 0, swaps = 0;
+   cout << "Sorting Vector 1 With Bubble Sort" << endl;
+   bubbleSort( vec1, comparisons, swaps );
+   logStuff( fout, "Bubble Sort", comparisons, swaps );
 
-   for( index = 0; /*fin.good() == true*/ index < numValues; index++ )
-   {
-      fin >> number;
-      vec1[ index ] = number;
-   }
+   system("pause");
 
-   fin.close();
+   comparisons = 0, swaps = 0;
+   cout << "Sorting Vector 2 With Quick Sort" << endl;
+   quickSort( vec2, 0, vec2.size(), comparisons, swaps );
+   logStuff( fout, "Quick Sort", comparisons, swaps );
 
-// LOAD VECTOR FUNCTION - END
-
-//   loadVector( vec1 );
-//   loadVector( vec2 );
-//   loadVector( vec3 );
-
-   // comparisons = 0, swaps = 0;
-   // cout << "Sorting Vector 1 With Bubble Sort" << endl;
-   // bubbleSort( vec1, comparisons, swaps );
-   // logStuff( fout, "Bubble Sort", comparisons, swaps );
-   //
-   // comparisons = 0, swaps = 0;
-   // cout << "Sorting Vector 2 With Quick Sort" << endl;
-   // quickSort( vec2, 0, vec2.size(), comparisons, swaps );
-   // logStuff( fout, "Quick Sort", comparisons, swaps );
+   system("pause");
 
 /*
    comparisons = 0, swaps = 0;
@@ -86,7 +73,7 @@ int main()
 
    for( int index = 0; index < numValues; index++ )
    {
-      cout << index + 1 << ". " << vec1[index] << endl;
+      cout << index + 1 << ". " << vec2[index] << endl;
    }
 
    fout.close();
@@ -135,7 +122,7 @@ void generateFile( int numValues )
    fout.close();
 }
 
-void loadVector( vector<int>& vec )
+void loadVector( vector<int>& vec, int numValues )
 {
    int index, number;
    ifstream fin;
@@ -143,7 +130,7 @@ void loadVector( vector<int>& vec )
    fin.clear();
    fin.open( "values.txt" );
 
-   for( index = 0; fin.good() == true; index++ )
+   for( index = 0; index < numValues; index++ )
    {
       fin >> number;
       vec[ index ] = number;
