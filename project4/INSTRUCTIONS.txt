@@ -7,7 +7,7 @@ and bubble), O(n*logn) (i.e., merge and quick), and O(n) (i.e., counting, bucket
 and radix) categories.
 
 Randomly generate (1 000, 10 000, 100 000, or 1 000 000) integer values (in the
-range of 0 to 1000000) to be inserted into the data structures. Note that the
+range of 0 to 1 000 000) to be inserted into the data structures. Note that the
 list (i.e., the input values) itself should not be sorted and all algorithms
 should use the same input file when the input size is same.
 
