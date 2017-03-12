@@ -1,3 +1,5 @@
+/* COMPILE WITH C++11 */
+
 // HEADER FILES & LIBRARIES
 #include <cstdlib>
 #include <iostream>
