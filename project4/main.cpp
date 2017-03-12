@@ -21,7 +21,7 @@ void logStuff( ofstream& fout, string sort, const int comparisons, const int swa
 void bubbleSort( vector<int>& vec, int& comparisons, int& swaps );
 void quickSort( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
 int partition( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
-//void radixSort( vector<int>& vec, int& comparisons, int& swaps );
+void radixSort( vector<int>& vec, int& comparisons, int& swaps );
 
 // MAIN PROGRAM
 int main()
@@ -46,34 +46,23 @@ int main()
    loadVector( vec3, numValues );
 
    comparisons = 0, swaps = 0;
-   cout << "Sorting Vector 1 With Bubble Sort" << endl;
    bubbleSort( vec1, comparisons, swaps );
    logStuff( fout, "Bubble Sort", comparisons, swaps );
 
-   system("pause");
-
    comparisons = 0, swaps = 0;
-   cout << "Sorting Vector 2 With Quick Sort" << endl;
    quickSort( vec2, 0, vec2.size(), comparisons, swaps );
    logStuff( fout, "Quick Sort", comparisons, swaps );
 
-   system("pause");
-
-/*
    comparisons = 0, swaps = 0;
-   cout << "Sorting Vector 3 With Radix Sort" << endl;
    radixSort( vec3, comparisons, swaps );
    logStuff( fout, "Radix Sort", comparisons, swaps );
-
-   system("pause");
-*/
 
 // TEST OUTPUT TO VERIFY THAT VECTOR HAS BEEN SORTED - INSERT ANYWHERE TO VIEW
 // CONTENTS OF VECTOR
 
    for( int index = 0; index < numValues; index++ )
    {
-      cout << index + 1 << ". " << vec2[index] << endl;
+      cout << index + 1 << ". " << vec3[index] << endl;
    }
 
    fout.close();
@@ -202,7 +191,7 @@ int partition( vector<int>& vec, int first, int last, int& comparisons, int& swa
 
     return y;
 }
-/*
+
 void radixSort( vector<int>& vec, int& comparisons, int& swaps )
 {
   for (int i = 0; i < 32; ++i)
@@ -238,4 +227,3 @@ void radixSort( vector<int>& vec, int& comparisons, int& swaps )
     }
   }
 }
-*/
