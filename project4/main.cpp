@@ -24,7 +24,7 @@ void logStuff( ofstream& fout, string sort, const int comparisons, const int swa
 void bubbleSort( vector<int>& vec, int& comparisons, int& swaps );
 void quickSort( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
 int partition( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
-void radixSort( vector<int>& vec, int& comparisons, int& swaps );
+void radixSort( vector<int>& vec, int& swaps );
 
 // MAIN PROGRAM
 int main()
@@ -32,11 +32,12 @@ int main()
    int numValues, comparisons, swaps;
    vector<int> vec1, vec2, vec3;
    ofstream fout;
+   clock_t t1, t2, t3;
 
    fout.clear();
    fout.open( "log.txt" );
 
-   numValues = 1000;
+   numValues = 10000;
 
    vec1.resize( numValues );
    vec2.resize( numValues );
@@ -48,25 +49,45 @@ int main()
    loadVector( vec2, numValues );
    loadVector( vec3, numValues );
 
+   t1 = clock();
+
    comparisons = 0, swaps = 0;
    bubbleSort( vec1, comparisons, swaps );
    logStuff( fout, "Bubble Sort", comparisons, swaps );
+
+   t2 = clock();
+
+   t3 = t2 - t1;
+
+   cout << "It took " << ( (double)t3 / CLOCKS_PER_SEC ) << " seconds to sort vector 1 with bubble sort." << endl;
+
+   system("pause");
+
+   t1 = clock();
 
    comparisons = 0, swaps = 0;
    quickSort( vec2, 0, vec2.size(), comparisons, swaps );
    logStuff( fout, "Quick Sort", comparisons, swaps );
 
+   t2 = clock();
+
+   t3 = t2 - t1;
+
+   cout << "It took " << ( (double)t3 / CLOCKS_PER_SEC ) << " seconds to sort vector 2 with quick sort." << endl;
+
+   system("pause");
+
    comparisons = 0, swaps = 0;
-   radixSort( vec3, comparisons, swaps );
+   radixSort( vec3, swaps );
    logStuff( fout, "Radix Sort", comparisons, swaps );
 
 // TEST OUTPUT TO VERIFY THAT VECTOR HAS BEEN SORTED - INSERT ANYWHERE TO VIEW
 // CONTENTS OF VECTOR
 
-   for( int index = 0; index < numValues; index++ )
-   {
-      cout << index + 1 << ". " << vec3[index] << endl;
-   }
+   // for( int index = 0; index < numValues; index++ )
+   // {
+   //    cout << index + 1 << ". " << vec3[index] << endl;
+   // }
 
    fout.close();
 
@@ -195,7 +216,7 @@ int partition( vector<int>& vec, int first, int last, int& comparisons, int& swa
     return y;
 }
 
-void radixSort( vector<int>& vec, int& comparisons, int& swaps )
+void radixSort( vector<int>& vec, int& swaps )
 {
   for (int i = 0; i < 32; ++i)
   {
