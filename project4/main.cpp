@@ -77,16 +77,26 @@ int main()
 
    system("pause");
 
+   t1 = clock();
+
    comparisons = 0, swaps = 0;
    radixSort( vec3, swaps );
    logStuff( fout, "Radix Sort", comparisons, swaps );
+
+   t2 = clock();
+
+   t3 = t2 - t1;
+
+   cout << "It took " << ( (double)t3 / CLOCKS_PER_SEC ) << " seconds to sort vector 3 with radix sort." << endl;
+
+   system("pause");
 
 // TEST OUTPUT TO VERIFY THAT VECTOR HAS BEEN SORTED - INSERT ANYWHERE TO VIEW
 // CONTENTS OF VECTOR
 
    // for( int index = 0; index < numValues; index++ )
    // {
-   //    cout << index + 1 << ". " << vec3[index] << endl;
+   //    cout << index + 1 << ". " << vec1[index] << endl;
    // }
 
    fout.close();
