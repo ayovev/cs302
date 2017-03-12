@@ -11,6 +11,7 @@
 #include <random>
 #include <vector>
 #include <utility>
+#include <ctime>
 
 using namespace std;
 
@@ -219,12 +220,16 @@ void radixSort( vector<int>& vec, int& comparisons, int& swaps )
 
     if (i == 31)
     {
+      swaps++;
       vec.insert(vec.end(), oneBucket.begin(), oneBucket.end());
+      swaps++;
       vec.insert(vec.end(), zeroBucket.begin(), zeroBucket.end());
     }
     else
     {
+      swaps++;
       vec.insert(vec.end(), zeroBucket.begin(), zeroBucket.end());
+      swaps++;
       vec.insert(vec.end(), oneBucket.begin(), oneBucket.end());
     }
   }
