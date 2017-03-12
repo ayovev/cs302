@@ -25,6 +25,7 @@ void bubbleSort( vector<int>& vec, int& comparisons, int& swaps );
 void quickSort( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
 int partition( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
 void radixSort( vector<int>& vec, int& swaps );
+// maybe implement run function to modularize main function?
 
 // MAIN PROGRAM
 int main()
@@ -265,3 +266,5 @@ void radixSort( vector<int>& vec, int& swaps )
     }
   }
 }
+
+// maybe implement run function to modularize main function?
