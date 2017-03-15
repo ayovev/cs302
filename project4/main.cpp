@@ -23,48 +23,54 @@ void loadVector( vector<int>& vec, int numValues );
 void bubbleSort( vector<int>& vec, int& comparisons, int& swaps );
 void quickSort( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
 int partition( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
-void radixSort( vector<int>& vec, int& swaps );
+void radixSort( vector<int>& vec );
 double run( string sort, vector<int>& vec, int numValues, int& comparisons, int& swaps );
 
 // MAIN PROGRAM
 int main()
 {
-   int numValues, comparisons, swaps;
+   int numValues, comparisons = 0, swaps = 0;
    vector<int> vec1, vec2, vec3;
    double averageTime = 0;
    int numRuns = 10;
 
    numValues = 1000;
 
+   cout << endl << "Running bubble sort " << numRuns << " times with " << numValues << " values..." << endl;
+
    for( int i = 0; i < numRuns; i++ )
    {
       averageTime += run( "Bubble Sort", vec1, numValues, comparisons, swaps );
    }
-   cout << "Average sorting time for bubble sort: " << ( averageTime / CLOCKS_PER_SEC ) / numRuns << " seconds" << endl;
-   cout << "Average number of comparisons for bubble sort: " << comparisons / numRuns << endl;
-   cout << "Average number of swaps for bubble sort: " << swaps / numRuns << endl;
-
-   system("pause");
+   cout << "Average sorting time of " << numRuns << " runs for bubble sort: " << ( averageTime / CLOCKS_PER_SEC ) / numRuns << " seconds" << endl;
+   cout << "Average number of comparisons of " << numRuns << " runs for bubble sort: " << comparisons / numRuns << endl;
+   cout << "Average number of swaps of " << numRuns << " runs for bubble sort: " << swaps / numRuns << endl << endl;
 
    averageTime = 0;
+   comparisons = 0, swaps = 0;
+
+   cout << endl << "Running quick sort " << numRuns << " times with " << numValues << " values..." << endl;
 
    for( int i = 0; i < numRuns; i++ )
    {
       averageTime += run( "Quick Sort", vec2, numValues, comparisons, swaps );
    }
-   cout << "Average sorting time for quick sort: " << ( averageTime / CLOCKS_PER_SEC ) / numRuns << " seconds" << endl;
-   cout << "Average number of comparisons for quick sort: " << comparisons / numRuns << endl;
-   cout << "Average number of swaps for quick sort: " << swaps / numRuns << endl;
+   cout << "Average sorting time of " << numRuns << " runs for quick sort: " << ( averageTime / CLOCKS_PER_SEC ) / numRuns << " seconds" << endl;
+   cout << "Average number of comparisons of " << numRuns << " runs for quick sort: " << comparisons / numRuns << endl;
+   cout << "Average number of swaps of " << numRuns << " runs for quick sort: " << swaps / numRuns << endl << endl;
 
    averageTime = 0;
+   comparisons = 0, swaps = 0;
+
+   cout << endl << "Running radix sort " << numRuns << " times with " << numValues << " values..." << endl;
 
    for( int i = 0; i < numRuns; i++ )
    {
       averageTime += run( "Radix Sort", vec3, numValues, comparisons, swaps );
    }
-   cout << "Average sorting time for radix sort: " << ( averageTime / CLOCKS_PER_SEC ) / numRuns << " seconds" << endl;
-   cout << "Average number of comparisons for radix sort: " << comparisons / numRuns << endl;
-   cout << "Average number of swaps for radix sort: " << swaps / numRuns << endl;
+   cout << "Average sorting time of " << numRuns << " runs for radix sort: " << ( averageTime / CLOCKS_PER_SEC ) / numRuns << " seconds" << endl;
+   cout << "Average number of comparisons of " << numRuns << " runs for radix sort: " << comparisons / numRuns << endl;
+   cout << "Average number of swaps of " << numRuns << " runs for radix sort: " << swaps / numRuns << endl << endl;
 
 // TEST OUTPUT TO VERIFY THAT VECTOR HAS BEEN SORTED - INSERT ANYWHERE TO VIEW
 // CONTENTS OF VECTOR
@@ -190,7 +196,7 @@ int partition( vector<int>& vec, int first, int last, int& comparisons, int& swa
     return y;
 }
 
-void radixSort( vector<int>& vec, int& swaps )
+void radixSort( vector<int>& vec )
 {
   for (int i = 0; i < 32; ++i)
   {
@@ -215,16 +221,12 @@ void radixSort( vector<int>& vec, int& swaps )
 
     if (i == 31)
     {
-      swaps++;
       vec.insert(vec.end(), oneBucket.begin(), oneBucket.end());
-      swaps++;
       vec.insert(vec.end(), zeroBucket.begin(), zeroBucket.end());
     }
     else
     {
-      swaps++;
       vec.insert(vec.end(), zeroBucket.begin(), zeroBucket.end());
-      swaps++;
       vec.insert(vec.end(), oneBucket.begin(), oneBucket.end());
     }
   }
@@ -263,7 +265,7 @@ double run( string sort, vector<int>& vec, int numValues, int& comparisons, int&
    else if( sort == "Radix Sort" )
    {
       t1 = clock();
-      radixSort( vec, swaps );
+      radixSort( vec );
       t2 = clock();
 
       t3 = t2 - t1;
