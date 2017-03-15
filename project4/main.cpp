@@ -20,28 +20,33 @@ int randomNumberGenerator();
 void delay();
 void generateFile( int numValues );
 void loadVector( vector<int>& vec, int numValues );
-void logStuff( ofstream& fout, string sort, const int comparisons, const int swaps );
+void logStuff( string sort, const int comparisons, const int swaps );
 void bubbleSort( vector<int>& vec, int& comparisons, int& swaps );
 void quickSort( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
 int partition( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
 void radixSort( vector<int>& vec, int& swaps );
-void run( string sort, ofstream& fout, vector<int>& vec, int numValues, int& comparisons, int& swaps );
+double run( string sort, vector<int>& vec, int numValues, int& comparisons, int& swaps );
 
 // MAIN PROGRAM
 int main()
 {
    int numValues, comparisons, swaps;
    vector<int> vec1, vec2, vec3;
-   ofstream fout;
-
-   fout.clear();
-   fout.open( "log.txt" );
+   double averageTime = 0;
 
    numValues = 1000;
 
-   run( "Bubble Sort", fout, vec1, numValues, comparisons, swaps );
-   run( "Quick Sort", fout, vec2, numValues, comparisons, swaps );
-   run( "Radix Sort", fout, vec3, numValues, comparisons, swaps );
+   for( int i = 0; i < 5; i++ )
+   {
+      averageTime += run( "Bubble Sort", vec1, numValues, comparisons, swaps );
+   }
+   cout << "Average sorting time: " << ( averageTime / CLOCKS_PER_SEC ) / 5 << endl;
+
+   system("pause");
+
+   run( "Bubble Sort", vec1, numValues, comparisons, swaps );
+   run( "Quick Sort", vec2, numValues, comparisons, swaps );
+   run( "Radix Sort", vec3, numValues, comparisons, swaps );
 
 // TEST OUTPUT TO VERIFY THAT VECTOR HAS BEEN SORTED - INSERT ANYWHERE TO VIEW
 // CONTENTS OF VECTOR
@@ -50,8 +55,6 @@ int main()
    // {
    //    cout << index + 1 << ". " << vec1[index] << endl;
    // }
-
-   fout.close();
 
    return EXIT_SUCCESS;
 }
@@ -83,7 +86,7 @@ void generateFile( int numValues )
    int counter;
    ofstream fout;
 
-   cout  << "Generating " << numValues << " Random Values..." << endl;
+   cout << "Generating " << numValues << " Random Values..." << endl;
 
    fout.clear();
    fout.open( "values.txt" );
@@ -114,9 +117,9 @@ void loadVector( vector<int>& vec, int numValues )
    fin.close();
 }
 
-void logStuff( ofstream& fout, const string sort, const int comparisons, const int swaps )
+void logStuff( const string sort, const int comparisons, const int swaps )
 {
-   fout << sort << " took "
+   cout << sort << " took "
         << comparisons << " comparisons and "
         << swaps << " swaps." << endl;
 }
@@ -218,9 +221,11 @@ void radixSort( vector<int>& vec, int& swaps )
   }
 }
 
-void run( string sort, ofstream& fout, vector<int>& vec, int numValues, int& comparisons, int& swaps )
+double run( string sort, vector<int>& vec, int numValues, int& comparisons, int& swaps )
 {
    clock_t t1, t2, t3;
+
+   vec.clear();
 
    vec.resize( numValues );
 
@@ -235,33 +240,34 @@ void run( string sort, ofstream& fout, vector<int>& vec, int numValues, int& com
       t1 = clock();
       bubbleSort( vec, comparisons, swaps );
       t2 = clock();
-      logStuff( fout, "Bubble Sort", comparisons, swaps );
+      logStuff( "Bubble Sort", comparisons, swaps );
 
       t3 = t2 - t1;
 
-      cout << "It took " << ( (double)t3 / CLOCKS_PER_SEC ) << " seconds to sort a vector with bubble sort." << endl;
+      cout << "It took " << ( (double)t3 / CLOCKS_PER_SEC ) << " seconds to sort a vector with bubble sort." << endl << endl;
    }
    else if( sort == "Quick Sort" )
    {
       t1 = clock();
       quickSort( vec, 0, vec.size(), comparisons, swaps );
       t2 = clock();
-      logStuff( fout, "Quick Sort", comparisons, swaps );
+      logStuff( "Quick Sort", comparisons, swaps );
 
       t3 = t2 - t1;
 
-      cout << "It took " << ( (double)t3 / CLOCKS_PER_SEC ) << " seconds to sort a vector with quick sort." << endl;
+      cout << "It took " << ( (double)t3 / CLOCKS_PER_SEC ) << " seconds to sort a vector with quick sort." << endl << endl;
    }
    else if( sort == "Radix Sort" )
    {
       t1 = clock();
       radixSort( vec, swaps );
       t2 = clock();
-      logStuff( fout, "Radix Sort", comparisons, swaps );
+      logStuff( "Radix Sort", comparisons, swaps );
 
       t3 = t2 - t1;
 
-      cout << "It took " << ( (double)t3 / CLOCKS_PER_SEC ) << " seconds to sort a vector with radix sort." << endl;
+      cout << "It took " << ( (double)t3 / CLOCKS_PER_SEC ) << " seconds to sort a vector with radix sort." << endl << endl;
    }
 
+   return (double)t3;
 }
