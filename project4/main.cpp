@@ -47,7 +47,7 @@ int main()
 
       if( numValues == 100000 )
       {
-         numRuns = 2;
+         numRuns = 3;
       }
 
       cout << endl << "Running bubble sort " << numRuns << " times with " << numValues << " values..." << endl;
