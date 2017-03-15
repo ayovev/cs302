@@ -25,7 +25,7 @@ void bubbleSort( vector<int>& vec, int& comparisons, int& swaps );
 void quickSort( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
 int partition( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
 void radixSort( vector<int>& vec, int& swaps );
-// maybe implement run function to modularize main function?
+void run( string sort, ofstream& fout, vector<int>& vec, int numValues, int& comparisons, int& swaps );
 
 // MAIN PROGRAM
 int main()
@@ -33,64 +33,15 @@ int main()
    int numValues, comparisons, swaps;
    vector<int> vec1, vec2, vec3;
    ofstream fout;
-   clock_t t1, t2, t3;
 
    fout.clear();
    fout.open( "log.txt" );
 
-   numValues = 10000;
+   numValues = 1000;
 
-   vec1.resize( numValues );
-   vec2.resize( numValues );
-   vec3.resize( numValues );
-
-   generateFile( numValues );
-
-   loadVector( vec1, numValues );
-   loadVector( vec2, numValues );
-   loadVector( vec3, numValues );
-
-   t1 = clock();
-
-   comparisons = 0, swaps = 0;
-   bubbleSort( vec1, comparisons, swaps );
-   logStuff( fout, "Bubble Sort", comparisons, swaps );
-
-   t2 = clock();
-
-   t3 = t2 - t1;
-
-   cout << "It took " << ( (double)t3 / CLOCKS_PER_SEC ) << " seconds to sort vector 1 with bubble sort." << endl;
-
-   system("pause");
-
-   t1 = clock();
-
-   comparisons = 0, swaps = 0;
-   quickSort( vec2, 0, vec2.size(), comparisons, swaps );
-   logStuff( fout, "Quick Sort", comparisons, swaps );
-
-   t2 = clock();
-
-   t3 = t2 - t1;
-
-   cout << "It took " << ( (double)t3 / CLOCKS_PER_SEC ) << " seconds to sort vector 2 with quick sort." << endl;
-
-   system("pause");
-
-   t1 = clock();
-
-   comparisons = 0, swaps = 0;
-   radixSort( vec3, swaps );
-   logStuff( fout, "Radix Sort", comparisons, swaps );
-
-   t2 = clock();
-
-   t3 = t2 - t1;
-
-   cout << "It took " << ( (double)t3 / CLOCKS_PER_SEC ) << " seconds to sort vector 3 with radix sort." << endl;
-
-   system("pause");
+   run( "Bubble Sort", fout, vec1, numValues, comparisons, swaps );
+   run( "Quick Sort", fout, vec2, numValues, comparisons, swaps );
+   run( "Radix Sort", fout, vec3, numValues, comparisons, swaps );
 
 // TEST OUTPUT TO VERIFY THAT VECTOR HAS BEEN SORTED - INSERT ANYWHERE TO VIEW
 // CONTENTS OF VECTOR
@@ -120,9 +71,9 @@ int randomNumberGenerator()
 
 void delay()
 {
-   for( int i = 0; i < 1500; i++ )
+   for( int i = 0; i < 1000; i++ )
    {
-      for( int j = 0; j < 1500; j++ )
+      for( int j = 0; j < 1000; j++ )
       {}
    }
 }
@@ -267,4 +218,50 @@ void radixSort( vector<int>& vec, int& swaps )
   }
 }
 
-// maybe implement run function to modularize main function?
+void run( string sort, ofstream& fout, vector<int>& vec, int numValues, int& comparisons, int& swaps )
+{
+   clock_t t1, t2, t3;
+
+   vec.resize( numValues );
+
+   generateFile( numValues );
+
+   loadVector( vec, numValues );
+
+   comparisons = 0, swaps = 0;
+
+   if( sort == "Bubble Sort" )
+   {
+      t1 = clock();
+      bubbleSort( vec, comparisons, swaps );
+      t2 = clock();
+      logStuff( fout, "Bubble Sort", comparisons, swaps );
+
+      t3 = t2 - t1;
+
+      cout << "It took " << ( (double)t3 / CLOCKS_PER_SEC ) << " seconds to sort a vector with bubble sort." << endl;
+   }
+   else if( sort == "Quick Sort" )
+   {
+      t1 = clock();
+      quickSort( vec, 0, vec.size(), comparisons, swaps );
+      t2 = clock();
+      logStuff( fout, "Quick Sort", comparisons, swaps );
+
+      t3 = t2 - t1;
+
+      cout << "It took " << ( (double)t3 / CLOCKS_PER_SEC ) << " seconds to sort a vector with quick sort." << endl;
+   }
+   else if( sort == "Radix Sort" )
+   {
+      t1 = clock();
+      radixSort( vec, swaps );
+      t2 = clock();
+      logStuff( fout, "Radix Sort", comparisons, swaps );
+
+      t3 = t2 - t1;
+
+      cout << "It took " << ( (double)t3 / CLOCKS_PER_SEC ) << " seconds to sort a vector with radix sort." << endl;
+   }
+
+}
