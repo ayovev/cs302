@@ -20,7 +20,6 @@ int randomNumberGenerator();
 void delay();
 void generateFile( int numValues );
 void loadVector( vector<int>& vec, int numValues );
-void logStuff( string sort, const int comparisons, const int swaps );
 void bubbleSort( vector<int>& vec, int& comparisons, int& swaps );
 void quickSort( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
 int partition( vector<int>& vec, int first, int last, int& comparisons, int& swaps );
@@ -33,20 +32,39 @@ int main()
    int numValues, comparisons, swaps;
    vector<int> vec1, vec2, vec3;
    double averageTime = 0;
+   int numRuns = 10;
 
    numValues = 1000;
 
-   for( int i = 0; i < 5; i++ )
+   for( int i = 0; i < numRuns; i++ )
    {
       averageTime += run( "Bubble Sort", vec1, numValues, comparisons, swaps );
    }
-   cout << "Average sorting time: " << ( averageTime / CLOCKS_PER_SEC ) / 5 << endl;
+   cout << "Average sorting time for bubble sort: " << ( averageTime / CLOCKS_PER_SEC ) / numRuns << " seconds" << endl;
+   cout << "Average number of comparisons for bubble sort: " << comparisons / numRuns << endl;
+   cout << "Average number of swaps for bubble sort: " << swaps / numRuns << endl;
 
    system("pause");
 
-   run( "Bubble Sort", vec1, numValues, comparisons, swaps );
-   run( "Quick Sort", vec2, numValues, comparisons, swaps );
-   run( "Radix Sort", vec3, numValues, comparisons, swaps );
+   averageTime = 0;
+
+   for( int i = 0; i < numRuns; i++ )
+   {
+      averageTime += run( "Quick Sort", vec2, numValues, comparisons, swaps );
+   }
+   cout << "Average sorting time for quick sort: " << ( averageTime / CLOCKS_PER_SEC ) / numRuns << " seconds" << endl;
+   cout << "Average number of comparisons for quick sort: " << comparisons / numRuns << endl;
+   cout << "Average number of swaps for quick sort: " << swaps / numRuns << endl;
+
+   averageTime = 0;
+
+   for( int i = 0; i < numRuns; i++ )
+   {
+      averageTime += run( "Radix Sort", vec3, numValues, comparisons, swaps );
+   }
+   cout << "Average sorting time for radix sort: " << ( averageTime / CLOCKS_PER_SEC ) / numRuns << " seconds" << endl;
+   cout << "Average number of comparisons for radix sort: " << comparisons / numRuns << endl;
+   cout << "Average number of swaps for radix sort: " << swaps / numRuns << endl;
 
 // TEST OUTPUT TO VERIFY THAT VECTOR HAS BEEN SORTED - INSERT ANYWHERE TO VIEW
 // CONTENTS OF VECTOR
@@ -86,8 +104,6 @@ void generateFile( int numValues )
    int counter;
    ofstream fout;
 
-   cout << "Generating " << numValues << " Random Values..." << endl;
-
    fout.clear();
    fout.open( "values.txt" );
 
@@ -115,13 +131,6 @@ void loadVector( vector<int>& vec, int numValues )
    }
 
    fin.close();
-}
-
-void logStuff( const string sort, const int comparisons, const int swaps )
-{
-   cout << sort << " took "
-        << comparisons << " comparisons and "
-        << swaps << " swaps." << endl;
 }
 
 void bubbleSort( vector<int>& vec, int& comparisons, int& swaps )
@@ -240,33 +249,24 @@ double run( string sort, vector<int>& vec, int numValues, int& comparisons, int&
       t1 = clock();
       bubbleSort( vec, comparisons, swaps );
       t2 = clock();
-      logStuff( "Bubble Sort", comparisons, swaps );
 
       t3 = t2 - t1;
-
-      cout << "It took " << ( (double)t3 / CLOCKS_PER_SEC ) << " seconds to sort a vector with bubble sort." << endl << endl;
    }
    else if( sort == "Quick Sort" )
    {
       t1 = clock();
       quickSort( vec, 0, vec.size(), comparisons, swaps );
       t2 = clock();
-      logStuff( "Quick Sort", comparisons, swaps );
 
       t3 = t2 - t1;
-
-      cout << "It took " << ( (double)t3 / CLOCKS_PER_SEC ) << " seconds to sort a vector with quick sort." << endl << endl;
    }
    else if( sort == "Radix Sort" )
    {
       t1 = clock();
       radixSort( vec, swaps );
       t2 = clock();
-      logStuff( "Radix Sort", comparisons, swaps );
 
       t3 = t2 - t1;
-
-      cout << "It took " << ( (double)t3 / CLOCKS_PER_SEC ) << " seconds to sort a vector with radix sort." << endl << endl;
    }
 
    return (double)t3;
