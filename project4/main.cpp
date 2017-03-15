@@ -60,8 +60,7 @@ int main()
       cout << "Average number of comparisons of " << numRuns << " runs for bubble sort: " << comparisons / numRuns << endl;
       cout << "Average number of swaps of " << numRuns << " runs for bubble sort: " << swaps / numRuns << endl << endl;
 
-      averageTime = 0;
-      comparisons = 0, swaps = 0;
+      averageTime = 0, comparisons = 0, swaps = 0;
 
       numRuns = 10;
 
@@ -75,8 +74,7 @@ int main()
       cout << "Average number of comparisons of " << numRuns << " runs for quick sort: " << comparisons / numRuns << endl;
       cout << "Average number of swaps of " << numRuns << " runs for quick sort: " << swaps / numRuns << endl << endl;
 
-      averageTime = 0;
-      comparisons = 0, swaps = 0;
+      averageTime = 0, comparisons = 0, swaps = 0;
 
       cout << endl << "Running radix sort " << numRuns << " times with " << numValues << " values..." << endl;
 
