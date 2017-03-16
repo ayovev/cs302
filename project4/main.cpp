@@ -39,6 +39,7 @@ int main()
    vector<int> vec1, vec2, vec3;
    double averageTime = 0;
    int numRuns = 10;
+   clock_t t1, t2, t3;
 
    // run loop 3 times, once for 1 000, once for 10 000, once for 100 000
    for( int i = 1, count = 0; count < 3; i *= 10, count++ )
@@ -53,7 +54,7 @@ int main()
       if( numValues == 100000 )
       {
          // set the number of runs equal to 3 for bubble sort to save time
-         numRuns = 3;
+         numRuns = 2;
       }
 
       // active output to inform user of what is going on
@@ -104,6 +105,42 @@ int main()
       cout << "Average number of comparisons of " << numRuns << " runs for radix sort: " << comparisons / numRuns << endl;
       cout << "Average number of swaps of " << numRuns << " runs for radix sort: " << swaps / numRuns << endl << endl;
    }
+
+   run( "Bubble Sort", vec1, 10000, comparisons, swaps );
+
+   // reset comparisons, swaps, and averageTime to 0
+   averageTime = 0, comparisons = 0, swaps = 0;
+   t1 = clock();
+   bubbleSort( vec1, comparisons, swaps );
+   t2 = clock();
+
+   t3 = t2 - t1;
+
+   cout << "Bubble sort realized the vector was already sorted in " << ( (double)t3 / CLOCKS_PER_SEC ) << " seconds" << endl;
+
+   run( "Quick Sort", vec2, 10000, comparisons, swaps );
+
+   // reset comparisons, swaps, and averageTime to 0
+   averageTime = 0, comparisons = 0, swaps = 0;
+   t1 = clock();
+   quickSort( vec2, 0, vec2.size(), comparisons, swaps );
+   t2 = clock();
+
+   t3 = t2 - t1;
+
+   cout << "Quick sort realized the vector was already sorted in " << ( (double)t3 / CLOCKS_PER_SEC ) << " seconds" << endl;
+
+   run( "Radix Sort", vec3, 10000, comparisons, swaps );
+
+   // reset comparisons, swaps, and averageTime to 0
+   averageTime = 0, comparisons = 0, swaps = 0;
+   t1 = clock();
+   radixSort( vec3 );
+   t2 = clock();
+
+   t3 = t2 - t1;
+
+   cout << "Radix sort realized the vector was already sorted in " << ( (double)t3 / CLOCKS_PER_SEC ) << " seconds" << endl << endl;
 
 // TEST OUTPUT TO VERIFY THAT VECTOR HAS BEEN SORTED - INSERT ANYWHERE TO VIEW
 // CONTENTS OF ANY VECTOR
