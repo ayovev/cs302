@@ -54,7 +54,7 @@ int main()
       if( numValues == 100000 )
       {
          // set the number of runs equal to 3 for bubble sort to save time
-         numRuns = 2;
+         numRuns = 3;
       }
 
       // active output to inform user of what is going on
