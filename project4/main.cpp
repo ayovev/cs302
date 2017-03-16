@@ -43,47 +43,63 @@ int main()
    // run loop 3 times, once for 1 000, once for 10 000, once for 100 000
    for( int i = 1, count = 0; count < 3; i *= 10, count++ )
    {
+      // set numValues in the beginning of every loop
       numValues = i * 1000;
 
+      // generate a file with the previously specified number of values
       generateFile( numValues );
 
+      // if the number of values is 100 000
       if( numValues == 100000 )
       {
+         // set the number of runs equal to 3 for bubble sort to save time
          numRuns = 3;
       }
 
+      // active output to inform user of what is going on
       cout << endl << "Running bubble sort " << numRuns << " times with " << numValues << " values..." << endl;
 
       for( int i = 0; i < numRuns; i++ )
       {
+         // run specified sort n times
          averageTime += run( "Bubble Sort", vec1, numValues, comparisons, swaps );
       }
+      // display average results to user
       cout << "Average sorting time of " << numRuns << " runs for bubble sort: " << ( averageTime / CLOCKS_PER_SEC ) / numRuns << " seconds" << endl;
       cout << "Average number of comparisons of " << numRuns << " runs for bubble sort: " << comparisons / numRuns << endl;
       cout << "Average number of swaps of " << numRuns << " runs for bubble sort: " << swaps / numRuns << endl << endl;
 
+      // reset comparisons, swaps, and averageTime to 0
       averageTime = 0, comparisons = 0, swaps = 0;
 
+      // set numRuns to 10
       numRuns = 10;
 
+      // active output to inform user of what is going on
       cout << endl << "Running quick sort " << numRuns << " times with " << numValues << " values..." << endl;
 
       for( int i = 0; i < numRuns; i++ )
       {
+         // run specified sort n times
          averageTime += run( "Quick Sort", vec2, numValues, comparisons, swaps );
       }
+      // display average results to user
       cout << "Average sorting time of " << numRuns << " runs for quick sort: " << ( averageTime / CLOCKS_PER_SEC ) / numRuns << " seconds" << endl;
       cout << "Average number of comparisons of " << numRuns << " runs for quick sort: " << comparisons / numRuns << endl;
       cout << "Average number of swaps of " << numRuns << " runs for quick sort: " << swaps / numRuns << endl << endl;
 
+      // reset comparisons, swaps, and averageTime to 0
       averageTime = 0, comparisons = 0, swaps = 0;
 
+      // active output to inform user of what is going on
       cout << endl << "Running radix sort " << numRuns << " times with " << numValues << " values..." << endl;
 
       for( int i = 0; i < numRuns; i++ )
       {
+         // run specified sort n times
          averageTime += run( "Radix Sort", vec3, numValues, comparisons, swaps );
       }
+      // display average results to user
       cout << "Average sorting time of " << numRuns << " runs for radix sort: " << ( averageTime / CLOCKS_PER_SEC ) / numRuns << " seconds" << endl;
       cout << "Average number of comparisons of " << numRuns << " runs for radix sort: " << comparisons / numRuns << endl;
       cout << "Average number of swaps of " << numRuns << " runs for radix sort: " << swaps / numRuns << endl << endl;
@@ -97,6 +113,7 @@ int main()
    //    cout << index + 1 << ". " << vec1[index] << endl;
    // }
 
+   // exit program successfully
    return EXIT_SUCCESS;
 }
 
