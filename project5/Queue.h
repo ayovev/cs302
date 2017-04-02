@@ -3,10 +3,7 @@
 
 #include <iostream>
 
-// EITHER
-// using namespace std;
-// OR
-using std::ostream;
+using namespace std;
 
 class Queue;
 
@@ -15,6 +12,7 @@ struct Node
    Node( int item, Node* next );
    int data;
    Node* link;
+
    friend ostream& operator <<( ostream& out, const Queue& object ); // NOT SURE IF THIS IS NEEDED
 };
 
