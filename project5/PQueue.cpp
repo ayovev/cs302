@@ -4,13 +4,6 @@
 
 using namespace std;
 
-// PNode::PNode( int item, int prio )
-// {
-//    data = item;
-//    priority = prio;
-//    link = NULL;
-// }
-
 PNode::PNode( int item, int prio, PNode* next )
 {
    data = item;
@@ -42,7 +35,7 @@ bool PriorityQueue::push( int item, int priority )
 {
    PNode* temp1 = new PNode( item, priority, NULL );
 
-   if( front == NULL || temp1->priority < front->priority )
+   if( front == NULL || temp1->priority > front->priority )
    {
       temp1->link = front;
       front = temp1;
@@ -53,7 +46,7 @@ bool PriorityQueue::push( int item, int priority )
    {
       PNode* temp2 = front;
 
-      while( temp2->link != NULL && temp2->link->priority <= temp1->priority )
+      while( temp2->link != NULL && temp2->link->priority >= temp1->priority )
       {
          temp2 = temp2->link;
       }
@@ -104,4 +97,16 @@ bool PriorityQueue::isEmpty()
    {
       return false;
    }
+}
+
+ostream& operator <<( ostream& out, const PriorityQueue& object )
+{
+   PNode* temp = object.front;
+
+   while( temp != NULL )
+   {
+      out << temp->data << ' ';
+      temp = temp->link;
+   }
+   return out;
 }
