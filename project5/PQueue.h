@@ -3,6 +3,7 @@
 
 struct PNode
 {
+   PNode( int item, int prio );
    PNode( int item, int prio, PNode* next );
    int priority;
    int data;

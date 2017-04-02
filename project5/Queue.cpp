@@ -44,7 +44,7 @@ bool Queue::push( int item )
       rear = rear->link;
       return true;
    }
-   return false; // NOT SURE IF THIS IS NEEDED...?
+   return false;
 }
 
 bool Queue::pop()
@@ -68,6 +68,7 @@ bool Queue::pop()
       }
       return true;
    }
+   return false;
 }
 
 int Queue::getFront()
