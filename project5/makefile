@@ -4,6 +4,7 @@ O_FILES = main.o
 
 all: $(O_FILES)
 	$(CC) $(CXXFLAGS) $(O_FILES)
+	del *.o
 
 main.o: main.cpp
 	$(CC) $(CXXFLAGS) -c main.cpp -o main.o
