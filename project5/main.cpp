@@ -16,44 +16,50 @@ int oneQueueOneTeller();
 
 int main()
 {
+   int test1;
+
    srand( time( NULL ) );
 
-   oneQueueOneTeller();
+   test1 = oneQueueOneTeller();
+
+   cout << test1 << endl << endl;
+
+   system( "pause" );
 
 // INCLUDED FOR TESTING PURPOSES - START
-   Queue line;
-
-   line.push( 1 );
-   cout << line.getFront() << endl;
-   line.push( 2 );
-   cout << line.getFront() << endl;
-   line.push( 3 );
-   cout << line.getFront() << endl;
-   line.push( 4 );
-   cout << line.getFront() << endl;
-
-   cout << line << endl << endl;
-
-   PriorityQueue linee;
-
-   linee.push( 1, 10 );
-   cout << linee.getFront() << endl;
-   linee.push( 2, 3 );
-   cout << linee.getFront() << endl;
-   linee.push( 3, 5 );
-   cout << linee.getFront() << endl;
-   linee.push( 4, 20 );
-   cout << linee.getFront() << endl;
-   linee.push( 5, 10 );
-   cout << linee.getFront() << endl;
-   linee.push( 6, 1 );
-   cout << linee.getFront() << endl;
-   linee.push( 7, 2 );
-   cout << linee.getFront() << endl;
-   linee.push( 8, 99 );
-   cout << linee.getFront() << endl;
-
-   cout << linee << endl << endl;
+   // Queue line;
+   //
+   // line.push( 1 );
+   // cout << line.getFront() << endl;
+   // line.push( 2 );
+   // cout << line.getFront() << endl;
+   // line.push( 3 );
+   // cout << line.getFront() << endl;
+   // line.push( 4 );
+   // cout << line.getFront() << endl;
+   //
+   // cout << line << endl << endl;
+   //
+   // PriorityQueue linee;
+   //
+   // linee.push( 1, 10 );
+   // cout << linee.getFront() << endl;
+   // linee.push( 2, 3 );
+   // cout << linee.getFront() << endl;
+   // linee.push( 3, 5 );
+   // cout << linee.getFront() << endl;
+   // linee.push( 4, 20 );
+   // cout << linee.getFront() << endl;
+   // linee.push( 5, 10 );
+   // cout << linee.getFront() << endl;
+   // linee.push( 6, 1 );
+   // cout << linee.getFront() << endl;
+   // linee.push( 7, 2 );
+   // cout << linee.getFront() << endl;
+   // linee.push( 8, 99 );
+   // cout << linee.getFront() << endl;
+   //
+   // cout << linee << endl << endl;
 // INCLUDED FOR TESTING PURPOSES - END
 
    generateInputFile();
@@ -110,14 +116,23 @@ int oneQueueOneTeller()
 {
    Queue customers;
    PriorityQueue events;
-   int eventsRemaining = NUM_EVENTS;
+
+   int arrivalTime, transactionTime/*, eventsRemaining = NUM_EVENTS*/;
+   /*bool tellerAvailable = true;*/
+
+   ifstream fin;
+
+   fin.clear();
+   fin.open( "input.txt" );
 
    // event-driven, not time-driven
-   while( eventsRemaining != 0 )
+   while( fin.eof() == false )
    {
-      // do stuff
-      eventsRemaining--;
+      fin >> arrivalTime >> transactionTime;
+
    }
+
+   cout << events;
 
    return EXIT_SUCCESS;
 }
