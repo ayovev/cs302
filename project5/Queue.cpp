@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Node::Node( int item, Node* next )
+Node::Node( const int item, Node* next )
 {
    data = item;
    link = next;
@@ -30,7 +30,7 @@ Queue::~Queue()
    }
 }
 
-bool Queue::push( int item )
+bool Queue::push( const int item )
 {
    if( rear == NULL )
    {

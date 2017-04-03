@@ -4,7 +4,7 @@
 
 using namespace std;
 
-PNode::PNode( int item, int prio, PNode* next )
+PNode::PNode( const int item, const int prio, PNode* next )
 {
    data = item;
    priority = prio;
@@ -31,7 +31,7 @@ PriorityQueue::~PriorityQueue()
    }
 }
 
-bool PriorityQueue::push( int item, int priority )
+bool PriorityQueue::push( const int item, const int priority )
 {
    PNode* temp1 = new PNode( item, priority, NULL );
 

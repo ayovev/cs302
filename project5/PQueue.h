@@ -9,7 +9,7 @@ class PriorityQueue;
 
 struct PNode
 {
-   PNode( int item, int prio, PNode* next );
+   PNode( const int item, const int prio, PNode* next );
    int priority;
    int data;
    PNode* link;
@@ -22,7 +22,7 @@ class PriorityQueue
    public:
       PriorityQueue();
       ~PriorityQueue();
-      bool push( int item, int priority );
+      bool push( const int item, const int priority );
       bool pop();
       int getFront();
       bool isEmpty();

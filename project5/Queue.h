@@ -9,7 +9,7 @@ class Queue;
 
 struct Node
 {
-   Node( int item, Node* next );
+   Node( const int item, Node* next );
    int data;
    Node* link;
 
@@ -21,7 +21,7 @@ class Queue
    public:
       Queue();
       ~Queue();
-      bool push( int item );
+      bool push( int const item );
       bool pop();
       int getFront();
       bool isEmpty();

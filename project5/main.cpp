@@ -51,7 +51,6 @@ int main()
    cout << linee.getFront() << endl;
 
    cout << linee << endl << endl;
-
 // INCLUDED FOR TESTING PURPOSES - END
 
    generateInputFile();
