@@ -12,10 +12,13 @@ using namespace std;
 const int NUM_EVENTS = 100;
 
 void generateInputFile();
+int oneQueueOneTeller();
 
 int main()
 {
    srand( time( NULL ) );
+
+   oneQueueOneTeller();
 
 // INCLUDED FOR TESTING PURPOSES - START
    Queue line;
@@ -101,4 +104,20 @@ void generateInputFile()
 
    // close file stream
    fout.close();
+}
+
+int oneQueueOneTeller()
+{
+   Queue customers;
+   PriorityQueue events;
+   int eventsRemaining = NUM_EVENTS;
+
+   // event-driven, not time-driven
+   while( eventsRemaining != 0 )
+   {
+      // do stuff
+      eventsRemaining--;
+   }
+
+   return EXIT_SUCCESS;
 }
