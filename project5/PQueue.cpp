@@ -4,10 +4,11 @@
 
 using namespace std;
 
-PNode::PNode( const int item, const int prio, PNode* next )
+PNode::PNode( const int item, const int prio, const char eventType, PNode* next )
 {
    data = item;
    priority = prio;
+   type = eventType;
    link = next;
 }
 
@@ -31,9 +32,9 @@ PriorityQueue::~PriorityQueue()
    }
 }
 
-bool PriorityQueue::push( const int item, const int priority )
+bool PriorityQueue::push( const int item, const int priority, const char type )
 {
-   PNode* temp1 = new PNode( item, priority, NULL );
+   PNode* temp1 = new PNode( item, priority, type, NULL );
 
    if( front == NULL || temp1->priority > front->priority )
    {
