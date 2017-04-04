@@ -83,7 +83,12 @@ bool PriorityQueue::pop()
    return false;
 }
 
-int PriorityQueue::getFront()
+int PriorityQueue::getFrontArrivalTime()
+{
+   return front->arrivalTime;
+}
+
+int PriorityQueue::getFrontTransactionTime()
 {
    return front->transactionTime;
 }
