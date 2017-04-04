@@ -4,9 +4,10 @@
 
 using namespace std;
 
-Node::Node( const int item, Node* next )
+Customer::Customer( const int aTime, const int dTime, Customer* next )
 {
-   data = item;
+   arrivalTime = aTime;
+   departureTime = dTime;
    link = next;
 }
 
@@ -30,17 +31,17 @@ Queue::~Queue()
    }
 }
 
-bool Queue::push( const int item )
+bool Queue::push( const int aTime, const int dTime )
 {
    if( rear == NULL )
    {
-      rear = new Node( item, NULL );
+      rear = new Customer( aTime, dTime, NULL );
       front = rear;
       return true;
    }
    else
    {
-      rear->link = new Node( item, NULL );
+      rear->link = new Customer( aTime, dTime, NULL );
       rear = rear->link;
       return true;
    }
@@ -55,7 +56,7 @@ bool Queue::pop()
    }
    else
    {
-      Node* temp = front;
+      Customer* temp = front;
       front = front->link;
 
       temp->link = NULL;
@@ -71,9 +72,14 @@ bool Queue::pop()
    return false;
 }
 
-int Queue::getFront()
+int Queue::getFrontArrivalTime()
 {
-   return front->data;
+   return front->arrivalTime;
+}
+
+int Queue::getFrontDepartureTime()
+{
+   return front->departureTime;
 }
 
 bool Queue::isEmpty()
@@ -90,11 +96,11 @@ bool Queue::isEmpty()
 
 ostream& operator <<( ostream& out, const Queue& object )
 {
-   Node* temp = object.front;
+   Customer* temp = object.front;
 
    while( temp != NULL )
    {
-      out << temp->data << ' ';
+      out << temp->arrivalTime << ' ';
       temp = temp->link;
    }
    return out;

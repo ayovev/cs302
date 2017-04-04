@@ -7,11 +7,12 @@ using namespace std;
 
 class Queue;
 
-struct Node
+struct Customer
 {
-   Node( const int item, Node* next );
-   int data;
-   Node* link;
+   Customer( const int aTime, const int dTime, Customer* next );
+   int arrivalTime;
+   int departureTime;
+   Customer* link;
 
    friend ostream& operator <<( ostream& out, const Queue& object ); // NOT SURE IF THIS IS NEEDED
 };
@@ -21,16 +22,17 @@ class Queue
    public:
       Queue();
       ~Queue();
-      bool push( int const item );
+      bool push( int const aTime, const int dTime );
       bool pop();
-      int getFront();
+      int getFrontArrivalTime();
+      int getFrontDepartureTime();
       bool isEmpty();
 
       friend ostream& operator <<( ostream& out, const Queue& object );
 
    private:
-      Node* front;
-      Node* rear;
+      Customer* front;
+      Customer* rear;
 };
 
 #endif // QUEUE_H
