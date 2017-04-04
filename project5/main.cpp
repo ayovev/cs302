@@ -62,8 +62,6 @@ int main()
    // cout << linee << endl << endl;
 // INCLUDED FOR TESTING PURPOSES - END
 
-   generateInputFile();
-
    return EXIT_SUCCESS;
 }
 
@@ -117,10 +115,11 @@ int oneQueueOneTeller()
    Queue customers;
    PriorityQueue events;
 
-   int arrivalTime, transactionTime/*, eventsRemaining = NUM_EVENTS*/;
-   /*bool tellerAvailable = true;*/
+   int arrivalTime, transactionTime;
 
    ifstream fin;
+
+   generateInputFile();
 
    fin.clear();
    fin.open( "input.txt" );
@@ -130,9 +129,19 @@ int oneQueueOneTeller()
    {
       fin >> arrivalTime >> transactionTime;
 
+      events.push( arrivalTime, transactionTime, 'A' );
    }
 
-   cout << events;
+   // while( events.isEmpty() == false )
+   // {
+   //    // do stuff
+   // }
+
+// INCLUDED FOR TESTING PURPOSES - START
+   cout << events << endl;
+   //
+   // cout << events.getFrontType() << ' ' << events.getFront() << endl;
+// INCLUDED FOR TESTING PURPOSES - END
 
    return EXIT_SUCCESS;
 }

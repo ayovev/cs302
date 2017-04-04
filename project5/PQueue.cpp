@@ -4,11 +4,11 @@
 
 using namespace std;
 
-PNode::PNode( const int item, const int prio, const char eventType, PNode* next )
+PNode::PNode( const int prio, const int item, const char type, PNode* next )
 {
-   data = item;
-   priority = prio;
-   type = eventType;
+   arrivalTime = prio;
+   transactionTime = item;
+   eventType = type;
    link = next;
 }
 
@@ -32,11 +32,11 @@ PriorityQueue::~PriorityQueue()
    }
 }
 
-bool PriorityQueue::push( const int item, const int priority, const char type )
+bool PriorityQueue::push( const int priority, const int item, const char type )
 {
-   PNode* temp1 = new PNode( item, priority, type, NULL );
+   PNode* temp1 = new PNode( priority, item, type, NULL );
 
-   if( front == NULL || temp1->priority < front->priority )
+   if( front == NULL || temp1->arrivalTime < front->arrivalTime )
    {
       temp1->link = front;
       front = temp1;
@@ -47,7 +47,7 @@ bool PriorityQueue::push( const int item, const int priority, const char type )
    {
       PNode* temp2 = front;
 
-      while( temp2->link != NULL && temp2->link->priority <= temp1->priority )
+      while( temp2->link != NULL && temp2->link->arrivalTime <= temp1->arrivalTime )
       {
          temp2 = temp2->link;
       }
@@ -85,7 +85,12 @@ bool PriorityQueue::pop()
 
 int PriorityQueue::getFront()
 {
-   return front->data;
+   return front->transactionTime;
+}
+
+char PriorityQueue::getFrontType()
+{
+   return front->eventType;
 }
 
 bool PriorityQueue::isEmpty()
@@ -106,7 +111,7 @@ ostream& operator <<( ostream& out, const PriorityQueue& object )
 
    while( temp != NULL )
    {
-      out << temp->data << ' ';
+      out << temp->eventType << ' ' << temp->arrivalTime << ' ' << temp->transactionTime << endl;
       temp = temp->link;
    }
    return out;
