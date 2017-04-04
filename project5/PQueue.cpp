@@ -35,7 +35,7 @@ bool PriorityQueue::push( const int item, const int priority )
 {
    PNode* temp1 = new PNode( item, priority, NULL );
 
-   if( front == NULL || temp1->priority > front->priority )
+   if( front == NULL || temp1->priority < front->priority )
    {
       temp1->link = front;
       front = temp1;
@@ -46,7 +46,7 @@ bool PriorityQueue::push( const int item, const int priority )
    {
       PNode* temp2 = front;
 
-      while( temp2->link != NULL && temp2->link->priority >= temp1->priority )
+      while( temp2->link != NULL && temp2->link->priority <= temp1->priority )
       {
          temp2 = temp2->link;
       }
