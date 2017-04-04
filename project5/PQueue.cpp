@@ -4,7 +4,7 @@
 
 using namespace std;
 
-PNode::PNode( const int prio, const int item, const char type, PNode* next )
+Event::Event( const int prio, const int item, const char type, Event* next )
 {
    arrivalTime = prio;
    transactionTime = item;
@@ -34,7 +34,7 @@ PriorityQueue::~PriorityQueue()
 
 bool PriorityQueue::push( const int priority, const int item, const char type )
 {
-   PNode* temp1 = new PNode( priority, item, type, NULL );
+   Event* temp1 = new Event( priority, item, type, NULL );
 
    if( front == NULL || temp1->arrivalTime < front->arrivalTime )
    {
@@ -45,7 +45,7 @@ bool PriorityQueue::push( const int priority, const int item, const char type )
    }
    else
    {
-      PNode* temp2 = front;
+      Event* temp2 = front;
 
       while( temp2->link != NULL && temp2->link->arrivalTime <= temp1->arrivalTime )
       {
@@ -67,7 +67,7 @@ bool PriorityQueue::pop()
    }
    else
    {
-      PNode* temp = front;
+      Event* temp = front;
       front = front->link;
 
       temp->link = NULL;
@@ -112,7 +112,7 @@ bool PriorityQueue::isEmpty()
 
 ostream& operator <<( ostream& out, const PriorityQueue& object )
 {
-   PNode* temp = object.front;
+   Event* temp = object.front;
 
    while( temp != NULL )
    {

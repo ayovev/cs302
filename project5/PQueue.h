@@ -7,13 +7,13 @@ using namespace std;
 
 class PriorityQueue;
 
-struct PNode
+struct Event
 {
-   PNode( const int prio, const int item, const char eventType, PNode* next );
+   Event( const int prio, const int item, const char eventType, Event* next );
    int arrivalTime;
    int transactionTime;
    char eventType;
-   PNode* link;
+   Event* link;
 
    friend ostream& operator <<( ostream& out, const PriorityQueue& object ); // NOT SURE IF THIS IS NEEDED
 };
@@ -33,8 +33,8 @@ class PriorityQueue
       friend ostream& operator <<( ostream& out, const PriorityQueue& object );
 
    private:
-      PNode* front;
-      PNode* rear;
+      Event* front;
+      Event* rear;
 };
 
 #endif // PRIORITY_QUEUE_H
