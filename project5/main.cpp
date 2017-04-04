@@ -11,55 +11,77 @@ using namespace std;
 
 const int NUM_EVENTS = 100;
 
-void generateInputFile();
 int oneQueueOneTeller();
+void generateInputFile();
+void processArrival( PriorityQueue events, Queue customers );
+void processDeparture(...);
 
 int main()
 {
-   int test1;
+   int test1 = 1;
 
    srand( time( NULL ) );
 
    test1 = oneQueueOneTeller();
 
-   cout << test1 << endl << endl;
+   if( test1 == 0 )
+   {
+      cout << "TEST 1 PASSED" << endl;
+   }
+   else
+   {
+      cout << "TEST 1 FAILED" << endl;
+   }
 
-   system( "pause" );
+   return EXIT_SUCCESS;
+}
+
+int oneQueueOneTeller()
+{
+   Queue customers;
+   PriorityQueue events;
+
+   int currentTime, arrivalTime, transactionTime, newEventATime, newEventTTime;
+
+   ifstream fin;
+
+   generateInputFile();
+
+   fin.clear();
+   fin.open( "input.txt" );
+
+   // event-driven, not time-driven
+   while( fin.eof() == false )
+   {
+      fin >> arrivalTime >> transactionTime;
+
+      events.push( arrivalTime, transactionTime, 'A' );
+   }
+
+   while( events.isEmpty() == false )
+   {
+         newEventATime = events.getFrontArrivalTime();
+         newEventTTime = events.getFrontTransactionTime();
+
+         currentTime = newEventATime;
+
+         cout << currentTime << endl;
+
+         if( events.getFrontType() == 'A' )
+         {
+            // processArrival(...)
+         }
+         else
+         {
+            // processDeparture(...)
+         }
+         events.pop();
+   }
 
 // INCLUDED FOR TESTING PURPOSES - START
-   // Queue line;
+   // cout << events << endl;
    //
-   // line.push( 1 );
-   // cout << line.getFront() << endl;
-   // line.push( 2 );
-   // cout << line.getFront() << endl;
-   // line.push( 3 );
-   // cout << line.getFront() << endl;
-   // line.push( 4 );
-   // cout << line.getFront() << endl;
-   //
-   // cout << line << endl << endl;
-   //
-   // PriorityQueue linee;
-   //
-   // linee.push( 1, 10 );
-   // cout << linee.getFront() << endl;
-   // linee.push( 2, 3 );
-   // cout << linee.getFront() << endl;
-   // linee.push( 3, 5 );
-   // cout << linee.getFront() << endl;
-   // linee.push( 4, 20 );
-   // cout << linee.getFront() << endl;
-   // linee.push( 5, 10 );
-   // cout << linee.getFront() << endl;
-   // linee.push( 6, 1 );
-   // cout << linee.getFront() << endl;
-   // linee.push( 7, 2 );
-   // cout << linee.getFront() << endl;
-   // linee.push( 8, 99 );
-   // cout << linee.getFront() << endl;
-   //
-   // cout << linee << endl << endl;
+   // cout << events.getFrontType() << ' ' << events.getFront() << endl;
 // INCLUDED FOR TESTING PURPOSES - END
 
    return EXIT_SUCCESS;
@@ -110,38 +132,17 @@ void generateInputFile()
    fout.close();
 }
 
-int oneQueueOneTeller()
+void processArrival( PriorityQueue events, Queue customers )
 {
-   Queue customers;
-   PriorityQueue events;
+   events.pop();
 
-   int arrivalTime, transactionTime;
-
-   ifstream fin;
-
-   generateInputFile();
-
-   fin.clear();
-   fin.open( "input.txt" );
-
-   // event-driven, not time-driven
-   while( fin.eof() == false )
+   if( customers.isEmpty() == false )
    {
-      fin >> arrivalTime >> transactionTime;
-
-      events.push( arrivalTime, transactionTime, 'A' );
+      // do stuff;
    }
+}
 
-   // while( events.isEmpty() == false )
-   // {
-   //    // do stuff
-   // }
+void processDeparture(...)
+{
 
-// INCLUDED FOR TESTING PURPOSES - START
-   cout << events << endl;
-   //
-   // cout << events.getFrontType() << ' ' << events.getFront() << endl;
-// INCLUDED FOR TESTING PURPOSES - END
-
-   return EXIT_SUCCESS;
 }
