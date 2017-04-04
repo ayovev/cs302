@@ -58,24 +58,26 @@ int oneQueueOneTeller()
       events.push( arrivalTime, transactionTime, 'A' );
    }
 
+   fin.close();
+
    while( events.isEmpty() == false )
    {
-         newEventATime = events.getFrontArrivalTime();
-         newEventTTime = events.getFrontTransactionTime();
+      newEventATime = events.getFrontArrivalTime();
+      newEventTTime = events.getFrontTransactionTime();
 
-         currentTime = newEventATime;
+      currentTime = newEventATime;
 
-         cout << currentTime << endl;
+      cout << currentTime << endl;
 
-         if( events.getFrontType() == 'A' )
-         {
-            // processArrival(...)
-         }
-         else
-         {
-            // processDeparture(...)
-         }
-         events.pop();
+      if( events.getFrontType() == 'A' )
+      {
+         // processArrival(...)
+      }
+      else if( events.getFrontType() == 'D' )
+      {
+         // processDeparture(...)
+      }
+      events.pop();
    }
 
 // INCLUDED FOR TESTING PURPOSES - START
@@ -130,19 +132,4 @@ void generateInputFile()
 
    // close file stream
    fout.close();
-}
-
-void processArrival( PriorityQueue events, Queue customers )
-{
-   events.pop();
-
-   if( customers.isEmpty() == false )
-   {
-      // do stuff;
-   }
-}
-
-void processDeparture(...)
-{
-
 }
