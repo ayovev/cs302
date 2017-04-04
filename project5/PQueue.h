@@ -9,9 +9,10 @@ class PriorityQueue;
 
 struct PNode
 {
-   PNode( const int item, const int prio, PNode* next );
+   PNode( const int item, const int prio, const char eventType, PNode* next );
    int priority;
    int data;
+   char type;
    PNode* link;
 
    friend ostream& operator <<( ostream& out, const PriorityQueue& object ); // NOT SURE IF THIS IS NEEDED
@@ -22,7 +23,7 @@ class PriorityQueue
    public:
       PriorityQueue();
       ~PriorityQueue();
-      bool push( const int item, const int priority );
+      bool push( const int item, const int priority, const char type );
       bool pop();
       int getFront();
       bool isEmpty();
