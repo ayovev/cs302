@@ -13,7 +13,8 @@ const int NUM_EVENTS = 100;
 
 int oneQueueOneTeller();
 void generateInputFile();
-void processArrival( PriorityQueue events, Queue customers );
+void processArrival( int aTime, int dTime, bool tellerAvailable,
+                     PriorityQueue& events, Queue& customers );
 void processDeparture(...);
 
 int main()
@@ -41,7 +42,9 @@ int oneQueueOneTeller()
    Queue customers;
    PriorityQueue events;
 
-   int currentTime, arrivalTime, transactionTime, newEventATime, newEventTTime;
+   int currentTime, arrivalTime, transactionTime;
+   int newEventATime, newEventTTime;
+   bool tellerAvailable = true;
 
    ifstream fin;
 
@@ -60,6 +63,10 @@ int oneQueueOneTeller()
 
    fin.close();
 
+   // INCLUDED FOR TESTING PURPOSES - START
+      // cout << events << endl << "--------------------------" << endl;
+   // INCLUDED FOR TESTING PURPOSES - END
+
    while( events.isEmpty() == false )
    {
       newEventATime = events.getFrontArrivalTime();
@@ -67,25 +74,37 @@ int oneQueueOneTeller()
 
       currentTime = newEventATime;
 
-      cout << currentTime << endl;
+   // INCLUDED FOR TESTING PURPOSES - START
+      // cout << currentTime << endl << endl;
+   // INCLUDED FOR TESTING PURPOSES - END
+
+   // INCLUDED FOR TESTING PURPOSES - START
+      // cout << events.getFrontType() << ' '
+      //      << events.getFrontArrivalTime() << ' '
+      //      << events.getFrontTransactionTime() << endl << endl;
+   // INCLUDED FOR TESTING PURPOSES - END
 
       if( events.getFrontType() == 'A' )
       {
-         // processArrival(...)
+         processArrival( newEventATime, newEventTTime, tellerAvailable,
+                         events, customers );
+
+      // INCLUDED FOR TESTING PURPOSES - START
+         // cout << events.getFrontType() << ' '
+         //      << events.getFrontArrivalTime() << ' '
+         //      << events.getFrontTransactionTime() << endl << endl;
+      // INCLUDED FOR TESTING PURPOSES - END
       }
       else if( events.getFrontType() == 'D' )
       {
          // processDeparture(...)
       }
-      events.pop();
    }
 
-// INCLUDED FOR TESTING PURPOSES - START
-   // cout << events << endl;
-   //
-   // cout << events.getFrontType() << ' ' << events.getFront() << endl;
-// INCLUDED FOR TESTING PURPOSES - END
-
+   // INCLUDED FOR TESTING PURPOSES - START
+      // cout << events << endl << "--------------------------" << endl;
+   // INCLUDED FOR TESTING PURPOSES - END
+   
    return EXIT_SUCCESS;
 }
 
@@ -132,4 +151,28 @@ void generateInputFile()
 
    // close file stream
    fout.close();
+}
+
+void processArrival( int aTime, int tTime, bool tellerAvailable,
+                     PriorityQueue& events, Queue& customers )
+{
+   int departureTime;
+
+   events.pop();
+
+   if( customers.isEmpty() == true && tellerAvailable == true )
+   {
+      // departureTime = aTime + tTime;
+      // events.push( departureTime, 0, 'D' );
+      // tellerAvailable = false;
+   }
+   else
+   {
+      customers.push( aTime, 0 );
+   }
+}
+
+void processDeparture(...)
+{
+
 }
