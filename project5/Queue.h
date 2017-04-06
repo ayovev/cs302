@@ -14,7 +14,7 @@ struct Customer
    int transactionTime;
    Customer* link;
 
-   friend ostream& operator <<( ostream& out, const Queue& object ); // NOT SURE IF THIS IS NEEDED
+   friend ostream& operator <<( ostream& out, const Queue& object );
 };
 
 class Queue

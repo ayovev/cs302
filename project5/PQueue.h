@@ -10,7 +10,7 @@ class PriorityQueue;
 struct Event
 {
    Event( const int prio, const int item, const char eventType, Event* next );
-   int arrivalTime;
+   int adTime;
    int transactionTime;
    char eventType;
    Event* link;

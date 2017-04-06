@@ -6,7 +6,7 @@ using namespace std;
 
 Event::Event( const int prio, const int item, const char type, Event* next )
 {
-   arrivalTime = prio;
+   adTime = prio;
    transactionTime = item;
    eventType = type;
    link = next;
@@ -36,7 +36,7 @@ bool PriorityQueue::push( const int priority, const int item, const char type )
 {
    Event* temp1 = new Event( priority, item, type, NULL );
 
-   if( front == NULL || temp1->arrivalTime < front->arrivalTime )
+   if( front == NULL || temp1->adTime < front->adTime )
    {
       temp1->link = front;
       front = temp1;
@@ -47,7 +47,7 @@ bool PriorityQueue::push( const int priority, const int item, const char type )
    {
       Event* temp2 = front;
 
-      while( temp2->link != NULL && temp2->link->arrivalTime <= temp1->arrivalTime )
+      while( temp2->link != NULL && temp2->link->adTime <= temp1->adTime )
       {
          temp2 = temp2->link;
       }
@@ -85,7 +85,7 @@ bool PriorityQueue::pop()
 
 int PriorityQueue::getFrontArrivalTime()
 {
-   return front->arrivalTime;
+   return front->adTime;
 }
 
 int PriorityQueue::getFrontTransactionTime()
@@ -116,7 +116,7 @@ ostream& operator <<( ostream& out, const PriorityQueue& object )
 
    while( temp != NULL )
    {
-      out << temp->eventType << ' ' << temp->arrivalTime << ' ' << temp->transactionTime << endl;
+      out << temp->eventType << ' ' << temp->adTime << ' ' << temp->transactionTime << endl;
       temp = temp->link;
    }
    return out;
