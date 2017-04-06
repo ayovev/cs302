@@ -11,11 +11,13 @@ using namespace std;
 
 const int NUM_EVENTS = 100;
 
-int oneQueueOneTeller();
 void generateInputFile();
+void readInEvents( PriorityQueue& events );
+int oneQueueOneTeller();
 void processArrival( int aTime, int dTime, bool& tellerAvailable,
                      PriorityQueue& events, Queue& customers );
-void processDeparture(...);
+void processDeparture( int aTime, int tTime, bool& tellerAvailable,
+                       PriorityQueue& events, Queue& customers );
 
 int main()
 {
@@ -42,26 +44,10 @@ int oneQueueOneTeller()
    Queue customers;
    PriorityQueue events;
 
-   int currentTime, arrivalTime, transactionTime;
    int newEventATime, newEventTTime;
    bool tellerAvailable = true;
 
-   ifstream fin;
-
-   generateInputFile();
-
-   fin.clear();
-   fin.open( "input.txt" );
-
-   // event-driven, not time-driven
-   while( fin.eof() == false )
-   {
-      fin >> arrivalTime >> transactionTime;
-
-      events.push( arrivalTime, transactionTime, 'A' );
-   }
-
-   fin.close();
+   readInEvents( events );
 
    // INCLUDED FOR TESTING PURPOSES - START
       // cout << events << endl << "--------------------------" << endl;
@@ -72,16 +58,11 @@ int oneQueueOneTeller()
       newEventATime = events.getFrontArrivalTime();
       newEventTTime = events.getFrontTransactionTime();
 
-      currentTime = newEventATime;
-
    // INCLUDED FOR TESTING PURPOSES - START
-      // cout << currentTime << endl << endl;
-   // INCLUDED FOR TESTING PURPOSES - END
-
-   // INCLUDED FOR TESTING PURPOSES - START
-      // cout << events.getFrontType() << ' '
-      //      << events.getFrontArrivalTime() << ' '
-      //      << events.getFrontTransactionTime() << endl << endl;
+      cout << events.getFrontType() << ' '
+           << events.getFrontArrivalTime() << ' '
+           << events.getFrontTransactionTime() << endl << endl;
+      system("pause");
    // INCLUDED FOR TESTING PURPOSES - END
 
       if( events.getFrontType() == 'A' )
@@ -93,11 +74,13 @@ int oneQueueOneTeller()
          // cout << events.getFrontType() << ' '
          //      << events.getFrontArrivalTime() << ' '
          //      << events.getFrontTransactionTime() << endl << endl;
+         // system("pause");
       // INCLUDED FOR TESTING PURPOSES - END
       }
       else if( events.getFrontType() == 'D' )
       {
-         // processDeparture(...)
+         processDeparture( newEventATime, newEventTTime, tellerAvailable,
+                           events, customers );
       }
    }
 
@@ -153,6 +136,27 @@ void generateInputFile()
    fout.close();
 }
 
+void readInEvents( PriorityQueue& events )
+{
+   int arrivalTime, transactionTime;
+   ifstream fin;
+
+   generateInputFile();
+
+   fin.clear();
+   fin.open( "input.txt" );
+
+   // event-driven, not time-driven
+   while( fin.eof() == false )
+   {
+      fin >> arrivalTime >> transactionTime;
+
+      events.push( arrivalTime, transactionTime, 'A' );
+   }
+
+   fin.close();
+}
+
 void processArrival( int aTime, int tTime, bool& tellerAvailable,
                      PriorityQueue& events, Queue& customers )
 {
@@ -172,7 +176,22 @@ void processArrival( int aTime, int tTime, bool& tellerAvailable,
    }
 }
 
-void processDeparture(...)
+void processDeparture( int aTime, int tTime, bool& tellerAvailable,
+                       PriorityQueue& events, Queue& customers )
 {
+   int departureTime;
 
+   events.pop();
+
+   if( customers.isEmpty() == false )
+   {
+      customers.pop();
+      departureTime = aTime + tTime;
+      events.push( departureTime, 0, 'D' );
+      tellerAvailable = false; // IDK IF THIS IS RIGHT?
+   }
+   else
+   {
+      tellerAvailable = true;
+   }
 }
