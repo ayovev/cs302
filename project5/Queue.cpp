@@ -4,10 +4,10 @@
 
 using namespace std;
 
-Customer::Customer( const int aTime, const int dTime, Customer* next )
+Customer::Customer( const int aTime, const int tTime, Customer* next )
 {
    arrivalTime = aTime;
-   departureTime = dTime;
+   transactionTime = tTime;
    link = next;
 }
 
@@ -77,9 +77,9 @@ int Queue::getFrontArrivalTime()
    return front->arrivalTime;
 }
 
-int Queue::getFrontDepartureTime()
+int Queue::getFrontTransactionTime()
 {
-   return front->departureTime;
+   return front->transactionTime;
 }
 
 bool Queue::isEmpty()

@@ -9,9 +9,9 @@ class Queue;
 
 struct Customer
 {
-   Customer( const int aTime, const int dTime, Customer* next );
+   Customer( const int aTime, const int tTime, Customer* next );
    int arrivalTime;
-   int departureTime;
+   int transactionTime;
    Customer* link;
 
    friend ostream& operator <<( ostream& out, const Queue& object ); // NOT SURE IF THIS IS NEEDED
@@ -25,7 +25,7 @@ class Queue
       bool push( int const aTime, const int dTime );
       bool pop();
       int getFrontArrivalTime();
-      int getFrontDepartureTime();
+      int getFrontTransactionTime();
       bool isEmpty();
 
       friend ostream& operator <<( ostream& out, const Queue& object );

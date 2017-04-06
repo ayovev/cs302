@@ -13,7 +13,7 @@ const int NUM_EVENTS = 100;
 
 int oneQueueOneTeller();
 void generateInputFile();
-void processArrival( int aTime, int dTime, bool tellerAvailable,
+void processArrival( int aTime, int dTime, bool& tellerAvailable,
                      PriorityQueue& events, Queue& customers );
 void processDeparture(...);
 
@@ -104,7 +104,7 @@ int oneQueueOneTeller()
    // INCLUDED FOR TESTING PURPOSES - START
       // cout << events << endl << "--------------------------" << endl;
    // INCLUDED FOR TESTING PURPOSES - END
-   
+
    return EXIT_SUCCESS;
 }
 
@@ -153,7 +153,7 @@ void generateInputFile()
    fout.close();
 }
 
-void processArrival( int aTime, int tTime, bool tellerAvailable,
+void processArrival( int aTime, int tTime, bool& tellerAvailable,
                      PriorityQueue& events, Queue& customers )
 {
    int departureTime;
@@ -162,13 +162,13 @@ void processArrival( int aTime, int tTime, bool tellerAvailable,
 
    if( customers.isEmpty() == true && tellerAvailable == true )
    {
-      // departureTime = aTime + tTime;
-      // events.push( departureTime, 0, 'D' );
-      // tellerAvailable = false;
+      departureTime = aTime + tTime;
+      events.push( departureTime, 0, 'D' );
+      tellerAvailable = false;
    }
    else
    {
-      customers.push( aTime, 0 );
+      customers.push( aTime, tTime );
    }
 }
 
