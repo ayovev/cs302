@@ -16,25 +16,19 @@ void readInEvents( PriorityQueue& events );
 int oneQueueOneTeller();
 void processArrival( int aTime, int tTime, bool& tellerAvailable,
                      PriorityQueue& events, Queue& customers );
-void processDeparture( int aTime, int tTime, bool& tellerAvailable,
+void processDeparture( int aTime, bool& tellerAvailable,
                        PriorityQueue& events, Queue& customers );
+void passFail( int t1, int t2, int t3 );
 
 int main()
 {
-   int test1 = 1;
+   int test1 = 1, test2 = 1, test3 = 1;
 
    srand( time( NULL ) );
 
    test1 = oneQueueOneTeller();
 
-   if( test1 == 0 )
-   {
-      cout << "TEST 1 PASSED" << endl;
-   }
-   else
-   {
-      cout << "TEST 1 FAILED" << endl;
-   }
+   passFail( test1, test2, test3 );
 
    return EXIT_SUCCESS;
 }
@@ -49,39 +43,32 @@ int oneQueueOneTeller()
    readInEvents( events );
 
    // INCLUDED FOR TESTING PURPOSES - START
-      cout << events << endl << "--------------------------" << endl;
+      // cout << events << endl << "--------------------------" << endl;
    // INCLUDED FOR TESTING PURPOSES - END
 
    while( events.isEmpty() == false )
    {
    // INCLUDED FOR TESTING PURPOSES - START
-      cout << events.getFrontType() << ' '
-           << events.getFrontArrivalTime() << ' '
-           << events.getFrontTransactionTime() << endl
-           << customers.isEmpty() << ' ' << tellerAvailable << endl;
+      // cout << events.getFrontType() << ' '
+      //      << events.getFrontArrivalTime() << ' '
+      //      << events.getFrontTransactionTime() << endl
+      //      << customers.isEmpty() << ' ' << tellerAvailable << endl;
    // INCLUDED FOR TESTING PURPOSES - END
 
       if( events.getFrontType() == 'A' )
       {
          processArrival( events.getFrontArrivalTime(), events.getFrontTransactionTime(),
                          tellerAvailable, events, customers );
-
-      // INCLUDED FOR TESTING PURPOSES - START
-         // cout << events.getFrontType() << ' '
-         //      << events.getFrontArrivalTime() << ' '
-         //      << events.getFrontTransactionTime() << endl << endl;
-         // system("pause");
-      // INCLUDED FOR TESTING PURPOSES - END
       }
       else if( events.getFrontType() == 'D' )
       {
-         processDeparture( events.getFrontArrivalTime(), events.getFrontTransactionTime(),
+         processDeparture( events.getFrontArrivalTime(),
                            tellerAvailable, events, customers );
       }
    }
 
    // INCLUDED FOR TESTING PURPOSES - START
-      cout << events << endl << "--------------------------" << endl;
+      // cout << events << endl << "--------------------------" << endl;
    // INCLUDED FOR TESTING PURPOSES - END
 
    return EXIT_SUCCESS;
@@ -156,8 +143,6 @@ void readInEvents( PriorityQueue& events )
 void processArrival( int aTime, int tTime, bool& tellerAvailable,
                      PriorityQueue& events, Queue& customers )
 {
-cout << "PROCESSING ARRIVAL" << endl << endl;
-system("pause");
    int departureTime;
 
    events.pop();
@@ -173,11 +158,9 @@ system("pause");
       customers.push( aTime, tTime );
    }
 }
-void processDeparture( int aTime, int tTime, bool& tellerAvailable,
+void processDeparture( int aTime, bool& tellerAvailable,
                        PriorityQueue& events, Queue& customers )
 {
-cout << "PROCESSING DEPARTURE" << endl << endl;
-system("pause");
    int departureTime;
 
    events.pop();
@@ -191,5 +174,28 @@ system("pause");
    else
    {
       tellerAvailable = true;
+   }
+}
+
+void passFail( int t1, int t2, int t3 )
+{
+   if( t1 == 0 && t2 == 0 && t3 == 0 )
+   {
+      cout << "ALL TESTS PASSED" << endl;
+   }
+   else
+   {
+      if( t1 == 1 )
+      {
+         cout << "TEST 1 FAILED" << endl;
+      }
+      if( t2 == 1 )
+      {
+         cout << "TEST 2 FAILED" << endl;
+      }
+      if( t3 == 1 )
+      {
+         cout << "TEST 3 FAILED" << endl;
+      }
    }
 }
