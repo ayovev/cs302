@@ -40,6 +40,11 @@ int oneQueueOneTeller()
 
    bool tellerAvailable = true;
 
+   ofstream fout;
+
+   fout.clear();
+   fout.open( "output.txt" );
+
    readInEvents( events );
 
    // INCLUDED FOR TESTING PURPOSES - START
@@ -57,12 +62,22 @@ int oneQueueOneTeller()
 
       if( events.getFrontType() == 'A' )
       {
-         processArrival( events.getFrontArrivalTime(), events.getFrontTransactionTime(),
+         fout << "ARRIVAL TIME: " << events.getFrontADTime() << endl
+              << "TRANSACTION TIME: " << events.getFrontTransactionTime() << endl
+              << "CUSTOMER QUEUE EMPTY? " << customers.isEmpty() << endl
+              << "TELLER AVAILABLE? " << tellerAvailable << endl << endl;
+
+         processArrival( events.getFrontADTime(), events.getFrontTransactionTime(),
                          tellerAvailable, events, customers );
       }
       else if( events.getFrontType() == 'D' )
       {
-         processDeparture( events.getFrontArrivalTime(),
+         fout << "DEPARTURE TIME: " << events.getFrontADTime() << endl
+              << "TRANSACTION TIME: " << events.getFrontTransactionTime() << endl
+              << "CUSTOMER QUEUE EMPTY? " << customers.isEmpty() << endl
+              << "TELLER AVAILABLE? " << tellerAvailable << endl << endl;
+
+         processDeparture( events.getFrontADTime(),
                            tellerAvailable, events, customers );
       }
    }
