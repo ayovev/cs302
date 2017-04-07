@@ -13,11 +13,14 @@ const int NUM_EVENTS = 100;
 
 void generateInputFile();
 void readInEvents( PriorityQueue& events );
+
 int oneQueueOneTeller();
+int oneQueueThreeTellers();
 void processArrival( int aTime, int tTime, bool& tellerAvailable,
                      PriorityQueue& events, Queue& customers );
 void processDeparture( int aTime, bool& tellerAvailable,
                        PriorityQueue& events, Queue& customers );
+
 void passFail( int t1, int t2, int t3 );
 
 int main()
@@ -27,6 +30,7 @@ int main()
    srand( time( NULL ) );
 
    test1 = oneQueueOneTeller();
+   test2 = oneQueueThreeTellers();
 
    passFail( test1, test2, test3 );
 
@@ -42,10 +46,10 @@ int oneQueueOneTeller()
 
    ofstream fout;
 
-   fout.clear();
-   fout.open( "output.txt" );
-
    readInEvents( events );
+
+   fout.clear();
+   fout.open( "output1Q1T.txt" );
 
    // INCLUDED FOR TESTING PURPOSES - START
       // cout << events << endl << "--------------------------" << endl;
@@ -85,6 +89,32 @@ int oneQueueOneTeller()
    // INCLUDED FOR TESTING PURPOSES - START
       // cout << events << endl << "--------------------------" << endl;
    // INCLUDED FOR TESTING PURPOSES - END
+
+   return EXIT_SUCCESS;
+}
+
+int oneQueueThreeTellers()
+{
+   Queue customers;
+   PriorityQueue events;
+
+   bool teller1Available = true, teller2Available = true, teller3Available = true;
+
+   ofstream fout;
+
+   readInEvents( events );
+
+   fout.clear();
+   fout.open( "output1Q3T.txt" );
+
+   // INCLUDED FOR TESTING PURPOSES - START
+      // cout << events << endl << "--------------------------" << endl;
+   // INCLUDED FOR TESTING PURPOSES - END
+
+   // while( events.isEmpty() == false )
+   // {
+   //    // do stuff
+   // }
 
    return EXIT_SUCCESS;
 }
