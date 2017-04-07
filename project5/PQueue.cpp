@@ -83,7 +83,7 @@ bool PriorityQueue::pop()
    return false;
 }
 
-int PriorityQueue::getFrontArrivalTime()
+int PriorityQueue::getFrontADTime()
 {
    return front->adTime;
 }

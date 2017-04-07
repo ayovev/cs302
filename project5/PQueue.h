@@ -25,7 +25,7 @@ class PriorityQueue
       ~PriorityQueue();
       bool push( const int priority, const int data, const char type );
       bool pop();
-      int getFrontArrivalTime();
+      int getFrontADTime();
       int getFrontTransactionTime();
       char getFrontType();
       bool isEmpty();
