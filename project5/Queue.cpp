@@ -100,7 +100,7 @@ ostream& operator <<( ostream& out, const Queue& object )
 
    while( temp != NULL )
    {
-      out << temp->arrivalTime << ' ';
+      out << temp->arrivalTime << ' ' << temp->transactionTime << endl;
       temp = temp->link;
    }
    return out;
