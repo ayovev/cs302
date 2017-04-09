@@ -24,7 +24,8 @@ void processDeparture1( int& wTime, int aTime, bool& tellerAvailable,
 int oneQueueThreeTellers();
 void processArrival2( int aTime, int tTime, bool tellersAvailable[ 3 ],
                       PriorityQueue& events, Queue& customers );
-void processDeparture2();
+void processDeparture2( int& wTime, int aTime, bool tellersAvailable[ 3 ],
+                        PriorityQueue& events, Queue& customers );
 bool checkAnyTellerAvailable( bool tellersAvailable[ 3 ] );
 
 int main()
@@ -97,7 +98,7 @@ int oneQueueOneTeller()
    fout << "---------------" << endl
         << "SIMULATION ENDS" << endl
         << "TOTAL NUMBER OF PEOPLE PROCESSED: " << NUM_EVENTS << endl
-        << "AVERAGE WAIT TIME: " << averageWaitTime;
+        << "AVERAGE WAIT TIME: " << averageWaitTime << " MINUTES";
 
    fout.close();
 
@@ -109,6 +110,7 @@ int oneQueueThreeTellers()
    Queue customers;
    PriorityQueue events;
 
+   int totalWaitTime = 0, averageWaitTime = 0;
    bool tellers[ 3 ] = { true, true, true };
 
    ofstream fout;
@@ -145,13 +147,21 @@ int oneQueueThreeTellers()
       {
          fout << "PROCESSING A DEPARTURE EVENT AT TIME: " << events.getFrontADTime() << endl;
          
-         // processDeparture2(...)
+         processDeparture2( totalWaitTime, events.getFrontADTime(), 
+                            tellers, events, customers );
       }
    }
+   
+   // INCLUDED FOR TESTING PURPOSES - START
+      // cout << events << endl << "--------------------------" << endl;
+   // INCLUDED FOR TESTING PURPOSES - END
+   
+   averageWaitTime = totalWaitTime / NUM_EVENTS;
 
    fout << "---------------" << endl
         << "SIMULATION ENDS" << endl
-        << "TOTAL NUMBER OF PEOPLE PROCESSED: " << NUM_EVENTS << endl;
+        << "TOTAL NUMBER OF PEOPLE PROCESSED: " << NUM_EVENTS << endl
+        << "AVERAGE WAIT TIME: " << averageWaitTime << " MINUTES";
 
    fout.close();
 
@@ -323,9 +333,24 @@ void processArrival2( int aTime, int tTime, bool tellersAvailable[ 3 ],
    
 }                      
 
-void processDeparture2(...)
+void processDeparture2( int& wTime, int aTime, bool tellersAvailable[ 3 ],
+                        PriorityQueue& events, Queue& customers )
 {
+   int departureTime;
    
+   events.pop();
+   
+   if( customers.isEmpty() == false )
+   {
+      departureTime = aTime + customers.getFrontTransactionTime();
+      wTime += ( aTime - customers.getFrontArrivalTime() );
+      customers.pop();
+      events.push( departureTime, 0, 'D' );
+   }
+   else
+   {
+      tellersAvailable[ 0 ] = true;
+   }
 }
 
 bool checkAnyTellerAvailable( bool tellersAvailable[ 3 ] )
@@ -340,4 +365,3 @@ bool checkAnyTellerAvailable( bool tellersAvailable[ 3 ] )
       return false;
    }
 }
-
