@@ -42,132 +42,6 @@ int main()
    return EXIT_SUCCESS;
 }
 
-int oneQueueOneTeller()
-{
-   Queue customers;
-   PriorityQueue events;
-
-   int totalWaitTime = 0, averageWaitTime = 0;
-   bool tellerAvailable = true;
-
-   ofstream fout;
-
-   readInEvents( events );
-
-   fout.clear();
-   fout.open( "output1Q1T.txt" );
-
-   fout << "ONE QUEUE ONE TELLER SIMULATION BEGINS" << endl
-        << "--------------------------------------" << endl;
-
-   // INCLUDED FOR TESTING PURPOSES - START
-      // cout << events << endl << "--------------------------" << endl;
-   // INCLUDED FOR TESTING PURPOSES - END
-
-   while( events.isEmpty() == false )
-   {
-   // INCLUDED FOR TESTING PURPOSES - START
-      // cout << events.getFrontType() << ' '
-      //      << events.getFrontArrivalTime() << ' '
-      //      << events.getFrontTransactionTime() << endl
-      //      << customers.isEmpty() << ' ' << tellerAvailable << endl;
-   // INCLUDED FOR TESTING PURPOSES - END
-
-      if( events.getFrontType() == 'A' )
-      {
-         fout << "PROCESSING AN ARRIVAL EVENT AT TIME: " << events.getFrontADTime() << endl;
-
-         processArrival1( events.getFrontADTime(), events.getFrontTransactionTime(),
-                         tellerAvailable, events, customers );
-      }
-      else if( events.getFrontType() == 'D' )
-      {
-         fout << "PROCESSING A DEPARTURE EVENT AT TIME: " << events.getFrontADTime() << endl;
-
-         processDeparture1( totalWaitTime, events.getFrontADTime(),
-                           tellerAvailable, events, customers );
-      }
-   }
-
-   // INCLUDED FOR TESTING PURPOSES - START
-      // cout << events << endl << "--------------------------" << endl;
-   // INCLUDED FOR TESTING PURPOSES - END
-
-   averageWaitTime = totalWaitTime / NUM_EVENTS;
-
-   fout << "---------------" << endl
-        << "SIMULATION ENDS" << endl
-        << "TOTAL NUMBER OF PEOPLE PROCESSED: " << NUM_EVENTS << endl
-        << "AVERAGE WAIT TIME: " << averageWaitTime << " MINUTES";
-
-   fout.close();
-
-   return EXIT_SUCCESS;
-}
-
-int oneQueueThreeTellers()
-{
-   Queue customers;
-   PriorityQueue events;
-
-   int totalWaitTime = 0, averageWaitTime = 0;
-   bool tellers[ 3 ] = { true, true, true };
-
-   ofstream fout;
-
-   readInEvents( events );
-
-   fout.clear();
-   fout.open( "output1Q3T.txt" );
-
-   fout << "ONE QUEUE THREE TELLERS SIMULATION BEGINS" << endl
-        << "--------------------------------------" << endl;
-
-   // INCLUDED FOR TESTING PURPOSES - START
-      // cout << events << endl << "--------------------------" << endl;
-   // INCLUDED FOR TESTING PURPOSES - END
-
-   while( events.isEmpty() == false )
-   {
-   // INCLUDED FOR TESTING PURPOSES - START
-      // cout << events.getFrontType() << ' '
-      //      << events.getFrontArrivalTime() << ' '
-      //      << events.getFrontTransactionTime() << endl
-      //      << customers.isEmpty() << ' ' << tellerAvailable << endl;
-   // INCLUDED FOR TESTING PURPOSES - END
-   
-      if( events.getFrontType() == 'A' )
-      {
-         fout << "PROCESSING AN ARRIVAL EVENT AT TIME: " << events.getFrontADTime() << endl;
-         
-         processArrival2( events.getFrontADTime(), events.getFrontTransactionTime(),
-                          tellers, events, customers );
-      }
-      else if( events.getFrontType() == 'D' )
-      {
-         fout << "PROCESSING A DEPARTURE EVENT AT TIME: " << events.getFrontADTime() << endl;
-         
-         processDeparture2( totalWaitTime, events.getFrontADTime(), 
-                            tellers, events, customers );
-      }
-   }
-   
-   // INCLUDED FOR TESTING PURPOSES - START
-      // cout << events << endl << "--------------------------" << endl;
-   // INCLUDED FOR TESTING PURPOSES - END
-   
-   averageWaitTime = totalWaitTime / NUM_EVENTS;
-
-   fout << "---------------" << endl
-        << "SIMULATION ENDS" << endl
-        << "TOTAL NUMBER OF PEOPLE PROCESSED: " << NUM_EVENTS << endl
-        << "AVERAGE WAIT TIME: " << averageWaitTime << " MINUTES";
-
-   fout.close();
-
-   return EXIT_SUCCESS;
-}
-
 void generateInputFile()
 {
    // declare output file stream and index
@@ -271,6 +145,69 @@ void passFail( int t1, int t2, int t3 )
    }
 }
 
+int oneQueueOneTeller()
+{
+   Queue customers;
+   PriorityQueue events;
+
+   int totalWaitTime = 0, averageWaitTime = 0;
+   bool tellerAvailable = true;
+
+   ofstream fout;
+
+   readInEvents( events );
+
+   fout.clear();
+   fout.open( "output1Q1T.txt" );
+
+   fout << "ONE QUEUE ONE TELLER SIMULATION BEGINS" << endl
+        << "--------------------------------------" << endl;
+
+   // INCLUDED FOR TESTING PURPOSES - START
+      // cout << events << endl << "--------------------------" << endl;
+   // INCLUDED FOR TESTING PURPOSES - END
+
+   while( events.isEmpty() == false )
+   {
+   // INCLUDED FOR TESTING PURPOSES - START
+      // cout << events.getFrontType() << ' '
+      //      << events.getFrontArrivalTime() << ' '
+      //      << events.getFrontTransactionTime() << endl
+      //      << customers.isEmpty() << ' ' << tellerAvailable << endl;
+   // INCLUDED FOR TESTING PURPOSES - END
+
+      if( events.getFrontType() == 'A' )
+      {
+         fout << "PROCESSING AN ARRIVAL EVENT AT TIME: " << events.getFrontADTime() << endl;
+
+         processArrival1( events.getFrontADTime(), events.getFrontTransactionTime(),
+                         tellerAvailable, events, customers );
+      }
+      else if( events.getFrontType() == 'D' )
+      {
+         fout << "PROCESSING A DEPARTURE EVENT AT TIME: " << events.getFrontADTime() << endl;
+
+         processDeparture1( totalWaitTime, events.getFrontADTime(),
+                           tellerAvailable, events, customers );
+      }
+   }
+
+   // INCLUDED FOR TESTING PURPOSES - START
+      // cout << events << endl << "--------------------------" << endl;
+   // INCLUDED FOR TESTING PURPOSES - END
+
+   averageWaitTime = totalWaitTime / NUM_EVENTS;
+
+   fout << "---------------" << endl
+        << "SIMULATION ENDS" << endl
+        << "TOTAL NUMBER OF PEOPLE PROCESSED: " << NUM_EVENTS << endl
+        << "AVERAGE WAIT TIME: " << averageWaitTime << " MINUTES";
+
+   fout.close();
+
+   return EXIT_SUCCESS;
+}
+
 void processArrival1( int aTime, int tTime, bool& tellerAvailable,
                      PriorityQueue& events, Queue& customers )
 {
@@ -308,6 +245,69 @@ void processDeparture1( int& wTime, int aTime, bool& tellerAvailable,
    {
       tellerAvailable = true;
    }
+}
+
+int oneQueueThreeTellers()
+{
+   Queue customers;
+   PriorityQueue events;
+
+   int totalWaitTime = 0, averageWaitTime = 0;
+   bool tellers[ 3 ] = { true, true, true };
+
+   ofstream fout;
+
+   readInEvents( events );
+
+   fout.clear();
+   fout.open( "output1Q3T.txt" );
+
+   fout << "ONE QUEUE THREE TELLERS SIMULATION BEGINS" << endl
+        << "--------------------------------------" << endl;
+
+   // INCLUDED FOR TESTING PURPOSES - START
+      // cout << events << endl << "--------------------------" << endl;
+   // INCLUDED FOR TESTING PURPOSES - END
+
+   while( events.isEmpty() == false )
+   {
+   // INCLUDED FOR TESTING PURPOSES - START
+      // cout << events.getFrontType() << ' '
+      //      << events.getFrontArrivalTime() << ' '
+      //      << events.getFrontTransactionTime() << endl
+      //      << customers.isEmpty() << ' ' << tellerAvailable << endl;
+   // INCLUDED FOR TESTING PURPOSES - END
+   
+      if( events.getFrontType() == 'A' )
+      {
+         fout << "PROCESSING AN ARRIVAL EVENT AT TIME: " << events.getFrontADTime() << endl;
+         
+         processArrival2( events.getFrontADTime(), events.getFrontTransactionTime(),
+                          tellers, events, customers );
+      }
+      else if( events.getFrontType() == 'D' )
+      {
+         fout << "PROCESSING A DEPARTURE EVENT AT TIME: " << events.getFrontADTime() << endl;
+         
+         processDeparture2( totalWaitTime, events.getFrontADTime(), 
+                            tellers, events, customers );
+      }
+   }
+   
+   // INCLUDED FOR TESTING PURPOSES - START
+      // cout << events << endl << "--------------------------" << endl;
+   // INCLUDED FOR TESTING PURPOSES - END
+   
+   averageWaitTime = totalWaitTime / NUM_EVENTS;
+
+   fout << "---------------" << endl
+        << "SIMULATION ENDS" << endl
+        << "TOTAL NUMBER OF PEOPLE PROCESSED: " << NUM_EVENTS << endl
+        << "AVERAGE WAIT TIME: " << averageWaitTime << " MINUTES";
+
+   fout.close();
+
+   return EXIT_SUCCESS;
 }
 
 void processArrival2( int aTime, int tTime, bool tellersAvailable[ 3 ],
