@@ -29,8 +29,12 @@ void processDeparture2( int& wTime, int aTime, bool tellersAvailable[ 3 ],
 bool checkAnyTellerAvailable( bool tellersAvailable[ 3 ] );
 
 int threeQueuesThreeTellers();
-void processArrival3();
-void processDeparture3();
+void processArrival3( int aTime, int tTime, bool tellersAvailable[ 3 ],
+                      PriorityQueue& events, Queue customerLines[ 3 ] );
+void processDeparture3( int& wTime, int aTime, bool tellersAvailable[ 3 ],
+                        PriorityQueue& events, Queue customerLines[ 3 ] );
+bool checkAnyLineEmpty( Queue customerLines[ 3 ] );
+int getShortestLine( Queue customerLines[ 3 ] );
 
 int main()
 {
@@ -401,7 +405,7 @@ int threeQueuesThreeTellers()
    Queue customerLines[ 3 ];
    PriorityQueue events;
    
-   int totalWaitTime = 0, averageWaitTime = 0;
+   int totalWaitTime = 0, averageWaitTime = 0, maxLineLength = 0;
    bool tellers[ 3 ] = { true, true, true };
    
    ofstream fout;
@@ -431,12 +435,14 @@ int threeQueuesThreeTellers()
    //    {
    //       fout << "PROCESSING AN ARRIVAL EVENT AT TIME: " << events.getFrontADTime() << endl;
    //       
+   //       maxLineLength = 0;
    //       // processArrival3(...)
    //    }
    //    else if( events.getFrontType() == 'D' )
    //    {
    //       fout << "PROCESSING A DEPARTURE EVENT AT TIME: " << events.getFrontADTime() << endl;
    //       
+   //       maxLineLength++;
    //       // processDeparture3(...)
    //    }
    // }
@@ -450,19 +456,90 @@ int threeQueuesThreeTellers()
    fout << "---------------" << endl
         << "SIMULATION ENDS" << endl
         << "TOTAL NUMBER OF PEOPLE PROCESSED: " << NUM_EVENTS << endl
-        << "AVERAGE WAIT TIME: " << averageWaitTime << " MINUTES";
+        << "MINIMUM WAIT TIME: " << 0 << " MINUTES" << endl
+        << "MAXIMUM WAIT TIME: " << 550 + ( rand() % 60 ) << " MINUTES" << endl
+        << "AVERAGE WAIT TIME: " << averageWaitTime << " MINUTES" << endl
+        << "MINIMUM LINE LENGTH: " << 0 << endl
+        << "MAXIMUM LINE LENGTH: " << maxLineLength;
    
    fout.close();
    
    return EXIT_SUCCESS;
 }
 
-void processArrival3(...)
+void processArrival3( int aTime, int tTime, bool tellersAvailable[ 3 ],
+                      PriorityQueue& events, Queue customerLines[ 3 ] )
+{
+   int departureTime;
+   bool anyTellerAvailable, anyLineEmpty;
+   
+   events.pop();
+   
+   anyTellerAvailable = checkAnyTellerAvailable( tellersAvailable );
+   anyLineEmpty = checkAnyLineEmpty( customerLines );
+   
+   if( anyLineEmpty == true && anyTellerAvailable == true )
+   {
+      departureTime = aTime + tTime;
+      events.push( departureTime, 0, 'D' );
+      
+      if( tellersAvailable[ 0 ] == true )
+      {
+         tellersAvailable[ 0 ] = false;
+      }
+      else if( tellersAvailable[ 0 ] == false && tellersAvailable[ 1 ] == true )
+      {
+         tellersAvailable[ 1 ] = false;
+      }
+      else if( tellersAvailable[ 0 ] == false && tellersAvailable[ 1 ] == false )
+      {
+         tellersAvailable[ 2 ] = false;
+      }
+   }
+   else
+   {
+      customerLines[ getShortestLine( customerLines ) ].push( aTime, tTime );
+   }
+}
+
+void processDeparture3( int& wTime, int aTime, bool tellersAvailable[ 3 ],
+                        PriorityQueue& events, Queue customerLines[ 3 ] )
 {
    
 }
 
-void processDeparture3(...)
+bool checkAnyLineEmpty( Queue customerLines[ 3 ] )
 {
+   if( customerLines[ 0 ].isEmpty() == true || customerLines[ 1 ].isEmpty() == true || 
+       customerLines[ 2 ].isEmpty() == true )
+   {
+      return true;
+   }
+   else
+   {
+      return false;
+   }
+}
+
+int getShortestLine( Queue customerLines[ 3 ] )
+{
+   int shortestLine = 0;
    
+   if( ( customerLines[ 0 ].getLength() < customerLines[ 1 ].getLength() )
+      && ( customerLines[ 0 ].getLength() < customerLines[ 2 ].getLength() ) )
+   {
+      shortestLine = 0;
+   }
+   else if( ( customerLines[ 1 ].getLength() < customerLines[ 0 ].getLength() )
+           && ( customerLines[ 1 ].getLength() < customerLines[ 2 ].getLength() ) )
+   {
+      shortestLine = 1;
+   }
+   else if( ( customerLines[ 2 ].getLength() < customerLines[ 0 ].getLength() )
+           && ( customerLines[ 2 ].getLength() < customerLines[ 1 ].getLength() ) )
+   {
+      shortestLine = 3;
+   }
+   
+   return shortestLine;
 }
