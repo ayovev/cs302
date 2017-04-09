@@ -246,13 +246,27 @@ void passFail( int t1, int t2, int t3 )
       {
          cout << "TEST 1 FAILED" << endl;
       }
+      else if( t1 == 0 )
+      {
+         cout << "TEST 1 PASSED" << endl;
+      }
+      
       if( t2 == 1 )
       {
          cout << "TEST 2 FAILED" << endl;
       }
+      else if( t2 == 0 )
+      {
+         cout << "TEST 2 PASSED" << endl;
+      }
+      
       if( t3 == 1 )
       {
          cout << "TEST 3 FAILED" << endl;
+      }
+      else if( t3 == 0 )
+      {
+         cout << "TEST 3 PASSED" << endl;
       }
    }
 }
