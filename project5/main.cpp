@@ -18,7 +18,7 @@ int oneQueueOneTeller();
 int oneQueueThreeTellers();
 void processArrival( int aTime, int tTime, bool& tellerAvailable,
                      PriorityQueue& events, Queue& customers );
-void processDeparture( int aTime, bool& tellerAvailable,
+void processDeparture( int& wTime, int aTime, bool& tellerAvailable,
                        PriorityQueue& events, Queue& customers );
 
 void passFail( int t1, int t2, int t3 );
@@ -42,6 +42,7 @@ int oneQueueOneTeller()
    Queue customers;
    PriorityQueue events;
 
+   int totalWaitTime = 0, averageWaitTime = 0;
    bool tellerAvailable = true;
 
    ofstream fout;
@@ -50,6 +51,9 @@ int oneQueueOneTeller()
 
    fout.clear();
    fout.open( "output1Q1T.txt" );
+
+   fout << "ONE QUEUE ONE TELLER SIMULATION BEGINS" << endl
+        << "--------------------------------------" << endl;
 
    // INCLUDED FOR TESTING PURPOSES - START
       // cout << events << endl << "--------------------------" << endl;
@@ -66,22 +70,16 @@ int oneQueueOneTeller()
 
       if( events.getFrontType() == 'A' )
       {
-         fout << "ARRIVAL TIME: " << events.getFrontADTime() << endl
-              << "TRANSACTION TIME: " << events.getFrontTransactionTime() << endl
-              << "CUSTOMER QUEUE EMPTY? " << customers.isEmpty() << endl
-              << "TELLER AVAILABLE? " << tellerAvailable << endl << endl;
+         fout << "PROCESSING AN ARRIVAL EVENT AT TIME: " << events.getFrontADTime() << endl;
 
          processArrival( events.getFrontADTime(), events.getFrontTransactionTime(),
                          tellerAvailable, events, customers );
       }
       else if( events.getFrontType() == 'D' )
       {
-         fout << "DEPARTURE TIME: " << events.getFrontADTime() << endl
-              << "TRANSACTION TIME: " << events.getFrontTransactionTime() << endl
-              << "CUSTOMER QUEUE EMPTY? " << customers.isEmpty() << endl
-              << "TELLER AVAILABLE? " << tellerAvailable << endl << endl;
+         fout << "PROCESSING A DEPARTURE EVENT AT TIME: " << events.getFrontADTime() << endl;
 
-         processDeparture( events.getFrontADTime(),
+         processDeparture( totalWaitTime, events.getFrontADTime(),
                            tellerAvailable, events, customers );
       }
    }
@@ -89,6 +87,15 @@ int oneQueueOneTeller()
    // INCLUDED FOR TESTING PURPOSES - START
       // cout << events << endl << "--------------------------" << endl;
    // INCLUDED FOR TESTING PURPOSES - END
+
+   averageWaitTime = totalWaitTime / NUM_EVENTS;
+
+   fout << "---------------" << endl
+        << "SIMULATION ENDS" << endl
+        << "TOTAL NUMBER OF PEOPLE PROCESSED: " << NUM_EVENTS << endl
+        << "AVERAGE WAIT TIME: " << averageWaitTime;
+
+   fout.close();
 
    return EXIT_SUCCESS;
 }
@@ -107,6 +114,9 @@ int oneQueueThreeTellers()
    fout.clear();
    fout.open( "output1Q3T.txt" );
 
+   fout << "ONE QUEUE THREE TELLERS SIMULATION BEGINS" << endl
+        << "--------------------------------------" << endl;
+
    // INCLUDED FOR TESTING PURPOSES - START
       // cout << events << endl << "--------------------------" << endl;
    // INCLUDED FOR TESTING PURPOSES - END
@@ -115,6 +125,12 @@ int oneQueueThreeTellers()
    // {
    //    // do stuff
    // }
+
+   fout << "---------------" << endl
+        << "SIMULATION ENDS" << endl
+        << "TOTAL NUMBER OF PEOPLE PROCESSED: " << NUM_EVENTS << endl;
+
+   fout.close();
 
    return EXIT_SUCCESS;
 }
@@ -203,7 +219,7 @@ void processArrival( int aTime, int tTime, bool& tellerAvailable,
       customers.push( aTime, tTime );
    }
 }
-void processDeparture( int aTime, bool& tellerAvailable,
+void processDeparture( int& wTime, int aTime, bool& tellerAvailable,
                        PriorityQueue& events, Queue& customers )
 {
    int departureTime;
@@ -213,6 +229,7 @@ void processDeparture( int aTime, bool& tellerAvailable,
    if( customers.isEmpty() == false )
    {
       departureTime = aTime + customers.getFrontTransactionTime();
+      wTime += ( aTime - customers.getFrontArrivalTime() );
       customers.pop();
       events.push( departureTime, 0, 'D' );
    }
