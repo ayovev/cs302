@@ -13,16 +13,12 @@ Customer::Customer( const int aTime, const int tTime, Customer* next )
 
 Queue::Queue()
 {
-   cout << "Queue Constructor" << endl; // INCLUDED FOR TESTING PURPOSES
-
    front = NULL;
    rear = NULL;
 }
 
 Queue::~Queue()
 {
-   cout << "Queue Destructor" << endl; // INCLUDED FOR TESTING PURPOSES
-
    while( front != NULL )
    {
       rear = front->link;

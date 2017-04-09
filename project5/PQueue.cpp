@@ -14,16 +14,12 @@ Event::Event( const int prio, const int item, const char type, Event* next )
 
 PriorityQueue::PriorityQueue()
 {
-   cout << "Priority Queue Constructor" << endl; // INCLUDED FOR TESTING PURPOSES
-
    front = NULL;
    rear = NULL;
 }
 
 PriorityQueue::~PriorityQueue()
 {
-   cout << "Priority Queue Destructor" << endl; // INCLUDED FOR TESTING PURPOSES
-
    while( front != NULL )
    {
       rear = front->link;
