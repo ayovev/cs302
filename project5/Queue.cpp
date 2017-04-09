@@ -90,6 +90,20 @@ bool Queue::isEmpty()
    }
 }
 
+int Queue::getLength()
+{
+   Customer* temp = front;
+   int length = 0;
+   
+   while( temp != NULL )
+   {
+      length++;
+      temp = temp->link;
+   }
+   
+   return length;   
+}
+
 ostream& operator <<( ostream& out, const Queue& object )
 {
    Customer* temp = object.front;

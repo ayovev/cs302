@@ -27,6 +27,7 @@ class Queue
       int getFrontArrivalTime();
       int getFrontTransactionTime();
       bool isEmpty();
+      int getLength();
 
       friend ostream& operator <<( ostream& out, const Queue& object );
 
