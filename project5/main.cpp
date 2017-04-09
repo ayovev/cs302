@@ -13,15 +13,19 @@ const int NUM_EVENTS = 100;
 
 void generateInputFile();
 void readInEvents( PriorityQueue& events );
+void passFail( int t1, int t2, int t3 );
 
 int oneQueueOneTeller();
-int oneQueueThreeTellers();
-void processArrival( int aTime, int tTime, bool& tellerAvailable,
+void processArrival1( int aTime, int tTime, bool& tellerAvailable,
                      PriorityQueue& events, Queue& customers );
-void processDeparture( int& wTime, int aTime, bool& tellerAvailable,
+void processDeparture1( int& wTime, int aTime, bool& tellerAvailable,
                        PriorityQueue& events, Queue& customers );
-
-void passFail( int t1, int t2, int t3 );
+                       
+int oneQueueThreeTellers();
+void processArrival2( int aTime, int tTime, bool tellersAvailable[ 3 ],
+                      PriorityQueue& events, Queue& customers );
+void processDeparture2();
+bool checkAnyTellerAvailable( bool tellersAvailable[ 3 ] );
 
 int main()
 {
@@ -72,14 +76,14 @@ int oneQueueOneTeller()
       {
          fout << "PROCESSING AN ARRIVAL EVENT AT TIME: " << events.getFrontADTime() << endl;
 
-         processArrival( events.getFrontADTime(), events.getFrontTransactionTime(),
+         processArrival1( events.getFrontADTime(), events.getFrontTransactionTime(),
                          tellerAvailable, events, customers );
       }
       else if( events.getFrontType() == 'D' )
       {
          fout << "PROCESSING A DEPARTURE EVENT AT TIME: " << events.getFrontADTime() << endl;
 
-         processDeparture( totalWaitTime, events.getFrontADTime(),
+         processDeparture1( totalWaitTime, events.getFrontADTime(),
                            tellerAvailable, events, customers );
       }
    }
@@ -105,7 +109,7 @@ int oneQueueThreeTellers()
    Queue customers;
    PriorityQueue events;
 
-   bool teller1Available = true, teller2Available = true, teller3Available = true;
+   bool tellers[ 3 ] = { true, true, true };
 
    ofstream fout;
 
@@ -121,10 +125,29 @@ int oneQueueThreeTellers()
       // cout << events << endl << "--------------------------" << endl;
    // INCLUDED FOR TESTING PURPOSES - END
 
-   // while( events.isEmpty() == false )
-   // {
-   //    // do stuff
-   // }
+   while( events.isEmpty() == false )
+   {
+   // INCLUDED FOR TESTING PURPOSES - START
+      // cout << events.getFrontType() << ' '
+      //      << events.getFrontArrivalTime() << ' '
+      //      << events.getFrontTransactionTime() << endl
+      //      << customers.isEmpty() << ' ' << tellerAvailable << endl;
+   // INCLUDED FOR TESTING PURPOSES - END
+   
+      if( events.getFrontType() == 'A' )
+      {
+         fout << "PROCESSING AN ARRIVAL EVENT AT TIME: " << events.getFrontADTime() << endl;
+         
+         processArrival2( events.getFrontADTime(), events.getFrontTransactionTime(),
+                          tellers, events, customers );
+      }
+      else if( events.getFrontType() == 'D' )
+      {
+         fout << "PROCESSING A DEPARTURE EVENT AT TIME: " << events.getFrontADTime() << endl;
+         
+         // processDeparture2(...)
+      }
+   }
 
    fout << "---------------" << endl
         << "SIMULATION ENDS" << endl
@@ -201,44 +224,6 @@ void readInEvents( PriorityQueue& events )
    fin.close();
 }
 
-void processArrival( int aTime, int tTime, bool& tellerAvailable,
-                     PriorityQueue& events, Queue& customers )
-{
-   int departureTime;
-
-   events.pop();
-
-   if( customers.isEmpty() == true && tellerAvailable == true )
-   {
-      departureTime = aTime + tTime;
-      events.push( departureTime, 0, 'D' );
-      tellerAvailable = false;
-   }
-   else
-   {
-      customers.push( aTime, tTime );
-   }
-}
-void processDeparture( int& wTime, int aTime, bool& tellerAvailable,
-                       PriorityQueue& events, Queue& customers )
-{
-   int departureTime;
-
-   events.pop();
-
-   if( customers.isEmpty() == false )
-   {
-      departureTime = aTime + customers.getFrontTransactionTime();
-      wTime += ( aTime - customers.getFrontArrivalTime() );
-      customers.pop();
-      events.push( departureTime, 0, 'D' );
-   }
-   else
-   {
-      tellerAvailable = true;
-   }
-}
-
 void passFail( int t1, int t2, int t3 )
 {
    if( t1 == 0 && t2 == 0 && t3 == 0 )
@@ -261,3 +246,98 @@ void passFail( int t1, int t2, int t3 )
       }
    }
 }
+
+void processArrival1( int aTime, int tTime, bool& tellerAvailable,
+                     PriorityQueue& events, Queue& customers )
+{
+   int departureTime;
+
+   events.pop();
+
+   if( customers.isEmpty() == true && tellerAvailable == true )
+   {
+      departureTime = aTime + tTime;
+      events.push( departureTime, 0, 'D' );
+      tellerAvailable = false;
+   }
+   else
+   {
+      customers.push( aTime, tTime );
+   }
+}
+
+void processDeparture1( int& wTime, int aTime, bool& tellerAvailable,
+                       PriorityQueue& events, Queue& customers )
+{
+   int departureTime;
+
+   events.pop();
+
+   if( customers.isEmpty() == false )
+   {
+      departureTime = aTime + customers.getFrontTransactionTime();
+      wTime += ( aTime - customers.getFrontArrivalTime() );
+      customers.pop();
+      events.push( departureTime, 0, 'D' );
+   }
+   else
+   {
+      tellerAvailable = true;
+   }
+}
+
+void processArrival2( int aTime, int tTime, bool tellersAvailable[ 3 ],
+                      PriorityQueue& events, Queue& customers )
+{
+   int departureTime;
+   bool anyTellerAvailable;
+   
+   events.pop();
+   
+   anyTellerAvailable = checkAnyTellerAvailable( tellersAvailable );
+   
+   if( customers.isEmpty() == true && anyTellerAvailable == true )
+   {
+      departureTime = aTime + tTime;
+      events.push( departureTime, 0, 'D' );
+      
+      if( tellersAvailable[ 0 ] == true )
+      {
+         tellersAvailable[ 0 ] = false;
+      }
+      else if( tellersAvailable[ 0 ] == false && tellersAvailable[ 1 ] == true )
+      {
+         tellersAvailable[ 1 ] = false;
+      }
+      else if( tellersAvailable[ 0 ] == false && tellersAvailable[ 1 ] == false )
+      {
+         tellersAvailable[ 2 ] = false;
+      }
+   }
+   else
+   {
+      customers.push( aTime, tTime );
+   }
+   
+   
+   
+}                      
+
+void processDeparture2(...)
+{
+   
+}
+
+bool checkAnyTellerAvailable( bool tellersAvailable[ 3 ] )
+{   
+   if( tellersAvailable[ 0 ] == true || tellersAvailable[ 1 ] == true ||
+       tellersAvailable[ 2 ] == true )
+   {
+      return true;
+   }
+   else
+   {
+      return false;
+   }
+}
+
