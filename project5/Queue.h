@@ -22,7 +22,7 @@ class Queue
    public:
       Queue();
       ~Queue();
-      bool push( int const aTime, const int dTime );
+      bool push( const int aTime, const int dTime );
       bool pop();
       int getFrontArrivalTime();
       int getFrontTransactionTime();
