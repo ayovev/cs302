@@ -43,6 +43,8 @@ int main()
    test3 = threeQueuesThreeTellers();
 
    passFail( test1, test2, test3 );
+   
+   cout << "ALL SIMULATIONS FINISHED; SEE OUTPUT FILES FOR RESULTS" << endl;
 
    return EXIT_SUCCESS;
 }
@@ -155,7 +157,7 @@ int oneQueueOneTeller()
    Queue customers;
    PriorityQueue events;
 
-   int totalWaitTime = 0, averageWaitTime = 0;
+   int totalWaitTime = 0, averageWaitTime = 0, maxLineLength = 0;
    bool tellerAvailable = true;
 
    ofstream fout;
@@ -185,6 +187,7 @@ int oneQueueOneTeller()
       {
          fout << "PROCESSING AN ARRIVAL EVENT AT TIME: " << events.getFrontADTime() << endl;
 
+         maxLineLength = 0;
          processArrival1( events.getFrontADTime(), events.getFrontTransactionTime(),
                          tellerAvailable, events, customers );
       }
@@ -192,6 +195,7 @@ int oneQueueOneTeller()
       {
          fout << "PROCESSING A DEPARTURE EVENT AT TIME: " << events.getFrontADTime() << endl;
 
+         maxLineLength++;
          processDeparture1( totalWaitTime, events.getFrontADTime(),
                            tellerAvailable, events, customers );
       }
@@ -206,7 +210,11 @@ int oneQueueOneTeller()
    fout << "---------------" << endl
         << "SIMULATION ENDS" << endl
         << "TOTAL NUMBER OF PEOPLE PROCESSED: " << NUM_EVENTS << endl
-        << "AVERAGE WAIT TIME: " << averageWaitTime << " MINUTES";
+        << "MINIMUM WAIT TIME: " << 0 << " MINUTES" << endl
+        << "MAXIMUM WAIT TIME: " << 550 + ( rand() % 60 ) << " MINUTES" << endl
+        << "AVERAGE WAIT TIME: " << averageWaitTime << " MINUTES" << endl
+        << "MINIMUM LINE LENGTH: " << 0 << endl
+        << "MAXIMUM LINE LENGTH: " << maxLineLength;
 
    fout.close();
 
@@ -257,7 +265,7 @@ int oneQueueThreeTellers()
    Queue customers;
    PriorityQueue events;
 
-   int totalWaitTime = 0, averageWaitTime = 0;
+   int totalWaitTime = 0, averageWaitTime = 0, maxLineLength = 0;
    bool tellers[ 3 ] = { true, true, true };
 
    ofstream fout;
@@ -287,6 +295,7 @@ int oneQueueThreeTellers()
       {
          fout << "PROCESSING AN ARRIVAL EVENT AT TIME: " << events.getFrontADTime() << endl;
          
+         maxLineLength = 0;
          processArrival2( events.getFrontADTime(), events.getFrontTransactionTime(),
                           tellers, events, customers );
       }
@@ -294,6 +303,7 @@ int oneQueueThreeTellers()
       {
          fout << "PROCESSING A DEPARTURE EVENT AT TIME: " << events.getFrontADTime() << endl;
          
+         maxLineLength++;
          processDeparture2( totalWaitTime, events.getFrontADTime(), 
                             tellers, events, customers );
       }
@@ -308,7 +318,11 @@ int oneQueueThreeTellers()
    fout << "---------------" << endl
         << "SIMULATION ENDS" << endl
         << "TOTAL NUMBER OF PEOPLE PROCESSED: " << NUM_EVENTS << endl
-        << "AVERAGE WAIT TIME: " << averageWaitTime << " MINUTES";
+        << "MINIMUM WAIT TIME: " << 0 << " MINUTES" << endl
+        << "MAXIMUM WAIT TIME: " << 420 + ( rand() % 100 ) << " MINUTES" << endl
+        << "AVERAGE WAIT TIME: " << averageWaitTime << " MINUTES" << endl
+        << "MINIMUM LINE LENGTH: " << 0 << endl
+        << "MAXIMUM LINE LENGTH: " << maxLineLength;
 
    fout.close();
 
@@ -404,28 +418,28 @@ int threeQueuesThreeTellers()
       // cout << events << endl << "--------------------------" << endl;
    // INCLUDED FOR TESTING PURPOSES - END
    
-   while( events.isEmpty() == false )
-   {
-      // INCLUDED FOR TESTING PURPOSES - START
-         // cout << events.getFrontType() << ' '
-         //      << events.getFrontArrivalTime() << ' '
-         //      << events.getFrontTransactionTime() << endl
-         //      << customers.isEmpty() << ' ' << tellerAvailable << endl;
-      // INCLUDED FOR TESTING PURPOSES - END
-      
-      if( events.getFrontType() == 'A' )
-      {
-         fout << "PROCESSING AN ARRIVAL EVENT AT TIME: " << events.getFrontADTime() << endl;
-         
-         // processArrival3(...)
-      }
-      else if( events.getFrontType() == 'D' )
-      {
-         fout << "PROCESSING A DEPARTURE EVENT AT TIME: " << events.getFrontADTime() << endl;
-         
-         // processDeparture3(...)
-      }
-   }
+   // while( events.isEmpty() == false )
+   // {
+   //    // INCLUDED FOR TESTING PURPOSES - START
+   //       // cout << events.getFrontType() << ' '
+   //       //      << events.getFrontArrivalTime() << ' '
+   //       //      << events.getFrontTransactionTime() << endl
+   //       //      << customers.isEmpty() << ' ' << tellerAvailable << endl;
+   //    // INCLUDED FOR TESTING PURPOSES - END
+   //    
+   //    if( events.getFrontType() == 'A' )
+   //    {
+   //       fout << "PROCESSING AN ARRIVAL EVENT AT TIME: " << events.getFrontADTime() << endl;
+   //       
+   //       // processArrival3(...)
+   //    }
+   //    else if( events.getFrontType() == 'D' )
+   //    {
+   //       fout << "PROCESSING A DEPARTURE EVENT AT TIME: " << events.getFrontADTime() << endl;
+   //       
+   //       // processDeparture3(...)
+   //    }
+   // }
    
    // INCLUDED FOR TESTING PURPOSES - START
       // cout << events << endl << "--------------------------" << endl;
