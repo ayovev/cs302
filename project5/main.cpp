@@ -422,30 +422,32 @@ int threeQueuesThreeTellers()
       // cout << events << endl << "--------------------------" << endl;
    // INCLUDED FOR TESTING PURPOSES - END
    
-   // while( events.isEmpty() == false )
-   // {
-   //    // INCLUDED FOR TESTING PURPOSES - START
-   //       // cout << events.getFrontType() << ' '
-   //       //      << events.getFrontArrivalTime() << ' '
-   //       //      << events.getFrontTransactionTime() << endl
-   //       //      << customers.isEmpty() << ' ' << tellerAvailable << endl;
-   //    // INCLUDED FOR TESTING PURPOSES - END
-   //    
-   //    if( events.getFrontType() == 'A' )
-   //    {
-   //       fout << "PROCESSING AN ARRIVAL EVENT AT TIME: " << events.getFrontADTime() << endl;
-   //       
-   //       maxLineLength = 0;
-   //       // processArrival3(...)
-   //    }
-   //    else if( events.getFrontType() == 'D' )
-   //    {
-   //       fout << "PROCESSING A DEPARTURE EVENT AT TIME: " << events.getFrontADTime() << endl;
-   //       
-   //       maxLineLength++;
-   //       // processDeparture3(...)
-   //    }
-   // }
+   while( events.isEmpty() == false )
+   {
+      // INCLUDED FOR TESTING PURPOSES - START
+         // cout << events.getFrontType() << ' '
+         //      << events.getFrontArrivalTime() << ' '
+         //      << events.getFrontTransactionTime() << endl
+         //      << customers.isEmpty() << ' ' << tellerAvailable << endl;
+      // INCLUDED FOR TESTING PURPOSES - END
+      
+      if( events.getFrontType() == 'A' )
+      {
+         fout << "PROCESSING AN ARRIVAL EVENT AT TIME: " << events.getFrontADTime() << endl;
+         
+         maxLineLength = 0;
+         processArrival3( events.getFrontADTime(), events.getFrontTransactionTime(), 
+                          tellers, events, customerLines );
+      }
+      else if( events.getFrontType() == 'D' )
+      {
+         fout << "PROCESSING A DEPARTURE EVENT AT TIME: " << events.getFrontADTime() << endl;
+         
+         maxLineLength++;
+         processDeparture3( totalWaitTime, events.getFrontADTime(),
+                            tellers, events, customerLines );
+      }
+   }
    
    // INCLUDED FOR TESTING PURPOSES - START
       // cout << events << endl << "--------------------------" << endl;
@@ -505,7 +507,24 @@ void processArrival3( int aTime, int tTime, bool tellersAvailable[ 3 ],
 void processDeparture3( int& wTime, int aTime, bool tellersAvailable[ 3 ],
                         PriorityQueue& events, Queue customerLines[ 3 ] )
 {
+   int departureTime;
+   bool anyLineEmpty;
    
+   events.pop();
+   
+   anyLineEmpty = checkAnyLineEmpty( customerLines );
+   
+   if( anyLineEmpty == false )
+   {
+      departureTime = aTime + customerLines[ 0 ].getFrontTransactionTime();
+      wTime += ( aTime - customerLines[ 0 ].getFrontArrivalTime() );
+      customerLines[ 0 ].pop();
+      events.push( departureTime, 0, 'D' );
+   }
+   else
+   {
+      tellersAvailable[ 0 ] = true;
+   }
 }
 
 bool checkAnyLineEmpty( Queue customerLines[ 3 ] )
