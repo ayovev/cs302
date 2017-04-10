@@ -38,14 +38,18 @@ int getShortestLine( Queue customerLines[ 3 ] );
 
 int main()
 {
+   // declare and initialize test values to failure (EXIT_FAILURE)
    int test1 = 1, test2 = 1, test3 = 1;
 
+   // seed random time
    srand( time( NULL ) );
 
+   // run tests
    test1 = oneQueueOneTeller();
    test2 = oneQueueThreeTellers();
    test3 = threeQueuesThreeTellers();
 
+   // check pass fail for each test
    passFail( test1, test2, test3 );
    
    cout << "ALL SIMULATIONS FINISHED; SEE OUTPUT FILES FOR RESULTS" << endl;
@@ -100,31 +104,39 @@ void generateInputFile()
 
 void readInEvents( PriorityQueue& events )
 {
+   // declare variables
    int arrivalTime, transactionTime;
    ifstream fin;
 
+   // generates necessary file
    generateInputFile();
 
+   // clear and open file stream
    fin.clear();
    fin.open( "input.txt" );
 
-   // event-driven, not time-driven
+   // while we are not at the end of the file
    while( fin.eof() == false )
    {
+      // read in pair of arrival time and transaction time
       fin >> arrivalTime >> transactionTime;
 
+      // push times as arrivals using 'A'
       events.push( arrivalTime, transactionTime, 'A' );
    }
 
+   // close filestream
    fin.close();
 }
 
 void passFail( int t1, int t2, int t3 )
 {
+   // check if tests returned EXIT_SUCCESS
    if( t1 == 0 && t2 == 0 && t3 == 0 )
    {
       cout << "ALL TESTS PASSED" << endl;
    }
+   // otherwise prints out which tests passed and failed
    else
    {
       if( t1 == 1 )
@@ -158,6 +170,7 @@ void passFail( int t1, int t2, int t3 )
 
 int oneQueueOneTeller()
 {
+   // declare variables
    Queue customers;
    PriorityQueue events;
 
@@ -166,8 +179,10 @@ int oneQueueOneTeller()
 
    ofstream fout;
 
+   // load event priority queue with events
    readInEvents( events );
 
+   // clear and open file stream
    fout.clear();
    fout.open( "output1Q1T.txt" );
 
@@ -178,6 +193,7 @@ int oneQueueOneTeller()
       // cout << events << endl << "--------------------------" << endl;
    // INCLUDED FOR TESTING PURPOSES - END
 
+   // while there are still events that need to be processed
    while( events.isEmpty() == false )
    {
       // INCLUDED FOR TESTING PURPOSES - START
@@ -187,6 +203,7 @@ int oneQueueOneTeller()
          //      << customers.isEmpty() << ' ' << tellerAvailable << endl;
       // INCLUDED FOR TESTING PURPOSES - END
 
+      // if next event is an arrival, process as arrival
       if( events.getFrontType() == 'A' )
       {
          fout << "PROCESSING AN ARRIVAL EVENT AT TIME: " << events.getFrontADTime() << endl;
@@ -195,6 +212,7 @@ int oneQueueOneTeller()
          processArrival1( events.getFrontADTime(), events.getFrontTransactionTime(),
                          tellerAvailable, events, customers );
       }
+      // otherwise, if next event is a departure, process as such
       else if( events.getFrontType() == 'D' )
       {
          fout << "PROCESSING A DEPARTURE EVENT AT TIME: " << events.getFrontADTime() << endl;
@@ -209,8 +227,10 @@ int oneQueueOneTeller()
       // cout << events << endl << "--------------------------" << endl;
    // INCLUDED FOR TESTING PURPOSES - END
 
+   // calculate average wait time based on running total and number of events
    averageWaitTime = totalWaitTime / NUM_EVENTS;
 
+   // output simulation statistics to file
    fout << "---------------" << endl
         << "SIMULATION ENDS" << endl
         << "TOTAL NUMBER OF PEOPLE PROCESSED: " << NUM_EVENTS << endl
@@ -220,6 +240,7 @@ int oneQueueOneTeller()
         << "MINIMUM LINE LENGTH: " << 0 << endl
         << "MAXIMUM LINE LENGTH: " << maxLineLength;
 
+   // close file stream
    fout.close();
 
    return EXIT_SUCCESS;
@@ -228,18 +249,24 @@ int oneQueueOneTeller()
 void processArrival1( int aTime, int tTime, bool& tellerAvailable,
                      PriorityQueue& events, Queue& customers )
 {
+   // declare variables
    int departureTime;
 
+   // remove current event
    events.pop();
 
+   // process next event if teller is available and customers are in line
    if( customers.isEmpty() == true && tellerAvailable == true )
    {
+      // calculate departure time, push new departure event, mark teller as unavailable
       departureTime = aTime + tTime;
       events.push( departureTime, 0, 'D' );
       tellerAvailable = false;
    }
+   // otherwise
    else
    {
+      // add customer to line
       customers.push( aTime, tTime );
    }
 }
@@ -247,25 +274,32 @@ void processArrival1( int aTime, int tTime, bool& tellerAvailable,
 void processDeparture1( int& wTime, int aTime, bool& tellerAvailable,
                        PriorityQueue& events, Queue& customers )
 {
+   // declare variables
    int departureTime;
 
+   // remove current event
    events.pop();
 
+   // process next event if customers are in line
    if( customers.isEmpty() == false )
    {
+      // calculate departure time, add wait time, push new departure event
       departureTime = aTime + customers.getFrontTransactionTime();
       wTime += ( aTime - customers.getFrontArrivalTime() );
       customers.pop();
       events.push( departureTime, 0, 'D' );
    }
+   // otherwise
    else
    {
+      // mark teller as available
       tellerAvailable = true;
    }
 }
 
 int oneQueueThreeTellers()
 {
+   // declare variables
    Queue customers;
    PriorityQueue events;
 
@@ -274,8 +308,10 @@ int oneQueueThreeTellers()
 
    ofstream fout;
 
+   // load event priority queue with events
    readInEvents( events );
 
+   // clear and open file stream
    fout.clear();
    fout.open( "output1Q3T.txt" );
 
@@ -286,6 +322,7 @@ int oneQueueThreeTellers()
       // cout << events << endl << "--------------------------" << endl;
    // INCLUDED FOR TESTING PURPOSES - END
 
+   // while there are still events that need to be processed
    while( events.isEmpty() == false )
    {
       // INCLUDED FOR TESTING PURPOSES - START
@@ -295,6 +332,7 @@ int oneQueueThreeTellers()
          //      << customers.isEmpty() << ' ' << tellerAvailable << endl;
       // INCLUDED FOR TESTING PURPOSES - END
    
+      // if next event is an arrival, process as arrival
       if( events.getFrontType() == 'A' )
       {
          fout << "PROCESSING AN ARRIVAL EVENT AT TIME: " << events.getFrontADTime() << endl;
@@ -303,6 +341,7 @@ int oneQueueThreeTellers()
          processArrival2( events.getFrontADTime(), events.getFrontTransactionTime(),
                           tellers, events, customers );
       }
+      // otherwise, if next event is a departure, process as such
       else if( events.getFrontType() == 'D' )
       {
          fout << "PROCESSING A DEPARTURE EVENT AT TIME: " << events.getFrontADTime() << endl;
@@ -317,8 +356,10 @@ int oneQueueThreeTellers()
       // cout << events << endl << "--------------------------" << endl;
    // INCLUDED FOR TESTING PURPOSES - END
    
+   // calculate average wait time based on running total and number of events
    averageWaitTime = totalWaitTime / NUM_EVENTS;
 
+   // output simulation to file
    fout << "---------------" << endl
         << "SIMULATION ENDS" << endl
         << "TOTAL NUMBER OF PEOPLE PROCESSED: " << NUM_EVENTS << endl
@@ -328,6 +369,7 @@ int oneQueueThreeTellers()
         << "MINIMUM LINE LENGTH: " << 0 << endl
         << "MAXIMUM LINE LENGTH: " << maxLineLength;
 
+   // close file stream
    fout.close();
 
    return EXIT_SUCCESS;
@@ -336,15 +378,20 @@ int oneQueueThreeTellers()
 void processArrival2( int aTime, int tTime, bool tellersAvailable[ 3 ],
                       PriorityQueue& events, Queue& customers )
 {
+   // declare variables
    int departureTime;
    bool anyTellerAvailable;
    
+   // remove current event
    events.pop();
    
+   // check if any teller is available
    anyTellerAvailable = checkAnyTellerAvailable( tellersAvailable );
    
+   // process next event if a teller is available and their are customers in line
    if( customers.isEmpty() == true && anyTellerAvailable == true )
    {
+      // calculate departure time, push new departure event, and mark appropriate teller
       departureTime = aTime + tTime;
       events.push( departureTime, 0, 'D' );
       
@@ -361,8 +408,10 @@ void processArrival2( int aTime, int tTime, bool tellersAvailable[ 3 ],
          tellersAvailable[ 2 ] = false;
       }
    }
+   // otherwise
    else
    {
+      // add customer to line
       customers.push( aTime, tTime );
    }
 }                      
@@ -370,25 +419,32 @@ void processArrival2( int aTime, int tTime, bool tellersAvailable[ 3 ],
 void processDeparture2( int& wTime, int aTime, bool tellersAvailable[ 3 ],
                         PriorityQueue& events, Queue& customers )
 {
+   // declare variables
    int departureTime;
    
+   // remove current event
    events.pop();
    
+   // process next event if customers are in line
    if( customers.isEmpty() == false )
    {
+      // calculate departure time, add wait time, push new departure event
       departureTime = aTime + customers.getFrontTransactionTime();
       wTime += ( aTime - customers.getFrontArrivalTime() );
       customers.pop();
       events.push( departureTime, 0, 'D' );
    }
+   // otherwise
    else
    {
+      // mark arbitrary teller as available
       tellersAvailable[ 0 ] = true;
    }
 }
 
 bool checkAnyTellerAvailable( bool tellersAvailable[ 3 ] )
-{   
+{  
+   // check if any teller is available 
    if( tellersAvailable[ 0 ] == true || tellersAvailable[ 1 ] == true ||
        tellersAvailable[ 2 ] == true )
    {
@@ -402,6 +458,7 @@ bool checkAnyTellerAvailable( bool tellersAvailable[ 3 ] )
 
 int threeQueuesThreeTellers()
 {
+   // declare variables
    Queue customerLines[ 3 ];
    PriorityQueue events;
    
@@ -410,8 +467,10 @@ int threeQueuesThreeTellers()
    
    ofstream fout;
    
+   // load event priority queue with events
    readInEvents( events );
    
+   // clear and open file stream
    fout.clear();
    fout.open( "output3Q3T.txt" );
    
@@ -422,6 +481,7 @@ int threeQueuesThreeTellers()
       // cout << events << endl << "--------------------------" << endl;
    // INCLUDED FOR TESTING PURPOSES - END
    
+   // while there are still events that need to be processed
    while( events.isEmpty() == false )
    {
       // INCLUDED FOR TESTING PURPOSES - START
@@ -431,6 +491,7 @@ int threeQueuesThreeTellers()
          //      << customers.isEmpty() << ' ' << tellerAvailable << endl;
       // INCLUDED FOR TESTING PURPOSES - END
       
+      // if next event is an arrival, process as arrival
       if( events.getFrontType() == 'A' )
       {
          fout << "PROCESSING AN ARRIVAL EVENT AT TIME: " << events.getFrontADTime() << endl;
@@ -439,6 +500,7 @@ int threeQueuesThreeTellers()
          processArrival3( events.getFrontADTime(), events.getFrontTransactionTime(), 
                           tellers, events, customerLines );
       }
+      // otherwise, if next event is a departure, process as such
       else if( events.getFrontType() == 'D' )
       {
          fout << "PROCESSING A DEPARTURE EVENT AT TIME: " << events.getFrontADTime() << endl;
@@ -453,8 +515,10 @@ int threeQueuesThreeTellers()
       // cout << events << endl << "--------------------------" << endl;
    // INCLUDED FOR TESTING PURPOSES - END
    
+   // calculate average wait time based n running total and number of events
    averageWaitTime = totalWaitTime / NUM_EVENTS;
    
+   // output simulation to file
    fout << "---------------" << endl
         << "SIMULATION ENDS" << endl
         << "TOTAL NUMBER OF PEOPLE PROCESSED: " << NUM_EVENTS << endl
@@ -464,6 +528,7 @@ int threeQueuesThreeTellers()
         << "MINIMUM LINE LENGTH: " << 0 << endl
         << "MAXIMUM LINE LENGTH: " << maxLineLength;
    
+   // close file stream
    fout.close();
    
    return EXIT_SUCCESS;
@@ -472,16 +537,21 @@ int threeQueuesThreeTellers()
 void processArrival3( int aTime, int tTime, bool tellersAvailable[ 3 ],
                       PriorityQueue& events, Queue customerLines[ 3 ] )
 {
+   // declare variables
    int departureTime;
    bool anyTellerAvailable, anyLineEmpty;
    
+   // remove current event
    events.pop();
    
+   // check if any teller is available, and if any line is empty
    anyTellerAvailable = checkAnyTellerAvailable( tellersAvailable );
    anyLineEmpty = checkAnyLineEmpty( customerLines );
    
+   // process next event if conditions are met
    if( anyLineEmpty == true && anyTellerAvailable == true )
    {
+      // calculate departure time, push new departure event, and mark appropriate teller
       departureTime = aTime + tTime;
       events.push( departureTime, 0, 'D' );
       
@@ -498,8 +568,10 @@ void processArrival3( int aTime, int tTime, bool tellersAvailable[ 3 ],
          tellersAvailable[ 2 ] = false;
       }
    }
+   // otherwise
    else
    {
+      // add customer to shortest line
       customerLines[ getShortestLine( customerLines ) ].push( aTime, tTime );
    }
 }
@@ -507,28 +579,36 @@ void processArrival3( int aTime, int tTime, bool tellersAvailable[ 3 ],
 void processDeparture3( int& wTime, int aTime, bool tellersAvailable[ 3 ],
                         PriorityQueue& events, Queue customerLines[ 3 ] )
 {
+   // declare variables
    int departureTime;
    bool anyLineEmpty;
    
+   // remove curent event
    events.pop();
    
+   // check if any line is empty
    anyLineEmpty = checkAnyLineEmpty( customerLines );
    
+   // process next event if no lines are empty
    if( anyLineEmpty == false )
    {
+      // calculate departure time, add wait time, push new departure event
       departureTime = aTime + customerLines[ 0 ].getFrontTransactionTime();
       wTime += ( aTime - customerLines[ 0 ].getFrontArrivalTime() );
       customerLines[ 0 ].pop();
       events.push( departureTime, 0, 'D' );
    }
    else
+   // otherwise
    {
+      // mark arbitrary teller as available
       tellersAvailable[ 0 ] = true;
    }
 }
 
 bool checkAnyLineEmpty( Queue customerLines[ 3 ] )
 {
+   // check if any line is empty
    if( customerLines[ 0 ].isEmpty() == true || customerLines[ 1 ].isEmpty() == true || 
        customerLines[ 2 ].isEmpty() == true )
    {
@@ -542,8 +622,10 @@ bool checkAnyLineEmpty( Queue customerLines[ 3 ] )
 
 int getShortestLine( Queue customerLines[ 3 ] )
 {
+   // declare variables
    int shortestLine = 0;
    
+   // checks which line is the shortest
    if( ( customerLines[ 0 ].getLength() < customerLines[ 1 ].getLength() )
       && ( customerLines[ 0 ].getLength() < customerLines[ 2 ].getLength() ) )
    {
