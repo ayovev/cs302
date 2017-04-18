@@ -12,13 +12,13 @@ class BinarySearchTree
       ~BinarySearchTree();
       
       bool isEmpty() const;
-      int getHeight() const;
+      int getHeight( BinaryNode* subTree ) const;
       int getNumberOfNodes() const;
       int getRootData() const;
       void setRootData( const int item );
       bool add( const int item );
       bool remove( const int item );
-      void clear();
+      void clear( BinaryNode* subTree );
       int getEntry( const int entry );
       bool contains( const int item ) const;
       

@@ -1,9 +1,11 @@
 #include "binarySearchTree.h"
 #include <cstdlib>
 #include <iostream>
+#include <algorithm>
 
 using std::cout;
 using std::endl;
+using std::max;
 
 BinarySearchTree::BinarySearchTree()
 {
@@ -26,7 +28,7 @@ BinarySearchTree::BinarySearchTree( const BinarySearchTree& tree )
 
 BinarySearchTree::~BinarySearchTree()
 {
-   clear();
+   clear( root );
 }
 
 bool BinarySearchTree::isEmpty() const
@@ -41,9 +43,14 @@ bool BinarySearchTree::isEmpty() const
    }
 }
 
-int BinarySearchTree::getHeight() const
-{
+int BinarySearchTree::getHeight( BinaryNode* subTree ) const
+{   
+   if( subTree == NULL )
+   {
+      return 0;
+   }
    
+   return 1 + max( getHeight( subTree->leftChild ), getHeight( subTree->rightChild ) );
 }
 
 int BinarySearchTree::getNumberOfNodes() const
@@ -71,9 +78,15 @@ bool BinarySearchTree::remove( const int item )
    
 }
 
-void BinarySearchTree::clear()
+void BinarySearchTree::clear( BinaryNode* subTree )
 {
-   
+   if( subTree != NULL )
+   {
+      clear( subTree->leftChild );
+      clear( subTree->rightChild );
+      
+      subTree = NULL;
+   }
 }
 
 int BinarySearchTree::getEntry( const int entry )
