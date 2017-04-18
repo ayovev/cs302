@@ -8,11 +8,13 @@ class BinaryNode
       BinaryNode( const int data );
       BinaryNode( const int data,
                   BinaryNode* left, BinaryNode* right );
+      ~BinaryNode();
                   
       void setItem( const int data );
       int getItem() const;
       bool isLeaf() const;
       
+   public:      
       int item;
       BinaryNode* leftChild;
       BinaryNode* rightChild;
