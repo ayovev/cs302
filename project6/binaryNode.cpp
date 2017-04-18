@@ -7,28 +7,28 @@ using std::endl;
 
 BinaryNode::BinaryNode()
 {
-   cout << "Node Default Constructor" << endl; // INCLUDED FOR TESTING PURPOSES
+   cout << "Node Default Constructor" << endl; // IFTP
    
-   item = 0; // MIGHT REMOVE?
+   data = 0;
    leftChild = NULL;
    rightChild = NULL;
 }
 
-BinaryNode::BinaryNode( const int data )
+BinaryNode::BinaryNode( const int item )
 {
-   cout << "Node Parameterized Constructor" << endl; // INCLUDED FOR TESTING PURPOSES
+   cout << "Node Parameterized Constructor" << endl; // IFTP
    
-   item  = data;
+   data  = item;
    leftChild = NULL;
    rightChild = NULL;
 }
 
-BinaryNode::BinaryNode( const int data,
+BinaryNode::BinaryNode( const int item,
                         BinaryNode* left, BinaryNode* right )
 {
-   cout << "Node Parameterized Constructor" << endl; // INCLUDED FOR TESTING PURPOSES
+   cout << "Node Parameterized Constructor" << endl; // IFTP
    
-   item = data;
+   data = item;
    leftChild = left;
    rightChild = right;
 }
@@ -39,14 +39,14 @@ BinaryNode::~BinaryNode()
    rightChild = NULL;
 }
 
-void BinaryNode::setItem( const int data )
+void BinaryNode::setItem( const int item )
 {
-   item = data;
+   data = item;
 }
 
 int BinaryNode::getItem() const
 {
-   return item;
+   return data;
 }
 
 bool BinaryNode::isLeaf() const

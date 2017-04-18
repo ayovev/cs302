@@ -5,17 +5,17 @@ class BinaryNode
 {
    public:
       BinaryNode();
-      BinaryNode( const int data );
-      BinaryNode( const int data,
+      BinaryNode( const int item );
+      BinaryNode( const int item,
                   BinaryNode* left, BinaryNode* right );
       ~BinaryNode();
                   
-      void setItem( const int data );
+      void setItem( const int item );
       int getItem() const;
       bool isLeaf() const;
       
    public:      
-      int item;
+      int data;
       BinaryNode* leftChild;
       BinaryNode* rightChild;
 };
