@@ -15,15 +15,19 @@ class BinarySearchTree
       int getHeight() const;
       int getNumberOfNodes() const;
       int getRootData() const;
-      void setRootData( const int data );
-      bool add( const int data );
-      bool remove( const int data );
+      void setRootData( const int item );
+      bool add( const int item );
+      bool remove( const int item );
       void clear();
       int getEntry( const int entry );
-      bool contains( const int data ) const;
+      bool contains( const int item ) const;
       
-      
+      void preorderTraverse() const;
+      void inorderTraverse() const;
+      void postorderTraverse() const;
       
    private:
       BinaryNode* root;
-}
+};
+
+#endif // BINARY_SEARCH_TREE_H
