@@ -1,13 +1,17 @@
-#include "binarySearchTree.cpp"
-#include "binaryNode.cpp"
+#include "binarySearchTree.h"
+#include "binaryNode.h"
 #include <cstdlib>
+#include <vector>
+#include <algorithm>
+#include <random>
+#include <chrono>
 #include <iostream>
 #include <fstream>
 #include <ctime>
 
 using namespace std;
 
-void generateInputFile( const int numValues );
+void generateInputFile( const unsigned int numValues );
 
 int main()
 {
@@ -23,23 +27,33 @@ int main()
    return EXIT_SUCCESS;
 }
 
-void generateInputFile( const int numValues )
+void generateInputFile( const unsigned int numValues )
 {
    ofstream fout;
-   int count = 0;
+   unsigned int count = 0;
+   vector<int> numbers;
+   
+   unsigned int seed = chrono::system_clock::now().time_since_epoch().count();
+   
+   for( count = 0; count < numValues; count++ )
+   {
+       numbers.push_back( count + 1 );
+   }
+   
+   shuffle( numbers.begin(), numbers.end(), default_random_engine( seed ) );
    
    fout.clear();
    fout.open( "input.txt" );
    
-   for( count = 0; count < numValues; count++ )
+   for( count = 0; count < numbers.size(); count++ )
    {
       if( count == 99 )
       {
-         fout << ( rand() % 200 ) + 1;
+         fout << numbers.at( count );
       }
       else
       {
-         fout << ( rand() % 200 ) + 1 << endl;
+         fout << numbers.at( count ) << endl;
       }
    }
    
