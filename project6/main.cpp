@@ -23,6 +23,7 @@ int main()
    generateInputFile( 100 );
    cout << "INPUT FILE GENERATED" << endl; // IFTP
    
+   cout << "BST HEIGHT: " << tree1.getHeight( tree1.root ) << endl;
    
    return EXIT_SUCCESS;
 }
