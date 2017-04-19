@@ -21,11 +21,6 @@ BinarySearchTree::BinarySearchTree( const int rootItem )
    root->data = rootItem;
 }
 
-BinarySearchTree::BinarySearchTree( const BinarySearchTree& tree )
-{
-   cout << "Binary Search Tree Copy Constructor" << endl;
-}
-
 BinarySearchTree::~BinarySearchTree()
 {
    clear( root );
