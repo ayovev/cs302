@@ -82,6 +82,16 @@ void BinarySearchTree::setRootData( const int item )
 
 bool BinarySearchTree::add( const int item )
 {
+   if( root == NULL )
+   {
+      root = new BinaryNode( item );
+      
+      return true;
+   }
+   else
+   {
+      // do other stuff
+   }
    return EXIT_SUCCESS; // TEMPORARY RETURN
 }
 

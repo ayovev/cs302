@@ -26,7 +26,7 @@ class BinarySearchTree
       void inorderTraverse() const;
       void postorderTraverse() const;
       
-   private:
+   public:
       BinaryNode* root;
 };
 
