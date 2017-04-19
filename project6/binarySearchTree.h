@@ -13,7 +13,7 @@ class BinarySearchTree
       
       bool isEmpty() const;
       int getHeight( BinaryNode* subTree ) const;
-      int getNumberOfNodes() const;
+      int getNumberOfNodes( BinaryNode* subTree ) const;
       int getRootData() const;
       void setRootData( const int item );
       bool add( const int item );

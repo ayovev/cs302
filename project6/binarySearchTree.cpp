@@ -53,9 +53,21 @@ int BinarySearchTree::getHeight( BinaryNode* subTree ) const
    return 1 + max( getHeight( subTree->leftChild ), getHeight( subTree->rightChild ) );
 }
 
-int BinarySearchTree::getNumberOfNodes() const
+int BinarySearchTree::getNumberOfNodes( BinaryNode* subTree ) const
 {
+   int count = 1;
    
+   if( subTree == NULL )
+   {
+      return 0;
+   }
+   else
+   {      
+      count += getNumberOfNodes( subTree->leftChild );
+      count += getNumberOfNodes( subTree->rightChild );
+      
+      return count;
+   }
 }
 
 int BinarySearchTree::getRootData() const
@@ -70,12 +82,12 @@ void BinarySearchTree::setRootData( const int item )
 
 bool BinarySearchTree::add( const int item )
 {
-   
+   return EXIT_SUCCESS; // TEMPORARY RETURN
 }
 
 bool BinarySearchTree::remove( const int item )
 {
-   
+   return EXIT_SUCCESS; // TEMPORARY RETURN
 }
 
 void BinarySearchTree::clear( BinaryNode* subTree )
@@ -91,12 +103,12 @@ void BinarySearchTree::clear( BinaryNode* subTree )
 
 int BinarySearchTree::getEntry( const int entry )
 {
-   
+   return EXIT_SUCCESS; // TEMPORARY RETURN
 }
 
 bool BinarySearchTree::contains( const int item ) const
 {
-   
+   return EXIT_SUCCESS; // TEMPORARY RETURN
 }
 
 void BinarySearchTree::preorderTraverse() const
