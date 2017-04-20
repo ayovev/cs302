@@ -187,17 +187,33 @@ bool BinarySearchTree::contains( BinaryNode* subTree, const int item ) const
    return EXIT_FAILURE; // INDICATES INCORRECT EXECUTION
 }
 
-void BinarySearchTree::preorderTraverse() const
+void BinarySearchTree::preorderTraverse( BinaryNode* subTree ) const
 {
-   
+   if( subTree != NULL )
+   {
+      cout << subTree->data << ' ';
+      preorderTraverse( subTree->leftChild );
+      preorderTraverse( subTree->rightChild );
+   }
 }
 
-void BinarySearchTree::inorderTraverse() const
+void BinarySearchTree::inorderTraverse( BinaryNode* subTree ) const
 {
-   
+   if( subTree != NULL )
+   {
+      inorderTraverse( subTree->leftChild );
+      cout << subTree->data << ' ';
+      inorderTraverse( subTree->rightChild );
+   }
 }
 
-void BinarySearchTree::postorderTraverse() const
+void BinarySearchTree::postorderTraverse( BinaryNode* subTree ) const
 {
+   if( subTree != NULL )
+   {
+      postorderTraverse( subTree->leftChild );
+      postorderTraverse( subTree->rightChild );
+      cout << subTree->data << ' ';
+   }
    
 }

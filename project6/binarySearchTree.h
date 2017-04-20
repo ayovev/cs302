@@ -21,9 +21,9 @@ class BinarySearchTree
       int getEntry( const int entry );
       bool contains( BinaryNode* subTree, const int item ) const;
       
-      void preorderTraverse() const;
-      void inorderTraverse() const;
-      void postorderTraverse() const;
+      void preorderTraverse( BinaryNode* subTree ) const;
+      void inorderTraverse( BinaryNode* subTree ) const;
+      void postorderTraverse( BinaryNode* subTree ) const;
       
    public:
       BinaryNode* root;
