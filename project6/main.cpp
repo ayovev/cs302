@@ -25,30 +25,20 @@ int main()
    
    cout << "INITIAL BST HEIGHT: " << tree1.getHeight( tree1.root ) << endl; // IFTP
    
-   tree1.add( 10 );
-   cout << "ADDING NODE WITH VALUE 10" << endl;
-   cout << "BST HEIGHT: " << tree1.getHeight( tree1.root ) << endl;
-   cout << "NUMBER OF NODES: " << tree1.getNumberOfNodes( tree1.root ) << endl;
-   
+// IFTP - START
+   // tree1.add( # );
+   // cout << "ADDING NODE WITH VALUE #" << endl;
+   // cout << "BST HEIGHT: " << tree1.getHeight( tree1.root ) << endl;
+   // cout << "NUMBER OF NODES: " << tree1.getNumberOfNodes( tree1.root ) << endl;
+// IFTP - END
+
+   tree1.add( 60 );
    tree1.add( 20 );
-   cout << "ADDING NODE WITH VALUE 20" << endl;
-   cout << "BST HEIGHT: " << tree1.getHeight( tree1.root ) << endl;
-   cout << "NUMBER OF NODES: " << tree1.getNumberOfNodes( tree1.root ) << endl;
-   
-   tree1.add( 5 );
-   cout << "ADDING NODE WITH VALUE 5" << endl;
-   cout << "BST HEIGHT: " << tree1.getHeight( tree1.root ) << endl;
-   cout << "NUMBER OF NODES: " << tree1.getNumberOfNodes( tree1.root ) << endl;
-   
-   tree1.add( 18 );
-   cout << "ADDING NODE WITH VALUE 18" << endl;
-   cout << "BST HEIGHT: " << tree1.getHeight( tree1.root ) << endl;
-   cout << "NUMBER OF NODES: " << tree1.getNumberOfNodes( tree1.root ) << endl;
-   
-   tree1.add( 6 );
-   cout << "ADDING NODE WITH VALUE 6" << endl;
-   cout << "BST HEIGHT: " << tree1.getHeight( tree1.root ) << endl;
-   cout << "NUMBER OF NODES: " << tree1.getNumberOfNodes( tree1.root ) << endl;
+   tree1.add( 70 );
+   tree1.add( 10 );
+   tree1.add( 40 );
+   tree1.add( 30 );
+   tree1.add( 50 );
    
    //cout << "CLEARING BST..." << endl << endl;
    //tree1.clear( tree1.root );
@@ -58,7 +48,19 @@ int main()
    // cout << "ADDRESS OF ROOT NODE: " << &tree1.root << endl;
    // cout << "ROOT NODE DATA: " << tree1.getRootData() << endl;
    
-   cout << tree1.contains( tree1.root, 0 ) << endl;
+   // cout << tree1.contains( tree1.root, 0 ) << endl;
+   
+   cout << "PREORDER TRAVERSE: ";
+   tree1.preorderTraverse( tree1.root );
+   cout << endl << endl;
+   
+   cout << "POSTORDER TRAVERSE: ";
+   tree1.postorderTraverse( tree1.root );
+   cout << endl << endl;
+   
+   cout << "INORDER TRAVERSE: ";
+   tree1.inorderTraverse( tree1.root );
+   cout << endl << endl;
    
    system("pause");
    
