@@ -35,9 +35,13 @@ BinaryNode::BinaryNode( const int item,
 
 BinaryNode::~BinaryNode()
 {
-   leftChild = NULL;
-   rightChild = NULL;
+   //leftChild = NULL;
+   //rightChild = NULL;
+   
+   //delete leftChild;
+   //delete rightChild;
 }
+
 
 void BinaryNode::setItem( const int item )
 {
