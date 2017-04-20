@@ -8,7 +8,6 @@ class BinarySearchTree
    public:
       BinarySearchTree();
       BinarySearchTree( const int rootItem );
-      BinarySearchTree( const BinarySearchTree& tree );
       ~BinarySearchTree();
       
       bool isEmpty() const;
@@ -20,7 +19,7 @@ class BinarySearchTree
       bool remove( const int item );
       void clear( BinaryNode* subTree );
       int getEntry( const int entry );
-      bool contains( const int item ) const;
+      bool contains( BinaryNode* subTree, const int item ) const;
       
       void preorderTraverse() const;
       void inorderTraverse() const;
