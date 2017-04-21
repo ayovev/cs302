@@ -137,33 +137,36 @@ bool BinarySearchTree::remove( BinaryNode* subTree, const int item )
    {
       remove( subTree->rightChild, item );
    }
-   else if( item == subTree->data )
+   else
    {
-      if( subTree->leftChild == NULL )
+      if( subTree->leftChild == NULL && subTree->rightChild == NULL )
       {
-         BinaryNode* temp = subTree->rightChild;
          delete subTree;
-         
-         return true;
+         subTree = NULL;
       }
       else if( subTree->rightChild == NULL )
       {
-         BinaryNode* temp = subTree->leftChild;
          delete subTree;
-         
-         return true;
+         subTree = NULL;
       }
-      
-      BinaryNode* current = subTree->rightChild;
-      
-      while( current->leftChild != NULL )
+      else if( subTree->leftChild == NULL )
       {
-         current = current->leftChild;
+         delete subTree;
+         subTree = NULL;
       }
-      
-      subTree->data = current->data;
-      
-      remove( subTree->rightChild, current->data );
+      else
+      {
+         BinaryNode* current = subTree->leftChild;
+         
+         while( current->rightChild != NULL )
+         {
+            current = current->rightChild;
+         }
+         
+         subTree->data = current->data;
+         
+         remove( subTree->leftChild, current->data );
+      }
    }
    return true;
 }
