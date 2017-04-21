@@ -6,18 +6,15 @@
 using std::cout;
 using std::endl;
 using std::max;
+using std::swap;
 
 BinarySearchTree::BinarySearchTree()
-{
-   cout << "Binary Search Tree Default Constructor" << endl;
-   
+{   
    root = NULL;
 }
 
 BinarySearchTree::BinarySearchTree( const int rootItem )
-{
-   cout << "Binary Search Tree Parameterized Constructor" << endl;
-   
+{   
    root->data = rootItem;
 }
 
@@ -126,44 +123,86 @@ bool BinarySearchTree::add( const int item )
    }
 }
 
-bool BinarySearchTree::remove( const int item )
+bool BinarySearchTree::remove( BinaryNode* subTree, const int item )
 {
-   return EXIT_SUCCESS; // TEMPORARY RETURN
+   if( subTree == NULL )
+   {
+      return false;
+   }
+   else if( item < subTree->data )
+   {
+      remove( subTree->leftChild, item );
+   }
+   else if( item > subTree->data )
+   {
+      remove( subTree->rightChild, item );
+   }
+   else if( item == subTree->data )
+   {
+      if( subTree->leftChild == NULL )
+      {
+         BinaryNode* temp = subTree->rightChild;
+         delete subTree;
+         
+         return true;
+      }
+      else if( subTree->rightChild == NULL )
+      {
+         BinaryNode* temp = subTree->leftChild;
+         delete subTree;
+         
+         return true;
+      }
+      
+      BinaryNode* current = subTree->rightChild;
+      
+      while( current->leftChild != NULL )
+      {
+         current = current->leftChild;
+      }
+      
+      subTree->data = current->data;
+      
+      remove( subTree->rightChild, current->data );
+   }
+   return true;
 }
 
 void BinarySearchTree::clear( BinaryNode* subTree )
 {
-/*
-   if( subTree != NULL )
-   {
-      if( subTree->leftChild != NULL )
-      {
-         clear( subTree->leftChild );
-      }
-      if( subTree->rightChild != NULL )
-      {
-         clear( subTree->rightChild );
-      }
-   }
-
-   delete subTree;
-   subTree = NULL;
-*/
-
-/*
    if( subTree != NULL )
    {
       clear( subTree->leftChild );
       clear( subTree->rightChild );
+      
+      subTree->leftChild = NULL;
+      subTree->rightChild = NULL;
+      
       delete subTree;
       subTree = NULL;
    }
-*/
+   root = NULL;
 }
 
-int BinarySearchTree::getEntry( const int entry )
+int BinarySearchTree::getEntry( BinaryNode* subTree, const int entry )
 {
-   return EXIT_SUCCESS; // TEMPORARY RETURN
+   if( subTree == NULL )
+   {
+      return -1;
+   }
+   else if( subTree->data == entry )
+   {
+      return entry;
+   }
+   else if( entry < subTree->data )
+   {
+      return getEntry( subTree->leftChild, entry );
+   }
+   else if( entry > subTree->data )
+   {
+      return getEntry( subTree->rightChild, entry );
+   }
+   return EXIT_FAILURE; // INDICATES INCORRECT EXECUTION
 }
 
 bool BinarySearchTree::contains( BinaryNode* subTree, const int item ) const
