@@ -59,7 +59,7 @@ int main()
       }
       if( found == true )
       {
-         // tree1.remove( tree1.root, count );
+         tree1.remove( tree1.root, count );
       }
       found = false;
    }
@@ -104,7 +104,7 @@ void generateInputFile( const unsigned int numValues )
    
    unsigned int seed = chrono::system_clock::now().time_since_epoch().count();
    
-   for( count = 0; count < numValues; count++ )
+   for( count = 0; count < 200; count++ )
    {
        numbers.push_back( count + 1 );
    }
@@ -114,9 +114,9 @@ void generateInputFile( const unsigned int numValues )
    fout.clear();
    fout.open( "input.txt" );
    
-   for( count = 0; count < numbers.size(); count++ )
+   for( count = 0; count < numValues; count++ )
    {
-      if( count == numbers.size() - 1 )
+      if( count == numValues - 1 )
       {
          fout << numbers.at( count );
       }
