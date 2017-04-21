@@ -6,18 +6,14 @@ using std::cout;
 using std::endl;
 
 BinaryNode::BinaryNode()
-{
-   cout << "Node Default Constructor" << endl; // IFTP
-   
-   data = 0;
+{   
+   data = -1;
    leftChild = NULL;
    rightChild = NULL;
 }
 
 BinaryNode::BinaryNode( const int item )
-{
-   cout << "Node Parameterized Constructor" << endl; // IFTP
-   
+{   
    data  = item;
    leftChild = NULL;
    rightChild = NULL;
@@ -26,8 +22,6 @@ BinaryNode::BinaryNode( const int item )
 BinaryNode::BinaryNode( const int item,
                         BinaryNode* left, BinaryNode* right )
 {
-   cout << "Node Parameterized Constructor" << endl; // IFTP
-   
    data = item;
    leftChild = left;
    rightChild = right;
@@ -35,13 +29,9 @@ BinaryNode::BinaryNode( const int item,
 
 BinaryNode::~BinaryNode()
 {
-   //leftChild = NULL;
-   //rightChild = NULL;
-   
-   //delete leftChild;
-   //delete rightChild;
+   leftChild = NULL;
+   rightChild = NULL;
 }
-
 
 void BinaryNode::setItem( const int item )
 {
