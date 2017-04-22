@@ -16,7 +16,7 @@ class BinarySearchTree
       int getRootData() const;
       void setRootData( const int item );
       bool add( const int item );
-      bool remove( BinaryNode* subTree, const int item );
+      BinaryNode* remove( BinaryNode* subTree, const int item );
       void clear( BinaryNode* subTree );
       int getEntry( BinaryNode* subTree, const int entry );
       bool contains( BinaryNode* subTree, const int item ) const;
