@@ -205,67 +205,85 @@ BinaryNode* BinarySearchTree::remove( BinaryNode* subTree, const int item )
 
 void BinarySearchTree::clear( BinaryNode* subTree )
 {
+   // check if subtree is empty
    if( subTree != NULL )
    {
+      // recursively clear left and right subtrees
       clear( subTree->leftChild );
       clear( subTree->rightChild );
       
+      // set left and right children to NULL
       subTree->leftChild = NULL;
       subTree->rightChild = NULL;
       
+      // delete subtree and set to NULL
       delete subTree;
       subTree = NULL;
    }
+   // set root to NULL
    root = NULL;
 }
 
 int BinarySearchTree::getEntry( BinaryNode* subTree, const int entry )
 {
+   // check if subtree is empty
    if( subTree == NULL )
    {
       return -1;
    }
+   // if entry is found, return it
    else if( subTree->data == entry )
    {
       return entry;
    }
+   // otherwise search left
    else if( entry < subTree->data )
    {
       return getEntry( subTree->leftChild, entry );
    }
+   // or otherwise search right
    else if( entry > subTree->data )
    {
       return getEntry( subTree->rightChild, entry );
    }
-   return EXIT_FAILURE; // INDICATES INCORRECT EXECUTION
+   // indicates unsuccessful execution
+   return EXIT_FAILURE;
 }
 
 bool BinarySearchTree::contains( BinaryNode* subTree, const int item ) const
 {
+   // check if subtree is empty
    if( subTree == NULL )
    {
       return false;
    }
+   // if item is found return true
    else if( subTree->data == item )
    {
       return true;
    }
+   // otherwise search left
    else if( item < subTree->data )
    {
       return contains( subTree->leftChild, item );
    }
+   // or otherwise search right
    else if( item > subTree->data )
    {
       return contains( subTree->rightChild, item );
    }
-   return EXIT_FAILURE; // INDICATES INCORRECT EXECUTION
+   // indicates unsuccessful execution
+   return EXIT_FAILURE;
 }
 
 void BinarySearchTree::preorderTraverse( BinaryNode* subTree ) const
 {
+   // check if subtree is empty
    if( subTree != NULL )
    {
+      // output data at node
       cout << subTree->data << ' ';
+      // traverse left and right children
       preorderTraverse( subTree->leftChild );
       preorderTraverse( subTree->rightChild );
    }
@@ -273,20 +291,27 @@ void BinarySearchTree::preorderTraverse( BinaryNode* subTree ) const
 
 void BinarySearchTree::inorderTraverse( BinaryNode* subTree ) const
 {
+   // check if subtree is empty
    if( subTree != NULL )
    {
+      // traverse left child
       inorderTraverse( subTree->leftChild );
+      // output data at node
       cout << subTree->data << ' ';
+      // traverse right right
       inorderTraverse( subTree->rightChild );
    }
 }
 
 void BinarySearchTree::postorderTraverse( BinaryNode* subTree ) const
 {
+   // check if subtree is empty
    if( subTree != NULL )
    {
+      // traverse left and right children
       postorderTraverse( subTree->leftChild );
       postorderTraverse( subTree->rightChild );
+      // output data at node
       cout << subTree->data << ' ';
    }
    
