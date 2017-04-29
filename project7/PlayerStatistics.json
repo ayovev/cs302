@@ -28,8 +28,7 @@
 		},
 		{
 			"Type": "Four Suits",
-			"Games": 0,
-			"Won": 0,
+			"Games Won": 0,
 			"Win Rate": 0,
 			"Games Played": 0,
 			"Fastest Win": 0,
