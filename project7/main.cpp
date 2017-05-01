@@ -18,6 +18,8 @@ int main()
    
    fin.close();
    
+   Player first;
+
    // return successful program execution
    return EXIT_SUCCESS;
 }
