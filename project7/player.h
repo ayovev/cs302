@@ -7,12 +7,14 @@ using namespace std;
 
 class Player
 {
-   private:
+   public:
+      void setName( string name );
+      string getName();
+      
+   public:
       string playerName;
       Overview all;
-      // Suits suitType[ 3 ];
+      Suit suitType[ 3 ];
 };
-
-
 
 #endif // PLAYER_H

@@ -4,22 +4,22 @@
 class Overview
 {
    public:
-      void setGamesWon();
+      void setGamesWon( int gw );
       int getGamesWon();
       
-      void setWinRate();
+      void setWinRate( double wr );
       double getWinRate();
       
-      void setGamesPlayed();
+      void setGamesPlayed( int gp );
       int getGamesPlayed();
       
-      void setFastestWin();
+      void setFastestWin( double fw );
       double getFastestWin();
       
-      void setFewestMoves();
+      void setFewestMoves( int fm );
       int getFewestMoves();
       
-      void setTopScore();
+      void setTopScore( int ts );
       int getTopScore();
       
    private:
