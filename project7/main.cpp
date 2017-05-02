@@ -2,18 +2,20 @@
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
-#include "overview.h"
+#include "overview.cpp"
 #include "suit.h"
 #include "player.cpp"
 
 using namespace std;
 
-void readInBeginning( ifstream& fin );
 void readPlayerName( ifstream& fin, Player& player );
+void readOverview( ifstream& fin, Player& player );
+void prime( ifstream& fin );
 
 // main function
 int main()
 {
+   char temp;
    Player playerOne, playerTwo;
    string name;
    
@@ -22,8 +24,8 @@ int main()
    fin.clear();
    fin.open( "PlayerStatistics.json" );
    
-   readInBeginning( fin );
    readPlayerName( fin, playerOne );
+   readOverview( fin, playerOne );
    
    fin.close();
 
@@ -31,7 +33,53 @@ int main()
    return EXIT_SUCCESS;
 }
 
-void readInBeginning( ifstream& fin )
+void readPlayerName( ifstream& fin, Player& player )
+{
+   char temp;
+   string name;
+   
+   prime( fin );
+   fin >> temp;
+   
+   getline( fin, name, '\"');
+   
+   player.setName( name );
+   
+   fin >> temp;
+}
+
+void readOverview( ifstream& fin, Player& player )
+{
+   char temp;
+   int value;
+   
+   prime( fin );
+   prime( fin );
+   fin >> value;
+   player.all.setGamesWon( value );
+   
+   prime( fin );
+   fin >> value;
+   player.all.setWinRate( value );
+   
+   prime( fin );
+   fin >> value;
+   player.all.setGamesPlayed( value );
+   
+   prime( fin );
+   fin >> value;
+   player.all.setFastestWin( value );
+   
+   prime( fin );
+   fin >> value;
+   player.all.setFewestMoves( value );
+   
+   prime( fin );
+   fin >> value;
+   player.all.setTopScore( value );
+}
+
+void prime( ifstream& fin )
 {
    char temp;
    
@@ -40,17 +88,10 @@ void readInBeginning( ifstream& fin )
    while( temp != ':' )
    {
       fin >> temp;
-   }   
-   fin >> temp;
-}
-
-void readPlayerName( ifstream& fin, Player& player )
-{
-   string name;
-   
-   getline( fin, name, '\"');
-   
-   player.setName( name );
-   
-   cout << player.getName() << endl;
+      
+      // // IFTP
+      // cout << temp << endl;
+      // 
+      // system("pause");
+   }
 }
