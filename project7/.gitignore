@@ -1,6 +1,7 @@
 # Prerequisites
 *.d
 *.pdf
+todo.txt
 
 # Compiled Object files
 *.slo
