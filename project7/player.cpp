@@ -29,8 +29,23 @@ void Player::printOverview()
         << endl;
 }
 
+void Player::printSuits()
+{
+   for( int j = 0; j < NUM_SUITS; j++ )
+   {
+      cout << suitType[ j ].getType() << endl
+           << suitType[ j ].getGamesWon() << endl
+           << suitType[ j ].getWinRate() << endl
+           << suitType[ j ].getGamesPlayed() << endl
+           << suitType[ j ].getFastestWin() << endl
+           << suitType[ j ].getFewestMoves() << endl
+           << suitType[ j ].getTopScore() << endl << endl;
+   }
+}
+
 void Player::printAllInfo()
 {
    printName();
    printOverview();
+   printSuits();
 }

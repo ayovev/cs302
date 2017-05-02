@@ -5,6 +5,8 @@
 
 using namespace std;
 
+const int NUM_SUITS = 3;
+
 class Player
 {
    public:
@@ -13,13 +15,14 @@ class Player
       
       void printName();
       void printOverview();
+      void printSuits();
       
       void printAllInfo();
       
    public:
       string playerName;
       Overview all;
-      Suit suitType[ 3 ];
+      Suit suitType[ NUM_SUITS ];
 };
 
 #endif // PLAYER_H
