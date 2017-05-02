@@ -11,6 +11,11 @@ class Player
       void setName( string name );
       string getName();
       
+      void printName();
+      void printOverview();
+      
+      void printAllInfo();
+      
    public:
       string playerName;
       Overview all;
