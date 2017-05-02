@@ -1,12 +1,12 @@
 [{
 	"Player Name": "Me",
 	"Overview": {
-		"Games Won": 0,
-		"Win Rate": 0,
-		"Games Played": 0,
-		"Fastest Win": 0,
-		"Fewest Moves": 0,
-		"Top Score": 0
+		"Games Won": 9,
+		"Win Rate": 90,
+		"Games Played": 10,
+		"Fastest Win": 241,
+		"Fewest Moves": 50,
+		"Top Score": 80
 	},
 	"Suits": [{
 			"Type": "One Suit",
