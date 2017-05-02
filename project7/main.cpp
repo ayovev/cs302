@@ -8,13 +8,10 @@
 
 using namespace std;
 
-const int NUM_SUITS = 3;
-
 void prime( ifstream& fin );
 void readPlayerName( ifstream& fin, Player& player );
 void readOverview( ifstream& fin, Player& player );
 void readSuits( ifstream& fin, Player& player );
-
 
 // main function
 int main()
@@ -32,9 +29,12 @@ int main()
    readOverview( fin, playerOne );
    readSuits( fin, playerOne );
    
-   // playerOne.printName();
-   // playerOne.printOverview();
-   // playerOne.printAllInfo();
+   readPlayerName( fin, playerTwo );
+   readOverview( fin, playerTwo);
+   readSuits( fin, playerTwo );
+   
+   playerOne.printAllInfo();   
+   playerTwo.printAllInfo();
    
    fin.close();
 
@@ -51,11 +51,6 @@ void prime( ifstream& fin )
    while( temp != ':' )
    {
       fin >> temp;
-      
-      // // IFTP
-      // cout << temp << endl;
-      // 
-      // system("pause");
    }
 }
 
@@ -145,19 +140,5 @@ void readSuits( ifstream& fin, Player& player )
       prime( fin );
       fin >> value;
       player.suitType[ i ].setTopScore( value );
-   }
-   
-   // // IFTP
-   // for( int j = 0; j < NUM_SUITS; j++ )
-   // {
-   //    cout << player.suitType[ j ].getType() << endl
-   //         << player.suitType[ j ].getGamesWon() << endl
-   //         << player.suitType[ j ].getWinRate() << endl
-   //         << player.suitType[ j ].getGamesPlayed() << endl
-   //         << player.suitType[ j ].getFastestWin() << endl
-   //         << player.suitType[ j ].getFewestMoves() << endl
-   //         << player.suitType[ j ].getTopScore() << endl << endl;
-   //         
-   //    system("pause");
    }
 }
