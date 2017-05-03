@@ -1,23 +1,28 @@
+// include library and header file
 #include <iostream>
 #include "player.h"
 
 using namespace std;
 
+// set player name
 void Player::setName( const string name )
 {
    playerName = name;
 }
 
+// get player name
 string Player::getName()
 {
    return playerName;
 }
 
+// print only the player name
 void Player::printName()
 {
    cout << endl << "Player Name: " << playerName << endl;
 }
 
+// print all information from overview section for player
 void Player::printOverview()
 {
    cout << endl 
@@ -32,6 +37,7 @@ void Player::printOverview()
         << endl;
 }
 
+// print all information from suits section for player
 void Player::printSuits()
 {
    for( int j = 0; j < NUM_SUITS; j++ )
@@ -46,6 +52,7 @@ void Player::printSuits()
    }
 }
 
+// print all info about player
 void Player::printAllInfo()
 {
    printName();
