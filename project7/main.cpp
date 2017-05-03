@@ -8,11 +8,23 @@
 
 using namespace std;
 
+const char DOUBLE_QUOTE = '\"';
+const char COLON = ':';
+const char OPEN_BRACKET = '[';
+const char CLOSE_BRACKET = ']';
+const char OPEN_BRACE = '{';
+const char CLOSE_BRACE = '}';
+const char COMMA = ',';
+const char TAB = '\t';
+const char SPACE = ' ';
+
 // function prototypes
 void prime( ifstream& fin );
 void readPlayerName( ifstream& fin, Player& player );
 void readOverview( ifstream& fin, Player& player );
 void readSuits( ifstream& fin, Player& player );
+void outputPlayerName( ofstream& fout, Player& player );
+void outputOverview( ofstream& fout, Player& player );
 
 // main function
 int main()
@@ -21,6 +33,7 @@ int main()
    Player playerOne, playerTwo;
    string name;
    ifstream fin;
+   ofstream fout;
    
    // clear and open file stream
    fin.clear();
@@ -37,11 +50,21 @@ int main()
    readSuits( fin, playerTwo );
    
    // print all info for both players
-   playerOne.printAllInfo();   
-   playerTwo.printAllInfo();
+   //playerOne.printAllInfo();   
+   //playerTwo.printAllInfo();
    
    // close file stream
    fin.close();
+   
+   fout.clear();
+   fout.open( "output.json" );
+
+   fout << OPEN_BRACKET << OPEN_BRACE << endl;
+   
+   outputPlayerName( fout, playerOne );
+   outputOverview( fout, playerOne );
+   
+   fout.close();
 
    // return successful program execution
    return EXIT_SUCCESS;
@@ -170,4 +193,35 @@ void readSuits( ifstream& fin, Player& player )
       fin >> value;
       player.suitType[ i ].setTopScore( value );
    }
+}
+
+void outputPlayerName( ofstream& fout, Player& player )
+{
+   fout << TAB << "\"Player Name\"" << COLON << SPACE
+        << DOUBLE_QUOTE << player.getName() << DOUBLE_QUOTE << COMMA << endl;
+}
+
+void outputOverview( ofstream& fout, Player& player )
+{
+   fout << TAB << "\"Overview\"" << COLON << SPACE << OPEN_BRACE << endl;
+   
+   fout << TAB << TAB << "\"Games Won\"" << COLON << SPACE
+        << player.all.getGamesWon() << COMMA << endl;
+        
+   fout << TAB << TAB << "\"Win Rate\"" << COLON << SPACE
+        << player.all.getWinRate() << COMMA << endl;
+        
+   fout << TAB << TAB << "\"Games Played\"" << COLON << SPACE
+        << player.all.getGamesPlayed() << COMMA << endl;
+        
+   fout << TAB << TAB << "\"Fastest Win\"" << COLON << SPACE
+        << player.all.getFastestWin() << COMMA << endl;
+        
+   fout << TAB << TAB << "\"Fewest Moves\"" << COLON << SPACE
+        << player.all.getFewestMoves() << COMMA << endl;
+        
+   fout << TAB << TAB << "\"Top Score\"" << COLON << SPACE
+        << player.all.getTopScore() << endl;
+        
+   fout << TAB << CLOSE_BRACE << COMMA << endl;
 }
