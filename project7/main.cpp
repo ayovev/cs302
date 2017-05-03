@@ -2,9 +2,9 @@
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
-#include "overview.cpp"
-#include "suit.cpp"
-#include "player.cpp"
+#include "overview.h"
+#include "suit.h"
+#include "player.h"
 
 using namespace std;
 
@@ -16,7 +16,6 @@ void readSuits( ifstream& fin, Player& player );
 // main function
 int main()
 {
-   char temp;
    Player playerOne, playerTwo;
    string name;
    
@@ -71,7 +70,6 @@ void readPlayerName( ifstream& fin, Player& player )
 
 void readOverview( ifstream& fin, Player& player )
 {
-   char temp;
    int value;
    
    prime( fin );
