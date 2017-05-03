@@ -1,6 +1,6 @@
 #include "suit.h"
 
-void Suit::setType( string t )
+void Suit::setType( const string t )
 {
    type = t;
 }

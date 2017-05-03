@@ -1,6 +1,6 @@
 #include "overview.h"
 
-void Overview::setGamesWon( int gw )
+void Overview::setGamesWon( const int gw )
 {
    gamesWon = gw;
 }
@@ -10,7 +10,7 @@ int Overview::getGamesWon()
    return gamesWon;
 }
 
-void Overview::setWinRate( double wr )
+void Overview::setWinRate( const double wr )
 {
    winRate = wr;
 }
@@ -20,7 +20,7 @@ double Overview::getWinRate()
    return winRate;
 }
 
-void Overview::setGamesPlayed( int gp )
+void Overview::setGamesPlayed( const int gp )
 {
    gamesPlayed = gp;
 }
@@ -30,7 +30,7 @@ int Overview::getGamesPlayed()
    return gamesPlayed;
 }
 
-void Overview::setFastestWin( double fw )
+void Overview::setFastestWin( const double fw )
 {
    fastestWin = fw;
 }
@@ -40,7 +40,7 @@ double Overview::getFastestWin()
    return fastestWin;
 }
 
-void Overview::setFewestMoves( int fm )
+void Overview::setFewestMoves( const int fm )
 {
    fewestMoves = fm;
 }
@@ -50,7 +50,7 @@ int Overview::getFewestMoves()
    return fewestMoves;
 }
 
-void Overview::setTopScore( int ts )
+void Overview::setTopScore( const int ts )
 {
    topScore = ts;
 }

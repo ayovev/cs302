@@ -1,6 +1,9 @@
+#include <iostream>
 #include "player.h"
 
-void Player::setName( string name )
+using namespace std;
+
+void Player::setName( const string name )
 {
    playerName = name;
 }
