@@ -25,6 +25,7 @@ void readOverview( ifstream& fin, Player& player );
 void readSuits( ifstream& fin, Player& player );
 void outputPlayerName( ofstream& fout, Player& player );
 void outputOverview( ofstream& fout, Player& player );
+void outputSuits( ofstream& fout, Player& player );
 
 // main function
 int main()
@@ -63,6 +64,13 @@ int main()
    
    outputPlayerName( fout, playerOne );
    outputOverview( fout, playerOne );
+   outputSuits( fout, playerOne );
+   fout << CLOSE_BRACE << COMMA << SPACE << OPEN_BRACE << endl;
+   
+   outputPlayerName( fout, playerTwo );
+   outputOverview( fout, playerTwo );
+   outputSuits( fout, playerTwo );
+   fout << CLOSE_BRACE << CLOSE_BRACKET;
    
    fout.close();
 
@@ -224,4 +232,42 @@ void outputOverview( ofstream& fout, Player& player )
         << player.all.getTopScore() << endl;
         
    fout << TAB << CLOSE_BRACE << COMMA << endl;
+}
+
+void outputSuits( ofstream& fout, Player& player )
+{
+   fout << TAB << "\"Suits\"" << COLON << SPACE
+        << OPEN_BRACKET << OPEN_BRACE << endl;
+        
+   for( int i = 0; i < NUM_SUITS; i++ )
+   {
+      fout << TAB << TAB << TAB << "\"Type\"" << COLON << SPACE
+           << DOUBLE_QUOTE << player.suitType[ i ].getType() << DOUBLE_QUOTE
+           << COMMA << endl;
+           
+      fout << TAB << TAB << TAB << "\"Games Won\"" << COLON << SPACE
+           << player.suitType[ i ].getGamesWon() << COMMA << endl;
+           
+      fout << TAB << TAB << TAB << "\"Win Rate\"" << COLON << SPACE
+           << player.suitType[ i ].getWinRate() << COMMA << endl;
+           
+      fout << TAB << TAB << TAB << "\"Games Played\"" << COLON << SPACE
+           << player.suitType[ i ].getGamesPlayed() << COMMA << endl;
+           
+      fout << TAB << TAB << TAB << "\"Fastest Win\"" << COLON << SPACE
+           << player.suitType[ i ].getFastestWin() << COMMA << endl;
+           
+      fout << TAB << TAB << TAB << "\"Fewest Moves\"" << COLON << SPACE
+           << player.suitType[ i ].getFewestMoves() << COMMA << endl;
+           
+      fout << TAB << TAB << TAB << "\"Top Score\"" << COLON << SPACE
+           << player.suitType[ i ].getTopScore() << endl;
+           
+      fout << TAB << TAB << CLOSE_BRACE;
+      if( i < NUM_SUITS - 1 )
+      {
+         fout << COMMA << endl << TAB << TAB << OPEN_BRACE << endl;
+      }
+   }
+   fout << endl << TAB << CLOSE_BRACKET << endl;
 }
