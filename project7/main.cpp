@@ -61,7 +61,7 @@ int main()
    
    // clear and open output file stream
    fout.clear();
-   fout.open( "output.json" );
+   fout.open( "PlayerStatistics.json" );
    
    // output beginning characters of JSON file
    fout << OPEN_BRACKET << OPEN_BRACE << endl;
